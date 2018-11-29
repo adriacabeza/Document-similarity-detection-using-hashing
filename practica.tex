@@ -1,6 +1,7 @@
 \documentclass[12pt]{article}
 \usepackage[utf8]{inputenc}
-\author{Carlos Bergillos, Antoni Ramble, Adrià Cabeza}
+\usepackage{cite}
+\author{Carlos Bergillos, Antoni Rambla, Adrià Cabeza\\ Departament de Computació}
 \title{Document similarity detection using hasing }
 \date{\today}
 
@@ -10,13 +11,14 @@
 
   
 	\begin{abstract}
-ESTO ES UNA PRUEBA PARA VER COMO QUEDA n this experiment we studied a very important physical effect by measuring the
-dependence of a quantity $V$ of the quantity $X$ for two different sample
-temperatures.  Our experimental measurements confirmed the quadratic dependence
-$V = kX^2$ predicted by Someone's first law. The value of the mystery parameter
-$k = 15.4\pm 0.5$~s was extracted from the fit. This value is
-not consistent with the theoretically predicted $k_{theory}=17.34$~s. We attribute this
-discrepancy to low efficiency of our $V$-detector.
+
+Our goal is to identify similarities between documents. He cometido el peor de los pecadosque un hombre puede cometer. No he sidofeliz. Que los glaciares del olvidome arrastren y me pierdan, despiadados.
+ Mis padres me engendraron para el juegoarriesgado y hermoso de la vida,
+ para la tierra, el agua, el aire, el fuego.
+ Los defraudé. No fui feliz. Cumplidano fue su joven voluntad. Mi mentese aplicó a las simétricas porfíasdel arte, que entreteje naderías.
+ Me legaron valor. No fui valiente.
+ No me abandona. Siempre está a mi ladoLa sombra de haber sido un desdichado.
+ 
 \end{abstract}
 
 \newpage
@@ -25,22 +27,83 @@ discrepancy to low efficiency of our $V$-detector.
 
 \section{Introduction}
 
-Minhashing: compresses large sets in such a wat that we can deduce the similatity of the underlying sets from their compressed versions. 
-When we search for similar items of any kind there may be far too many pairs of items to test each pair for their degree of similarity
+Our goal is to identify similarities between documents. We say that two documents are similar if they contain a significant number of common substrings that are not too small. 
+
+The problem of computing the similarity between two files has been studied extensively and many programs have been developed to sole it. Algorithms for the problem have numerous applications, including spelling correction systems, file comparison tools or even the study of genetic evolution.
+
+ Existing approaces can also include a brute force approach of comparing all sub-strings of pair of documents. However, such and approach is computationally prohibitive. 
+
+
+% Minhashing: compresses large sets in such a wat that we can deduce the similatity of the underlying sets from their compressed versions. 
+%When we search for similar items of any kind there may be far too many pairs of items to test each pair for their degree of similarity
 
 \section{Theory}
 
+He cometido el peor de los pecadosque un hombre puede cometer. No he sidofeliz. Que los glaciares del olvidome arrastren y me pierdan, despiadados.
+ Mis padres me engendraron para el juegoarriesgado y hermoso de la vida,
+ para la tierra, el agua, el aire, el fuego.
+ \subsection{Hashing}
+ 
+\subsection{Concept of similarity}
 First we have to focus into the definition of similarity, when we talk about the "Jaccard similarity",which is calculated by looking at the relative size of their intersection. 
 
-The Jaccard similarity, also known as Jaccard index is a statistical measure of similarity of sets. For two sets, it is defined as the size of the intersection divided by the size of the union of the sample sets:
+The Jaccard similarity, also known as Jaccard index is a statistical measure of similarity of sets. For two sets, it is defined as the size of the intersection divided by the size of the union of the sample sets. Mathematically,
+\bigbreak
+\centerline{\large $J(A,B)=\frac{\left |A\cap B  \right |}{ \left |A\cup B  \right |} = \frac{\left |A\cap B  \right |}{ \left|A\right|+\left|B\right|-\left |A\cap B  \right |} $}
+\bigbreak
+
+
+
+%In the case of finding similarities in text a slightly different approach is required. First, it is important to observe that testing whether two documents are exact duplicates is easy; just comparing the two documents characther-by-character would work. However, even if the documents are not identical, they can share large portions of their text.
+\subsection{Representation of documents}
+
+To identify lexically similar documents we need a proper way to represent documents as sets and the most effective way is to construct from the document the set of short strings that appear within it. If we do so, even if the documents have different sizes or those sentences appear in different order we will find several common elements. In the next section we will introduce some of the approaches of shingling and its variations.
+
+\subsubsection{\textit{k}-Shingles}
+
+A k-shingle (or word-k-gram) is a sequence of consecutive words of size k. Intuitively, two documents A and B are similar if they share enough k-shingles. By performing union and intersection operations between the k-shingles, we can find the Jaccard similarity coefficient between A and B. 
+\\
+There are some variations regarding on how white space (blank, tab, newline, etc) is treated. Also there is a variation that works with a bag of shingles instead of a set to keep the number of appearences of a shingle. \medskip \\
+\\
+How large k should be depends on how long typical documents are and how large the set of typical characters is. For example if we pick k=4 there are $27^4=531441 $ possible k-shingles. However, the calculation can be a little bit more subtile because all the characters do not appear with equal probability. A good rule of thumb is to imagine that there are only 20 characters and estimate the number of k-shingles as $20^k$. For large documents, choice k = 0 is considered safe. 
+
+\subsubsection{Hashing Shingles}
+
+Instead of using substrings direcly as shingles, we can pick a hash function that maps strings of length k to some number of buckets and treat the resulting bucket number as the shingle. That process compacts our data and lets us manipulate shingles by single-word machine operations.
+
+\subsection{MinHash}
+
+A minhash function on sets is based on a permutation of the universal set. Given any such permutation, the minhash value for a set is that element of the set that appears first in the permuted order. 
+
+This algorithm provides us with a fast approximation to the Jaccard Similarity. The concept is to condense the large sets of unique shingles into a much smaller representations called "signatures". We will then use these signatures to measure the similarity between document, the signature won't give us the exact similarity but we will get a close estimate (the larger the number of signatures you choose, the more accurate the estimate).
+\\ \medskip
+
+
+To implement the idea of generating randomly permutated rows, we don’t actually generate the random numbers, since it is not feasible to do so for large datasets, e.g. For a million itemset you will have to generate a million integers …, not to mention you have to do this for each signatures that you wish to generate. One way to avoid having to generate n permutated rows is to pick n hash functions in the form of :
 \medbreak
-\centerline{\small $J(A,B)=\frac{\left |A\cap B  \right |}{ \left |A\cup B  \right |} = \frac{\left |A\cap B  \right |}{ \left|A\right|+\left|B\right|-\left |A\cap B  \right |} $}
+\begin{center}
+$ h(x)=(ax+b) mod(c)$
+\end{center}
 
+Where: 
+\begin{itemize}
+\item x is the row numbers of your original characteristic matrix
+\item a and b are any random numbers smaller or equivalent to the maximum number of x 
+\item c is a prime number slightly larger than the total number of shingle sets. 
+\end{itemize}
 
+\subsection{Locality-Sensitive Hashing for Documents}
+ This technique allows us to avoid computing the similarity of every pair of sets or their minhash signatures. If we are given signatures for the sets, we may divide them into bands, and only measure the similarity of a pair of sets if they are identical in at least one band. By choosing the size of bands appropriately, we can eliminate from consideration most of the pairs that do not meet our threshold of similarity.
+\subsection{Distance Measures}
+\subsubsection{Jaccard Distance}
+\subsubsection{Edit Distance}
+%http://ethen8181.github.io/machine-learning/clustering_old/text_similarity/text_similarity.html
+
+%mirar aquest algoritme: http://www.xmailserver.org/diff2.pdf
 
 \begin{thebibliography}{100}
 
-\bibitem{Similarity}
+\bibitem{Concept of similarity}
 J.\ Bank and B.\ Cole,
 \textit {Calculating the Jaccard similarity coefficient with map reduce for entity pairs in
 Wikipedia} (Wikipedia Similarity Team, 2008).
@@ -49,7 +112,11 @@ Wikipedia} (Wikipedia Similarity Team, 2008).
 J.\ Leskovec, A.\ Rajaraman and J.\ Ullman
 \textit{ Finding Similar Items. In Mining of Massive Datasets} (Cambridge University Press, 2014).
 
+\bibitem{O(ND) Difference Algorithm}
+E.\ W. Myers \textit{An O(ND) Difference Algorithm and Its Variations} (Department of Computer Science, University of Arizona)
 
+\bibitem{Plagiarism Detection}
+S.\ Alzahrani and N. \ Salim, \textit{Fuzzy Semantic-Based String Similarity for Extrinsic Plagiarism Detection} (Taif University, Saudi Arabia and Universiti Teknologi Malaysia, Malaysia)
 
 \end{thebibliography}
 
