@@ -1,7 +1,7 @@
 \documentclass[12pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{cite}
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
 \author{Carlos Bergillos, Antoni Rambla, Adrià Cabeza\\ Departament de Computació}
 \title{Document similarity detection using hasing }
 \date{\today}
@@ -38,7 +38,6 @@ The problem of computing the similarity between two files has been studied exten
 He cometido el peor de los pecadosque un hombre puede cometer. No he sidofeliz. Que los glaciares del olvidome arrastren y me pierdan, despiadados.
  Mis padres me engendraron para el juegoarriesgado y hermoso de la vida,
  para la tierra, el agua, el aire, el fuego.
- \subsection{Hashing}
  
 \subsection{Concept of similarity}
 First we have to focus into the definition of similarity, when we talk about the ``Jaccard similarity'',which is calculated by looking at the relative size of their intersection. 
@@ -62,7 +61,7 @@ A k-shingle (or word-k-gram) is a sequence of consecutive words of size k. Intui
 \\
 There are some variations regarding on how white space (blank, tab, newline, etc) is treated. Also there is a variation that works with a bag of shingles instead of a set to keep the number of appearences of a shingle. \medskip \\
 \\
-How large k should be depends on how long typical documents are and how large the set of typical characters is. For example if we pick k=4 there are $27^4=531441 $ possible k-shingles. However, the calculation can be a little bit more subtile because all the characters do not appear with equal probability. A good rule of thumb is to imagine that there are only 20 characters and estimate the number of k-shingles as $20^k$. For large documents, choice k = 0 is considered safe. 
+How large k should be depends on how long typical documents are and how large the set of typical characters is. For example if we pick k=4 there are $27^4=531441 $ possible k-shingles. However, the calculation can be a little bit more subtile because all the characters do not appear with equal probability. A good rule of thumb is to imagine that there are only 20 characters and estimate the number of k-shingles as $20^k$. For large documents, choice k = 9 is considered safe. 
 
 \subsubsection{Hashing Shingles}
 
@@ -106,7 +105,7 @@ The hash functions that we want to use need to be:
 
 \begin{itemize}
 \item \textbf{Really fast}\\
-Dimensionality reduction is often a time bottle-neck and using a dast basic hash function to implement it may improve running times significantly. 
+Dimensionality reduction is often a time bottle-neck and using a fast basic hash function to implement it may improve running times significantly. 
 \item \textbf{Avoid hash collisions}\\
 We do not want to get the same hash using different pieces of data %(DIR ALGU DEL pidgeon hole principle)
 \item \textbf{Uniform distribution}\\
