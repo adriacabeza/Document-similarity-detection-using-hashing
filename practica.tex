@@ -1,6 +1,7 @@
 \documentclass[12pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{cite}
+\usepackage{hyperref}
 \author{Carlos Bergillos, Antoni Rambla, Adrià Cabeza\\ Departament de Computació}
 \title{Document similarity detection using hasing }
 \date{\today}
@@ -40,7 +41,7 @@ He cometido el peor de los pecadosque un hombre puede cometer. No he sidofeliz. 
  \subsection{Hashing}
  
 \subsection{Concept of similarity}
-First we have to focus into the definition of similarity, when we talk about the "Jaccard similarity",which is calculated by looking at the relative size of their intersection. 
+First we have to focus into the definition of similarity, when we talk about the ``Jaccard similarity'',which is calculated by looking at the relative size of their intersection. 
 
 The Jaccard similarity, also known as Jaccard index is a statistical measure of similarity of sets. For two sets, it is defined as the size of the intersection divided by the size of the union of the sample sets. Mathematically,
 \bigbreak
@@ -71,7 +72,7 @@ Instead of using substrings direcly as shingles, we can pick a hash function tha
 
 A minhash function on sets is based on a permutation of the universal set. Given any such permutation, the minhash value for a set is that element of the set that appears first in the permuted order. 
 
-This algorithm provides us with a fast approximation to the Jaccard Similarity. The concept is to condense the large sets of unique shingles into a much smaller representations called "signatures". We will then use these signatures to measure the similarity between document, the signature won't give us the exact similarity but we will get a close estimate (the larger the number of signatures you choose, the more accurate the estimate).
+This algorithm provides us with a fast approximation to the Jaccard Similarity. The concept is to condense the large sets of unique shingles into a much smaller representations called ``signatures''. We will then use these signatures to measure the similarity between document, the signature won't give us the exact similarity but we will get a close estimate (the larger the number of signatures you choose, the more accurate the estimate).
 \\ \medskip
 
 
