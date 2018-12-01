@@ -9,16 +9,11 @@
 \begin{document}
   \maketitle  
 
-  
+  \vspace{2cm}
 	\begin{abstract}
 
-Our goal is to identify similarities between documents. He cometido el peor de los pecadosque un hombre puede cometer. No he sidofeliz. Que los glaciares del olvidome arrastren y me pierdan, despiadados.
- Mis padres me engendraron para el juegoarriesgado y hermoso de la vida,
- para la tierra, el agua, el aire, el fuego.
- Los defraudé. No fui feliz. Cumplidano fue su joven voluntad. Mi mentese aplicó a las simétricas porfíasdel arte, que entreteje naderías.
- Me legaron valor. No fui valiente.
- No me abandona. Siempre está a mi ladoLa sombra de haber sido un desdichado.
- 
+Our goal is to identify similarities between documents. We have used \textit{Local-Sensitive Hashing} algorithms
+ and a \textit{k-shingles} and \textit{minhash signatures} representation of documents to evaluate the effectivity of the similarity computed. Once determined the best parameters for the collection, we will give an algorithm to indentify the more similar documents. 
 \end{abstract}
 
 \newpage
@@ -52,6 +47,7 @@ The Jaccard similarity, also known as Jaccard index is a statistical measure of 
 \centerline{\large $J(A,B)=\frac{\left |A\cap B  \right |}{ \left |A\cup B  \right |} = \frac{\left |A\cap B  \right |}{ \left|A\right|+\left|B\right|-\left |A\cap B  \right |} $}
 \bigbreak
 
+To calculate the similarity estimationj using this approach could be solved using \textit{k} independent repetitions of the MinHash algorithm, however this requires $O(k \cdot |A|)$ running time. 
 
 
 %In the case of finding similarities in text a slightly different approach is required. First, it is important to observe that testing whether two documents are exact duplicates is easy; just comparing the two documents characther-by-character would work. However, even if the documents are not identical, they can share large portions of their text.
@@ -97,9 +93,58 @@ Where:
 \subsection{Distance Measures}
 \subsubsection{Jaccard Distance}
 \subsubsection{Edit Distance}
+
+
+\subsection{Hashing}
+
+Hashing is a technique for dimensionality reduction. It uses a hash function that is any function that can be used to map data ( called a key) of arbitrary size to data of a fixed size (called a hash value or hash). That hash is a sum up of everything that is in the data. You can never make it backwards from the hash to the data.
+
+Hashing is done for indexing and locating items in databases because it is easier to find the shorter hash value than the longer string.
+
+The hash functions that we want to use need to be: 
+
+\begin{itemize}
+\item \textbf{Really fast}\\
+Dimensionality reduction is often a time bottle-neck and using a dast basic hash function to implement it may improve running times significantly. 
+\item \textbf{Avoid hash collisions}\\
+We do not want to get the same hash using different pieces of data %(DIR ALGU DEL pidgeon hole principle)
+\item \textbf{Uniform distribution}\\
+The hash values are uniformly distributed.
+%TODO: mirar, no estic segur de quines característiques necessitem, també he vist altres distribucions, en llop va ficar també que fossin independents
+
+\end{itemize}
+
+In our project we have not choosen hash cryptographic functions (i.e. sha-1 or md5) because they are too slow for our purpose.
+
+ 
+%he posat algunes que podríem fer servir
+\subsubsection{Multiply-shift}
+
+\subsubsection{2-wise PolyHash}
+
+\subsubsection{H3}
+
+
+\subsection{MurmurHash}
+
+Consists in applying some multiplications (MU) and rotations (R) to the entry bytes to obtaint the hash. 
+
+\section{Data} %canviar el nom de la secció
+
+\subsection{Real-world data}
+\begin{itemize}
+\item \textbf{News20}: Collection of approximately 20.000 newsgroup documents, partitioned evenly across 20 different newsgroup, each corresponding a different topic. 
+\end{itemize}
+
+\subsection{Generating our data}
+
+
+\section{Conclusion}
+
 %http://ethen8181.github.io/machine-learning/clustering_old/text_similarity/text_similarity.html
 
 %mirar aquest algoritme: http://www.xmailserver.org/diff2.pdf
+
 
 \begin{thebibliography}{100}
 
@@ -117,6 +162,9 @@ E.\ W. Myers \textit{An O(ND) Difference Algorithm and Its Variations} (Departme
 
 \bibitem{Plagiarism Detection}
 S.\ Alzahrani and N. \ Salim, \textit{Fuzzy Semantic-Based String Similarity for Extrinsic Plagiarism Detection} (Taif University, Saudi Arabia and Universiti Teknologi Malaysia, Malaysia)
+
+\bibitem{Hash Functions}
+S.\ Dahlgaard, M.\ Tejs Knudsen and M.\ Thorup, \textit{Practical Hash Functions for Similarity Estimation and Dimensionality Reduction} (University of Copenhagen)
 
 \end{thebibliography}
 
