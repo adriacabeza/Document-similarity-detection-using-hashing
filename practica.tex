@@ -90,8 +90,24 @@ Where:
 
 \subsection{Locality-Sensitive Hashing for Documents}
  This technique allows us to avoid computing the similarity of every pair of sets or their minhash signatures. If we are given signatures for the sets, we may divide them into bands, and only measure the similarity of a pair of sets if they are identical in at least one band. By choosing the size of bands appropriately, we can eliminate from consideration most of the pairs that do not meet our threshold of similarity.
+ 
 \subsection{Distance Measures}
+
+In this section we shall take a break to study the notions of distance measure.
+Suppose we have two points (i.e. x and y), a distance measure on them is a function d(x,y) that produces a real number and satisfies the following properties:
+\begin{itemize}
+\item d(x,y) $\geq$ 0 
+
+\item d(x,y) = 0 $\iff$ x = y 
+
+\item d(x,y) $\leq$ d(x,z) + d(z,y) (this is called the triangle inequality)
+\end{itemize}
+
+
 \subsubsection{Jaccard Distance}
+
+We define the Jaccard distance of two sets x and y as d(x,y) = 1 - SIM(x,y). Note that the Jaccard similarity is the probability that a random hash function maps x and y to the \textit{same} value, that means d(x,y) is the probablility that a random hash function sends them to \textit{different} values.
+
 \subsubsection{Edit Distance}
 
 
