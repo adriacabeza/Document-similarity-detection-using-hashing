@@ -1,16 +1,14 @@
 #include <iostream>
+#include <fstream>
 #include <cctype>
 #include <string>
-#include <vector>
 #include <set>
-using namespace std;
-
-vector<string> kshingles(istream *in, int k, bool keep_repetitions, bool to_lowercase, bool keep_spaces, bool keep_punctuation){
+using namespace std; 
+set<string> kshingles(ifstream *in, int k, bool to_lowercase, bool keep_spaces, bool keep_punctuation){
 	//TODO?: bool use_words?
 
 	string n_text;
 	set<string> s;
-	vector<string> v;
 	
 	char c;
 	while (in->get(c)){
@@ -24,22 +22,8 @@ vector<string> kshingles(istream *in, int k, bool keep_repetitions, bool to_lowe
 		for(int j = 0; j < k; j++){
 			piece.push_back(n_text[i+j]);	
 		}
-		if(keep_repetitions) v.push_back(piece);
-		else s.insert(piece);
+		s.insert(piece);
 	}
 
-	if(!keep_repetitions) v.assign(s.begin(), s.end());
-
-	return v;
-}
-
-int main(){
-	
-	vector<string> shingles = kshingles(&cin, 9, false, false, true, true);
-	
-	cout << "Computed " << shingles.size() << " k-shingles" << endl;
-	
-	/**for(string s : shingles){
-		cout << s << endl;
-	}**/
+	return s;
 }
