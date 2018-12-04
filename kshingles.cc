@@ -1,9 +1,4 @@
-#include <iostream>
-#include <fstream>
-#include <cctype>
-#include <string>
-#include <set>
-using namespace std; 
+#include "kshingles.h"
 set<string> kshingles(ifstream *in, int k, bool to_lowercase, bool keep_spaces, bool keep_punctuation){
 	//TODO?: bool use_words?
 
