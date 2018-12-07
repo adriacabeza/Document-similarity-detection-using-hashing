@@ -17,6 +17,11 @@ int main(){
     cout<<"De quin tamany vols els shingles?"<<endl;
     cin >> k; 
     //TODO: ficar una opció que sigui amb words o amb lletres
+    /*
+    bool decom; 
+    cout<<"Vols descompondre el document en paraules(0) o caràcters(1)?"
+    cin>>descom;
+    */
     //ARA JA HO TINC TOT INICIALITZAT
 
     ifstream ifs (path);
