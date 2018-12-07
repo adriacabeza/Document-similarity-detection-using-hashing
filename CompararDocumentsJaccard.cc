@@ -1,7 +1,5 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <set>
+#include "kshingles.h"
+#include "jaccard.h"
 
 
 using namespace std;
@@ -9,20 +7,24 @@ using namespace std;
 int main(){
     clock_t start = clock();
     int num;
-    string path;
     int k;
-    cout<<"Quants documents vols comparar?"<<endl;
-    cin>>num;
-    cout<<"Indica el path del primer document a comparar:"<<endl;
+    string path;
+    cout<<"Indica el path del primer document "<<num<< " a comparar:"<<endl;
     cin>> path; 
+    string path2; 
+    cout<<"Indica el path del segon document "<<num<< " a comparar:"<<endl;
+    cin>> path2;
     cout<<"De quin tamany vols els shingles?"<<endl;
     cin >> k; 
     //TODO: ficar una opció que sigui amb words o amb lletres
     //ARA JA HO TINC TOT INICIALITZAT
-    //FICAR CODI PER A FER QUE UN DOCUMENT ES SEPARI EN KSHINGLES
 
+    ifstream ifs (path);
+    ifstream ifs2 (path2);
 
-
+    set<string> A = kshingles(ifs,k,true,false,false);
+    set<string> B = kshingles(ifs2,k,true,false,false);
+    cout<<"La diferència calculada per la Jaccard Similarity és de: "<< Jaccard(A,B);
 
     cout<<"Temps d'execució final:"<<double(clock()-start)/CLOCKS_PER_SEC <<endl;
 }
