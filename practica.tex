@@ -134,16 +134,48 @@ In our project we have not choosen hash cryptographic functions (i.e. sha-1 or m
 
  
 %he posat algunes que podríem fer servir
-\subsubsection{Multiply-shift}
+\subsubsection{Modular Hashing}
 
-\subsubsection{2-wise PolyHash}
+The hash function it takes the following form. 
 
-\subsubsection{H3}
+\begin{center} $h(k) = k (mod (m))$ \end{center}
+
+for some $m$ (usually the number of buckets). For example if m is a power of two(i.e. $m = 2^p$), then $h(k)$ is the $p$ lowest-order its of k. 
+
+\subsubsection{Multiplicative Hashing}
+
+It is faster than modular hashing because multiplication is usually considerably faster than division(or mod) and is consists in:
+\begin{center}
+ $ \left \lfloor m* frac(k*a) \right \rfloor$
+\end{center}
+Where:
+\begin{itemize}
+\item k is an integer hash code
+\item a is a real number
+\item frac is a function that returns the fractional part of a real number
+\end{itemize}
 
 
-\subsection{MurmurHash}
+\subsubsection{Multilinear Hash}
+It takes the form of a scalar product between random values and string components.
+\begin{center}
+$h(s) = m_1 + \sum_{i=1}^{n} m_{i+1} + s_i$
+\end{center}
+The hash function $h$ is defined by the randomly generated values $m_1$,$m_2$,...
 
-Consists in applying some multiplications (MU) and rotations (R) to the entry bytes to obtaint the hash. 
+Also in order to reduce the number of multiplications in order to make it faster we can attempt to improve speed by reducing the number of multiplications by half: 
+\begin{center}
+ $h(s) = m_1 + \sum_{i=1}^{n/2} (m_{2i} + s_{2i-1})(m_{2i+1} + s_{2i})$
+\end{center}
+
+\subsubsection{Murmur Hash}
+
+Consists in applying some multiplications (MU) and rotations (R) to the entry bytes to obtaint the hash. It uses multiple constants which are decided to make it a good hash function by passing 2 basic tests: 
+
+\begin{itemize}
+\item Avalanche Test: evaluates how the output changes if the input is slightly modified.  
+\item Chi-Squared Test: 
+\end{itemize}
 
 \section{Data} %canviar el nom de la secció
 
@@ -160,7 +192,7 @@ Consists in applying some multiplications (MU) and rotations (R) to the entry by
 %http://ethen8181.github.io/machine-learning/clustering_old/text_similarity/text_similarity.html
 
 %mirar aquest algoritme: http://www.xmailserver.org/diff2.pdf
-
+\newpage
 
 \begin{thebibliography}{100}
 
@@ -181,6 +213,14 @@ S.\ Alzahrani and N. \ Salim, \textit{Fuzzy Semantic-Based String Similarity for
 
 \bibitem{Hash Functions}
 S.\ Dahlgaard, M.\ Tejs Knudsen and M.\ Thorup, \textit{Practical Hash Functions for Similarity Estimation and Dimensionality Reduction} (University of Copenhagen)
+
+\bibitem{Universal string hashing}
+D.\ Lemire and O.\ Kaser, \textit{Strongly universal string hashing is fast}, (Université du Québec, Canadá & University of New Brunswick, Canada) 
+\end{thebibliography}
+
+\end{document}
+
+
 
 \end{thebibliography}
 
