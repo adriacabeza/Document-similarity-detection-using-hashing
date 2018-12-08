@@ -20,9 +20,15 @@ void fill(vector<vector<unsigned int>> & repMatrix,const set<string> & shingles,
             if(docShing[j-1].find(shingle) != docShing[j-1].end()) repMatrix[i][j] = 1;
             else repMatrix[i][j] = 0;
         }
-
     }
+}
 
+float sim(vector<vector<unsigned int>> & signatureMatrix, int a, int b){
+    float simil = 0;
+    for(int i = 0; i < signatureMatrix.size(); ++i){
+        if(signatureMatrix[i][a] == signatureMatrix[i][b]) ++simil;
+    }
+    return (simil / signatureMatrix.size());
 }
 
 void printmat(const vector<vector<unsigned int>> & mat){
@@ -66,4 +72,10 @@ int main(int argc, char** argv){
             }
         }
     }
+    printmat(repMatrix);
+    for(int k = 0; k < h; ++k){
+        cout << minHashMod[k].first << " , " << minHashMod[k].second << ": " << prime << endl;
+    }
+    printmat(signatureMatrix);
+    cout << sim(signatureMatrix, 0, 1) << endl;
 }
