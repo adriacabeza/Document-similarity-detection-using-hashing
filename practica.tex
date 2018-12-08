@@ -1,6 +1,7 @@
 \documentclass[12pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{cite}
+\usepackage{listings}
 \usepackage[hidelinks]{hyperref}
 \author{Carlos Bergillos, Antoni Rambla, Adrià Cabeza\\ Departament de Computació}
 \title{Document similarity detection using hasing }
@@ -47,7 +48,40 @@ The Jaccard similarity, also known as Jaccard index is a statistical measure of 
 \centerline{\large $J(A,B)=\frac{\left |A\cap B  \right |}{ \left |A\cup B  \right |} = \frac{\left |A\cap B  \right |}{ \left|A\right|+\left|B\right|-\left |A\cap B  \right |} $}
 \bigbreak
 
-To calculate the similarity estimationj using this approach could be solved using \textit{k} independent repetitions of the MinHash algorithm, however this requires $O(k \cdot |A|)$ running time. 
+Calculating the similarity estimation using this approach could be solved using \textit{k} independent repetitions of the MinHash algorithm, however this would require $O(k \cdot |A|)$ running time. 
+
+The complexity of our implementation is $O(n)$. To calculate the intersection of both sets we two iterators that iterate through both sets. When an element of a set is smaller than the other we increment its iterator and when they are equal we iterate both and a counter. Finally we use the value of the counter to apply the formula. 
+\lstset{language= C++}
+\begin{lstlisting}
+double intersection(const set<string>& A,
+ const set<string>& B){
+	int common = 0; 
+	auto it = A.begin(), it2 = B.begin();
+	while(it!= A.end() and it2 != B.end()){
+		if(*it < *it2){
+			++it;
+		}
+		else if(*it > *it2){
+			++it2;
+		}
+		else {
+			++it;
+			++it2;
+			++common;
+		}
+	}
+	return common; 
+}
+
+double Jaccard(const set<string>& A, const set<string>& B){
+	double size_intersection = intersection(A,B);
+	return size_intersection / 
+	(A.size() + B.size() - size_intersection);
+}
+
+\end{lstlisting}
+
+If we take in account the cost of building a set we should observe that for unsorted sequences our cost would be incremented to $O(n*log(N))$.
 
 
 %In the case of finding similarities in text a slightly different approach is required. First, it is important to observe that testing whether two documents are exact duplicates is easy; just comparing the two documents characther-by-character would work. However, even if the documents are not identical, they can share large portions of their text.
@@ -143,17 +177,16 @@ for some $m$ (usually the number of buckets). For example if m is a power of two
 
 \subsubsection{Multiplicative Hashing}
 
-It is faster than modular hashing because multiplication is usually considerably faster than division(or mod) and is consists in:
+It consists in:
 \begin{center}
- $ \left \lfloor m* frac(k*a) \right \rfloor$
+ $ \left \lfloor (ax\; mod\;W) /(W/M) \right \rfloor$
 \end{center}
 Where:
 \begin{itemize}
-\item k is an integer hash code
-\item a is a real number
-\item frac is a function that returns the fractional part of a real number
+\item a is an appropiately chosen value that should be relatively prime to W
+\item BUSQUEULA pq A CADA PUTO LLOC DIUEN ALGU DIFERENT JODER I MHE RALLAT
 \end{itemize}
-
+And it produces a hash value in ${0,...,M-1}$.
 
 \subsubsection{Multilinear Hash}
 It takes the form of a scalar product between random values and string components.
@@ -180,7 +213,9 @@ Consists in applying some multiplications (MU) and rotations (R) to the entry by
 
 \subsection{Real-world data}
 \begin{itemize}
-\item \textbf{News20}: Collection of approximately 20.000 newsgroup documents, partitioned evenly across 20 different newsgroup, each corresponding a different topic. 
+\item \textbf{Harry Potter and the Sourcerer Stone}: All the text from the first Harry Potter novel.
+\item \textbf{The Lord of The Rings: The return of the King}: The entire script from the last Lord of the Rings movie.
+\item \textbf{Star Wars}: MIRAR QUINA ÉS
 \end{itemize}
 
 \subsection{Generating our data}
