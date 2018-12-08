@@ -5,5 +5,8 @@
 #include <ctime>
 #include <utility>
 using namespace std;
-pair<unsigned int, unsigned int> modHash(int ite, int maxrow);
+pair<int, int> modHash(int maxrow);
+int calcValue(pair<int, int> ab, int prime, int row);
+bool IsPrime(int number);
+int NextPrime(int a);
 #endif
