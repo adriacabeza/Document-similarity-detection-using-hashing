@@ -1,0 +1,54 @@
+Jaccard Similarity between Elretornodelrey.txt and harrypotter1.txt using 3-shingles is 0.739095
+Time 0.582755
+
+Jaccard Similarity between harrypotter1.txt and Starwars.txt using 3-shingles is 0.696868
+Time 0.639792
+
+Jaccard Similarity between Starwars.txt and Elretornodelrey.txt using 3-shingles is 0.675698
+Time 1.3013
+
+Jaccard Similarity between Elretornodelrey.txt and harrypotter1.txt using 9-shingles is 0.0352623
+Time 1.70895
+
+Jaccard Similarity between harrypotter1.txt and Starwars.txt using 9-shingles is 0.0426529
+Time 2.22584
+
+Jaccard Similarity between Starwars.txt and Elretornodelrey.txt using 9-shingles is 0.0376159
+Time 1.99672
+
+Jaccard Similarity between Elretornodelrey.txt and harrypotter1.txt using 18-shingles is 0.00014481
+Time 2.02441
+
+Jaccard Similarity between harrypotter1.txt and Starwars.txt using 18-shingles is 0.000540964
+Time 2.10916
+
+Jaccard Similarity between Starwars.txt and Elretornodelrey.txt using 18-shingles is 0.000176372
+Time 2.78326
+
+Jaccard Similarity between Elretornodelrey.txt and harrypotter1.txt using 3-shingles is 0.739095
+Time 0.57437
+
+Jaccard Similarity between harrypotter1.txt and Starwars.txt using 3-shingles is 0.696868
+Time 0.536215
+
+Jaccard Similarity between Starwars.txt and Elretornodelrey.txt using 3-shingles is 0.675698
+Time 0.673046
+
+Jaccard Similarity between Elretornodelrey.txt and harrypotter1.txt using 9-shingles is 0.0352623
+Time 1.44822
+
+Jaccard Similarity between harrypotter1.txt and Starwars.txt using 9-shingles is 0.0426529
+Time 1.50791
+
+Jaccard Similarity between Starwars.txt and Elretornodelrey.txt using 9-shingles is 0.0376159
+Time 1.90092
+
+Jaccard Similarity between Elretornodelrey.txt and harrypotter1.txt using 18-shingles is 0.00014481
+Time 1.89356
+
+Jaccard Similarity between harrypotter1.txt and Starwars.txt using 18-shingles is 0.000540964
+Time 1.95046
+
+Jaccard Similarity between Starwars.txt and Elretornodelrey.txt using 18-shingles is 0.000176372
+Time 2.41276
+
