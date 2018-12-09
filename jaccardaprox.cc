@@ -53,9 +53,10 @@ int main(int argc, char** argv){
     }
     vector<vector<unsigned int>> repMatrix (shingles.size() , vector<unsigned int> (argc));
     fill(repMatrix, shingles, docShing);
-    cout << "Introdueix el numero de funcions de hash que vols" << endl;
-    int h;
-    cin >> h;
+    int b, r, h;
+    cout << "Introdueix el numero de bandes i files que tindra el LSH" << endl;
+    cin >> b >> r;
+    h = r*b;
     vector<vector<unsigned int>> signatureMatrix (h, vector<unsigned int> (argc-1, INFINITY));
     vector<pair<int,int>> minHashMod(h);
     int value;
