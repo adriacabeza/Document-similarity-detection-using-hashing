@@ -23,11 +23,11 @@ void writeVector(const vector<string>& A, int i,string nom){
 
 int main(){
     int n; 
-    cout << "Fica el nombre de permutacions que vols"<<endl;
+    cout << "How may permutations do you want?"<<endl;
     cin>>n; 
     string testline; 
     string nom;
-    cout << "Introdueix el nom de l'arxiu"<<endl; 
+    cout << "Introduce the name of the file"<<endl; 
     cin>> nom; 
     inFile.open("./input_texts/"+nom);
     nom = nom.substr(0, nom.size() - 4);
@@ -35,13 +35,12 @@ int main(){
         cout<<"The file does not exist"<<endl;
     }
     else{
-        int i = 0; 
         vector<string> words; 
         while( inFile >> testline){
             words.push_back(testline);
         }
         inFile.close();
-        for(i = 0; i<n;++i){
+        for(int i = 0; i<n;++i){
             random_shuffle(words.begin(), words.end());
             writeVector(words,i,nom);
         }

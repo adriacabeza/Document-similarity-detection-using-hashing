@@ -213,9 +213,47 @@ Consists in applying some multiplications (MU) and rotations (R) to the entry by
 \item \textbf{Star Wars: Heir to the Empire}:  An Star Wars novel by Timothy Zahn. 
 \end{itemize}
 
-\subsection{Generating our data}
+\subsection{Generating the data}
 
+To generate the data for our experiments we have used the random\_shuffle function inside the C++ STL which rearranges the elements randomly. The function swaps the value of each element with that of some other randomly picked element. Its complexity is $O(n)$. %NOT REALLY SURE ABOUT THAT CHECK STL
 
+\begin{lstlisting}
+
+ifstream inFile;
+ofstream outFile;
+
+void writeVector(const vector<string>& A, int i,string nameFile){
+    outFile.open(nameFile);
+    for(int j = 0; j < A.size(); ++j){
+        outFile << A[j] <<" ";
+    }
+    outFile.close();
+}
+
+int main(){
+    int n; 
+    cin>>n; //number of permutations that we want to create
+         
+    string nameFile;
+    cin>> nameFile; 
+    inFile.open(nameFile); //open the file
+    
+    vector<string> words; 
+    string testline;
+    while( inFile >> testline){
+    	words.push_back(testline); 
+    	//insert each word in a vector of strings
+    }
+    inFile.close();
+    for(int i = 0; i<n;++i){
+    	random_shuffle(words.begin(),words.end()); 
+    	writeVector(words,i,nom);
+    }
+    
+}
+\end{lstlisting}
+
+As it can be seen, we traverse all the document once to generate a vector of strings containing all the words and then we shuffle the vector and write the result in a document n times. 
 \section{Conclusion}
 
 %http://ethen8181.github.io/machine-learning/clustering_old/text_similarity/text_similarity.html
@@ -245,6 +283,11 @@ S.\ Dahlgaard, M.\ Tejs Knudsen and M.\ Thorup, \textit{Practical Hash Functions
 
 \bibitem{Universal string hashing}
 D.\ Lemire and O.\ Kaser, \textit{Strongly universal string hashing is fast} (Université du Québec Canadá and University of New Brunswick, Canada) 
+
+\bibitem{C++ STL}
+C++ Standard Template Library,
+\ Source:\textit{cplusplus.com/reference/stl/}
+
 \end{thebibliography}
 
 \end{document}
