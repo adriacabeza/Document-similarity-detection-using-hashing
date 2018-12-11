@@ -2,7 +2,9 @@
 \usepackage[utf8]{inputenc}
 \usepackage{cite}
 \usepackage{listings}
+
 \usepackage[hidelinks]{hyperref}
+\usepackage{graphicx}
 \author{Carlos Bergillos, Antoni Rambla, Adrià Cabeza\\ Departament de Computació}
 \title{Document similarity detection using hasing }
 \date{\today}
@@ -356,10 +358,29 @@ int main(){
     	writeVector(words,i,nom);
     }
     
-}
-\end{lstlisting}
+}\end{lstlisting}
 
-As it can be seen, we traverse all the document once to generate a vector of strings containing all the words and then we shuffle the vector and write the result in a document n times. 
+
+As it can be seen, we traverse all the document once to generate a vector of strings containing all the words and then we shuffle the vector and write the result in a document n times. \\
+
+\section{Experiments}
+Vamos a poner unos cuantos experimentos
+
+\begin{figure}[h]
+	\includegraphics[scale=1]{JaccardSimilarity_KShinglesSimilarity.png} 
+  \caption{Relation between the k-shingles and the similarity outputed}
+  \label{fig:KShinglesSimilarity}
+\end{figure}
+
+
+\begin{figure}[h]
+\includegraphics[scale=1]{JaccardSimilarity_KShinglesTime.png}
+  \caption{Relation between the k-shingles and the time of execution}
+  \label{fig:KShinglesSimilarity}
+\end{figure}
+
+
+
 \section{Conclusion}
 
 %http://ethen8181.github.io/machine-learning/clustering_old/text_similarity/text_similarity.html
