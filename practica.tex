@@ -124,6 +124,112 @@ Where:
 
 \subsection{Locality-Sensitive Hashing for Documents}
  This technique allows us to avoid computing the similarity of every pair of sets or their minhash signatures. If we are given signatures for the sets, we may divide them into bands, and only measure the similarity of a pair of sets if they are identical in at least one band. By choosing the size of bands appropriately, we can eliminate from consideration most of the pairs that do not meet our threshold of similarity.
+ \medskip 
+ \\
+\subsubsection{Hash function used to hash a vector}
+ \begin{lstlisting}
+unsigned int hash_vec(vector<unsigned int> const& vec) {
+  unsigned int seed = vec.size();
+  for(auto& i : vec) {
+    seed ^= i + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+  }
+  return seed;
+}
+
+\end{lstlisting}
+ \medskip 
+  
+\subsubsection{Filling the signature matrix}
+\begin{lstlisting}
+void fill(vector<vector<unsigned int>> & repMatrix,const set<string> & shingles, const vector<set<string>> & docShing){
+
+    for(int i = 0; i < repMatrix.size(); ++i ){
+        repMatrix[i][0] = i;
+        string shingle = *next(shingles.begin(), i);
+        for(int j = 1; j < repMatrix[0].size(); ++j){
+            if(docShing[j-1].find(shingle) != docShing[j-1].end()) repMatrix[i][j] = 1;
+            else repMatrix[i][j] = 0;
+        }
+    }
+}
+\end{lstlisting}
+\medskip
+
+\subsubsection{Get the similarity}
+\begin{lstlisting}
+float sim(vector<vector<unsigned int>> & signatureMatrix, int a, int b){
+    float simil = 0;
+    for(int i = 0; i < signatureMatrix.size(); ++i){
+        if(signatureMatrix[i][a] == signatureMatrix[i][b]) ++simil;
+    }
+    return (simil / signatureMatrix.size());
+}
+
+
+\end{lstlisting}
+\begin{lstlisting}
+pair<unsigned int,unsigned int> parella_inc(unsigned int a, unsigned int b){
+    return (a < b) ? make_pair(a,b) : make_pair(b,a);
+}
+
+int main(int argc, char** argv){
+
+    set<string> shingles, aux;
+    vector<set<string>> docShing (argc-1);
+    for(int i = 1; i < argc; ++i ){
+        inFile.open(argv[i]);
+        aux = kshingles(&inFile, 9, false, true, true);
+        shingles.insert(aux.begin(), aux.end());
+        docShing[i-1] = aux;
+        inFile.close();
+    }
+    vector<vector<unsigned int>> repMatrix (shingles.size() , vector<unsigned int> (argc));
+    fill(repMatrix, shingles, docShing);
+    int b, r, h;
+    cin >> b >> r; //number of bands and rows
+    h = r*b;
+    vector<vector<unsigned int>> signatureMatrix (h, vector<unsigned int> (argc-1, INFINITY));
+    vector<pair<int,int>> minHashMod(h);
+    int value;
+    srand (time(NULL));
+    int prime =  NextPrime(repMatrix.size());                             
+    for(int k = 0; k < h; ++k) minHashMod[k] = modHash(repMatrix.size());
+    for(int i = 0; i < repMatrix.size(); ++i ){                          
+        for(int j = 1; j < repMatrix[0].size(); ++j){
+            if(repMatrix[i][j] == 1){
+                for(int k = 0; k < h; ++k){
+                    value = calcValue(minHashMod[k], prime, i);
+                    if(value < signatureMatrix[k][j-1]) signatureMatrix[k][j-1] = value;
+                }
+            }
+        }
+    }
+    set<pair<unsigned int,unsigned int>> candidats;                     
+    map<unsigned int,vector<unsigned int>> bucket;
+    for(int i = 0; i < h; i+=r){
+        bucket.clear();
+        for(int j = 0; j < argc-1; ++j){
+            vector<unsigned int> row;
+            for(int k = 0; k < r; ++k){
+                row.push_back(signatureMatrix[i+k][j]);
+            }
+            unsigned int doc1 = hash_vec(row);
+            auto it = bucket.find(doc1);            
+            if(it != bucket.end()){
+                for(int l = 0; l < (it->second).size(); ++l ){                     candidats.insert(parella_inc((it->second)[l], j));
+                    
+                }
+                (it->second).push_back(j);
+            }else{
+                bucket.insert(it, pair<unsigned int, vector<unsigned int> >(doc1, vector<unsigned int>( 1 , j)));                
+            }
+
+        }
+    }
+}
+
+ 
+ \end{lstlisting}
  
 \subsection{Distance Measures}
 
@@ -175,34 +281,34 @@ The hash function it takes the following form.
 
 for some $m$ (usually the number of buckets). For example if m is a power of two(i.e. $m = 2^p$), then $h(k)$ is the $p$ lowest-order its of k. 
 
-\subsubsection{Multiplicative Hashing}
+%\subsubsection{Multiplicative Hashing}
 
-It consists in:
-\begin{center}
- $ \left \lfloor (ax\; mod\;W) /(W/M) \right \rfloor$
-\end{center}
-Where:
-\begin{itemize}
-\item a is an appropiately chosen value that should be relatively prime to W
-\item BUSQUEULA pq A CADA PUTO LLOC DIUEN ALGU DIFERENT JODER I MHE RALLAT
-\end{itemize}
-And it produces a hash value in ${0,...,M-1}$.
+%It consists in:
+%\begin{center}
+ %$ \left \lfloor (ax\; mod\;W) /(W/M) \right \rfloor$
+%\end{center}
+%Where:
+%\begin{itemize}
+%\item a is an appropiately chosen value that should be relatively prime to W
+%\item BUSQUEULA pq A CADA PUTO LLOC DIUEN ALGU DIFERENT JODER I MHE RALLAT
+%\end{itemize}
+%And it produces a hash value in ${0,...,M-1}$.
 
-\subsubsection{Multilinear Hash}
-It takes the form of a scalar product between random values and string components.
-\begin{center}
-$h(s) = m_1 + \sum_{i=1}^{n} m_{i+1} + s_i$
-\end{center}
-The hash function $h$ is defined by the randomly generated values $m_1$,$m_2$,...
+%\subsubsection{Multilinear Hash}
+%It takes the form of a scalar product between random values and string components.
+%\begin{center}
+%$h(s) = m_1 + \sum_{i=1}^{n} m_{i+1} + s_i$
+%\end{center}
+%The hash function $h$ is defined by the randomly generated values $m_1$,$m_2$,...
 
-Also in order to reduce the number of multiplications in order to make it faster we can attempt to improve speed by reducing the number of multiplications by half: 
-\begin{center}
- $h(s) = m_1 + \sum_{i=1}^{n/2} (m_{2i} + s_{2i-1})(m_{2i+1} + s_{2i})$
-\end{center}
+%Also in order to reduce the number of multiplications in order to make it faster we can attempt to improve speed by reducing the number of multiplications by half: 
+%\begin{center}
+ %$h(s) = m_1 + \sum_{i=1}^{n/2} (m_{2i} + s_{2i-1})(m_{2i+1} + s_{2i})$
+%\end{center}
 
-\subsubsection{Murmur Hash}
+%\subsubsection{Murmur Hash}
 
-Consists in applying some multiplications (MU) and rotations (R) to the entry bytes to obtaint the hash. It uses multiple constants which are decided to make it a good hash function by passing 2 basic tests, the Avalanche Test that evaluates how the output changes if the input is slightly modified and the statistical Chi-Squared Test.
+%Consists in applying some multiplications (MU) and rotations (R) to the entry bytes to obtaint the hash. It uses multiple constants which are decided to make it a good hash function by passing 2 basic tests, the Avalanche Test that evaluates how the output changes if the input is slightly modified and the statistical Chi-Squared Test.
 
 \section{Data} %canviar el nom de la secció
 
