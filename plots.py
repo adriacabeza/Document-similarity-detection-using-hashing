@@ -4,72 +4,85 @@ from matplotlib.ticker import MaxNLocator
 import pandas as pd
 from collections import defaultdict
 import math
-# import re
 
-columns = defaultdict(list)
-with open("./output_data/lorem_out_sim.txt","r") as csv_fileTime:
-    csv_reader = csv.reader(csv_fileTime, delimiter='\t')
-    for row in csv_reader:
-        for i in range(len(row)):
-            columns[i].append(float (row[i]))
+print("Quin gràfic vols fer? OPCIONS: \n 0: Jaccard Similarity value with time \n 1: Jaccard Similarity with time and k-shingle \n 2: For each Hash Function the time for the approximation \n 3: Time of execution between Jaccard Similarity and the approximation\n ")
+a = int(input())
+if a == 0 :  #Plot severals Jaccard Similarity value with time
+    JaccardSimilarity = defaultdict(list)
+    with open("./output_data/lorem_out_sim.txt","r") as csv_fileTime:
+        csv_reader = csv.reader(csv_fileTime, delimiter='\t')
+        for row in csv_reader:
+            for i in range(len(row)):
+                JaccardSimilarity[i].append(float (row[i])) 
 
-print(columns)
+    plt.figure().gca().xaxis.set_major_locator(MaxNLocator(integer=True))
+    plt.ylabel("Similarity")
+    plt.xlabel("K-shingles")
 
-columns2 = defaultdict(list)
-with open("./output_data/lorem_out_time.txt","r") as csv_fileSimilarity:
-    csv_reader = csv.reader(csv_fileSimilarity, delimiter='\t')
-    for row in csv_reader:
-        for i in range(len(row)):
-            columns2[i].append(float (row[i]))
+    for i in range(1,len(JaccardSimilarity)):
+        plt.plot(JaccardSimilarity[0],JaccardSimilarity[i],color='red',alpha=0.005)
 
-print(columns2)
+    plt.savefig('JaccardSimilarityValueKshingles.pdf')
+    plt.show()
 
-#plt.axis([columns[0][0],columns[0[-1],[columns[1]]]])
-ax = plt.figure().gca()
-ax.xaxis.set_major_locator(MaxNLocator(integer=True))
-plt.ylabel("Time")
-plt.xlabel("K-shingles")
+elif a == 1 : 
+    JaccardTime = defaultdict(list)
+    with open("./output_data/lorem_out_time.txt","r") as csv_fileSimilarity:
+        csv_reader = csv.reader(csv_fileSimilarity, delimiter='\t')
+        for row in csv_reader:
+            for i in range(len(row)):
+                JaccardTime[i].append(float (row[i]))
 
-for i in range(1,len(columns)):
-    plt.plot(columns2[0],columns2[i],color='blue',alpha=0.05)
+    #Plot Jaccard Similarity with time and k-shingle
+    TimeKshingle = plt.figure().gca()
+    TimeKshingle.xaxis.set_major_locator(MaxNLocator(integer=True))
+    plt.ylabel("Time (s)")
+    plt.xlabel("K-shingles")
 
-plt.show()
-# kshingles2 = list(map(lambda x : math.log(x,10), kshingles))
-# print(values)
-# print(kshingles)
-# d = {'K-shingles': kshingles, 'Similarity': values}
-# df = pd.DataFrame(data = d)
-# df.style
-# # ef.to_html("SimilarityKShingle.html")
-# print(df)
+    for i in range(1,len(JaccardTime)):
+        plt.plot(JaccardTime[0],JaccardTime[i],color='blue',alpha=0.05)
 
-# #aquí ja faig servir el kshingle amb log perquè es vegi bé la diferència
-# d = {'K-shingles(log)': kshingles2, 'Similarity': values}
-# df = pd.DataFrame(data = d)
-# df.plot.line()
-# plt.savefig('JaccardSimilarity_KShinglesSimilarity.svg')
+    plt.savefig('JaccardSimilarityTimeKshingles.pdf')
+    plt.show()
 
+elif a == 2: #Plot for each Hash Function the time for the approximation
+    HashFunctionsJaccardAproxTime = defaultdict(list)
+    with open("./output_data/lorem_hashfuncts_time.txt","r") as csv_fileSimilarity:
+        csv_reader = csv.reader(csv_fileSimilarity, delimiter='\t')
+        for row in csv_reader:
+            for i in range(len(row)):
+                HashFunctionsJaccardAproxTime[i].append(float (row[i]))
 
-# e = {'Time': times, 'K-shingles': kshingles}
-# ef = pd.DataFrame(data = e)
-# ef.style
-# ef.style
-# # ef.to_html("TimeKShingle.html")
-# print(ef)
+    plt.figure().gca().xaxis.set_major_locator(MaxNLocator(integer=True))
+    plt.ylabel("Time (s)")
+    plt.xlabel("K-shingles")
 
-# #aquí ja faig servir el kshingle amb log perquè es vegi bé la diferència
-# e = {'K-shingles(log)': kshingles2, 'Time': times }
-# ef = pd.DataFrame(data = e)
-# ef.plot.line()
-# plt.savefig('JaccardSimilarity_KShinglesTime.png')
+    colors = ['red','blue','green']
+    labels = ['Modular','Multiplicative','Murmur']
+    for (i,color,label) in zip(range(1,len(HashFunctionsJaccardAproxTime)), colors, labels):
+        plt.plot(HashFunctionsJaccardAproxTime[0],HashFunctionsJaccardAproxTime[i],color=color,label=label, alpha=1)
+        plt.legend()
+        
+    plt.savefig('HashFunctionsJaccardAproxTime.pdf')
+    plt.show()
 
+elif a == 3:  #Plot for the Time of execution between Jaccard Similarity and the approximation
+    HashFunctionsJaccardAproxTime = defaultdict(list)
+    with open("./output_data/lorem_jacc_vs_approx_time.txt","r") as csv_fileSimilarity:
+        csv_reader = csv.reader(csv_fileSimilarity, delimiter='\t')
+        for row in csv_reader:
+            for i in range(len(row)):
+                HashFunctionsJaccardAproxTime[i].append(float (row[i]))
 
+    plt.figure().gca().xaxis.set_major_locator(MaxNLocator(integer=True))
+    plt.ylabel("Time (s)")
+    plt.xlabel("K-shingles")
 
-
-# kshingles = re.findall(r'using(.*)-shingles',text)
-# kshingles = list(map(float, kshingles))
-# values = re.findall(r'is (.*)',text)
-# values = list(map(float, values))
-# times = re.findall(r'Time (.*)',text)
-# times = list(map(float, times))
-# names = re.findall(r'between (.*) and (.*) using', text)
+    colors = ['red','blue']
+    labels = ['Jaccard Similarity','Jaccard Approximation']
+    for (i,color,label) in zip(range(1,len(HashFunctionsJaccardAproxTime)), colors, labels):
+        plt.plot(HashFunctionsJaccardAproxTime[0],HashFunctionsJaccardAproxTime[i],color=color,label=label, alpha=1)
+        plt.legend()
+        
+    plt.savefig('TimeBetweenJaccardSimandAprox2.pdf')
+    plt.show()
