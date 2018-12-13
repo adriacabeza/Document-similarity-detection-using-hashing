@@ -71,9 +71,9 @@ vector<vector<unsigned int>> multiplicativeHashing(const vector<vector<unsigned 
             if(repMatrix[i][j] == 1){
                 for(int k = 0; k < h; ++k){
                     value = computeValue(i,repMatrix.size(),seeds[k]);
-                    cout<<"I:"<<i<<" valor:"<< value<<endl;
+                    //cout<<"I:"<<i<<" valor:"<< value<<endl;
                     // cout<<signatureMatrix[k][j]<<" ";
-                    if (value==0) cout << "zerooo" << endl;
+                    if (value==0) {}//cout << "zerooo" << endl;
                     else if(value < signatureMatrix[k][j]) {
                         //cout<<"Vafjdkljfklsdjfklsdlue: "<< value<<endl;
                         signatureMatrix[k][j] = value;

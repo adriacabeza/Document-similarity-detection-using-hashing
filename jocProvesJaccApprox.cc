@@ -59,12 +59,12 @@ int main(){
 
         //Multiplicative Hashing
         start = clock();
-        signatureMatrix =  modularHashing(charactMatrix, h);
+        signatureMatrix =  multiplicativeHashing(charactMatrix, h);
         outFileTime << "\t" << double(clock()-start)/CLOCKS_PER_SEC;
 
         //Murmur Hashing
         start = clock();
-        signatureMatrix =  modularHashing(charactMatrix, h);
+        signatureMatrix =  murmurHashing(charactMatrix, h);
         outFileTime << "\t" << double(clock()-start)/CLOCKS_PER_SEC;
 
         /**set<pair<unsigned int, unsigned int> > candidates = LSH(signatureMatrix, r, h);
