@@ -10,15 +10,30 @@ ifstream inFile;
 ofstream outFileSim, outFileTime;
 
 int main(){
-    vector<string> paths {"./input_texts/lorem_0.txt","./input_texts/lorem_1.txt"};
-
+    set<string> A, B;
+    cout << "Enter filename: (without .txt)" << endl;
+    string filename;
+    cin >> filename;
+    vector<string> paths;
+    int i = 0;
+    string input = "./input_texts/"+filename+"_";
+    inFile.open(input+to_string(i)+".txt");
+    while(inFile.good()){
+        paths.push_back(input+to_string(i)+".txt");
+        inFile.close();
+        i++;
+        inFile.open(input+to_string(i)+".txt");
+    }
+    inFile.close();
     vector<int> ks {3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
     //vector<int> ks {15, 16};
-    outFileTime.open("./output_data/lorem_jacc_vs_approx_time.txt");
+    outFileTime.open("./output_data/"+filename+"_hashfuncts_time.txt");
     outFileTime << setprecision(6) << fixed;
 
     //int k = 9;
-
+    int b = 5;
+    int r = 5;
+    int h = b*r;
 
     for(int k : ks){
 
@@ -32,35 +47,26 @@ int main(){
             inFile.close();
         }
 
-        //Normal Jaccard
-        set<string> A, B;
-        clock_t start = clock();
-        inFile.open(paths[0]);
-        A = shingles_doc[0];
-        inFile.close();
-
-        inFile.open(paths[1]);
-        A = shingles_doc[1];
-        inFile.close();
-
-        float sim_jacc =Jaccard(A,B);
-
-        outFileTime << "\t" << double(clock()-start)/CLOCKS_PER_SEC;
-
-        //Approx
-        int b = 5;
-        int r = 5;
-        int h = b*r;
         vector<vector<unsigned int> > charactMatrix =  characteristicMatrix(shingles_doc, shingles_union);
         vector<vector<unsigned int> > signatureMatrix;
+
+        clock_t start = clock();
 
         //Modular Hashing
         start = clock();
         signatureMatrix =  modularHashing(charactMatrix, h);
-
-        float sim_approx = sim(signatureMatrix, 0, 1);
-
         outFileTime << "\t" << double(clock()-start)/CLOCKS_PER_SEC;
+
+        //Multiplicative Hashing
+        start = clock();
+        signatureMatrix =  multiplicativeHashing(charactMatrix, h);
+        outFileTime << "\t" << double(clock()-start)/CLOCKS_PER_SEC;
+
+        //Murmur Hashing
+        start = clock();
+        signatureMatrix =  murmurHashing(charactMatrix, h);
+        outFileTime << "\t" << double(clock()-start)/CLOCKS_PER_SEC;
+
         /**set<pair<unsigned int, unsigned int> > candidates = LSH(signatureMatrix, r, h);
         for(pair<unsigned int, unsigned int> p : candidates){
             int a = p.first;
