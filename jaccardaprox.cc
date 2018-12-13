@@ -61,6 +61,49 @@ void printmat(const vector<vector<unsigned int>> & mat){
     return signatureMatrix;
 }
 
+vector<vector<unsigned int>> multiplicativeHashing(const vector<vector<unsigned int>> & repMatrix, int h){
+    int value;
+    vector<vector<unsigned int>> signatureMatrix (h, vector<unsigned int> (repMatrix[0].size(), INFINITY));
+    vector<float> seeds(h);
+    for(int k = 0; k < h; ++k) seeds[k] =  ((sqrt(5) -1) /2.0)+(((rand()%5000))/5000.0*1.2)-0.6;
+    for(int i = 0; i < repMatrix.size(); ++i ){                           //comença el calcul de la signature matrix
+        for(int j = 0; j < repMatrix[0].size(); ++j){
+            if(repMatrix[i][j] == 1){
+                for(int k = 0; k < h; ++k){
+                    value = computeValue(i,repMatrix.size(),seeds[k]);
+                    cout<<"I:"<<i<<" valor:"<< value<<endl;
+                    // cout<<signatureMatrix[k][j]<<" ";
+                    if (value==0) cout << "zerooo" << endl;
+                    else if(value < signatureMatrix[k][j]) {
+                        //cout<<"Vafjdkljfklsdjfklsdlue: "<< value<<endl;
+                        signatureMatrix[k][j] = value;
+                    }
+                }
+            }
+        }
+    }
+    return signatureMatrix;
+}
+
+vector<vector<unsigned int>> murmurHashing(const vector<vector<unsigned int>> & repMatrix, int h){
+    unsigned int value;                 //unsure if works
+    vector<float> seeds(h);
+    for(int k = 0; k < h; ++k) seeds[k] = rand()% h;
+    vector<vector<unsigned int>> signatureMatrix (h, vector<unsigned int> (repMatrix[0].size(), INFINITY));
+    for(int i = 0; i < repMatrix.size(); ++i ){                           //comença el calcul de la signature matrix
+    const int *key = &i;
+        for(int j = 0; j < repMatrix[0].size(); ++j){
+            if(repMatrix[i][j] == 1){
+                for(int k = 0; k < h; ++k){
+                    MurmurHash3_x86_32(key, sizeof(int), seeds[k] ,&value, repMatrix.size());
+                    if(value < signatureMatrix[k][j]) signatureMatrix[k][j] = value;
+                }
+            }
+        }
+    }
+    return signatureMatrix;
+
+}
 set<pair<unsigned int,unsigned int>> LSH(const vector<vector<unsigned int>> & signatureMatrix, int r, int h){
     set<pair<unsigned int,unsigned int>> candidats;                     //creem el LSH
     map<unsigned int,vector<unsigned int>> bucket;

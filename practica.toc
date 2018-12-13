@@ -1,0 +1,22 @@
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}
+\contentsline {section}{\numberline {2}Theory}{3}{section.2}
+\contentsline {subsection}{\numberline {2.1}Concept of similarity}{3}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Representation of documents}{4}{subsection.2.2}
+\contentsline {subsubsection}{\numberline {2.2.1}\textit {k}-Shingles}{4}{subsubsection.2.2.1}
+\contentsline {subsubsection}{\numberline {2.2.2}Hashing Shingles}{5}{subsubsection.2.2.2}
+\contentsline {subsection}{\numberline {2.3}MinHash}{5}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}Locality-Sensitive Hashing for Documents}{6}{subsection.2.4}
+\contentsline {subsubsection}{\numberline {2.4.1}Hash function used to hash a vector}{6}{subsubsection.2.4.1}
+\contentsline {subsubsection}{\numberline {2.4.2}Filling the signature matrix}{6}{subsubsection.2.4.2}
+\contentsline {subsubsection}{\numberline {2.4.3}Get the similarity}{6}{subsubsection.2.4.3}
+\contentsline {subsection}{\numberline {2.5}Distance Measures}{8}{subsection.2.5}
+\contentsline {subsubsection}{\numberline {2.5.1}Jaccard Distance}{8}{subsubsection.2.5.1}
+\contentsline {subsubsection}{\numberline {2.5.2}Edit Distance}{8}{subsubsection.2.5.2}
+\contentsline {subsection}{\numberline {2.6}Hashing}{8}{subsection.2.6}
+\contentsline {subsubsection}{\numberline {2.6.1}Modular Hashing}{9}{subsubsection.2.6.1}
+\contentsline {subsubsection}{\numberline {2.6.2}Multiplicative Hashing}{9}{subsubsection.2.6.2}
+\contentsline {section}{\numberline {3}Data}{10}{section.3}
+\contentsline {subsection}{\numberline {3.1}Real-world data}{10}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Generating the data}{10}{subsection.3.2}
+\contentsline {section}{\numberline {4}Experiments}{11}{section.4}
+\contentsline {section}{\numberline {5}Conclusion}{11}{section.5}

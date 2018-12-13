@@ -53,13 +53,14 @@ int main(){
         }
 
         vector<vector<unsigned int> > charactMatrix =  characteristicMatrix(shingles_doc, shingles_union);
-        vector<vector<unsigned int> > signatureMatrix =  modularHashing(charactMatrix, h);
+        vector<vector<unsigned int> > signatureMatrix =  murmurHashing(charactMatrix, h);
         set<pair<unsigned int, unsigned int> > candidates = LSH(signatureMatrix, r, h);
+        printmat(signatureMatrix);
         for(pair<unsigned int, unsigned int> p : candidates){
             int a = p.first;
             int b = p.second;
             float sim_v = sim(signatureMatrix, a, b);
-            cout << "Candidate " << paths[a] << " with " << paths[b] << " has similarity " << sim_v << endl;
+            //cout << "Candidate " << paths[a] << " with " << paths[b] << " has similarity " << sim_v << endl;
         }
         ///////
                 /**clock_t start = clock();
