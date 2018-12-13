@@ -5,13 +5,21 @@
 \usepackage[scale=0.75]{geometry}
 \usepackage[hidelinks]{hyperref}
 \usepackage{graphicx}
+\usepackage{xcolor} % for setting colors
 \author{Carlos Bergillos, Antoni Rambla, Adrià Cabeza\\ Departament de Computació}
 \title{Document similarity detection using hasing }
 \date{\today}
 \lstset{
-	breaklines=true,
+    numbers=none,
+    commentstyle=\color{magenta}, % comment color
+    keywordstyle=\color{blue}, % keyword color
+    stringstyle=\color{red} % string color
+	breaklines=true,showstringspaces=false,
+  	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
 	tabsize = 2,
+	language=C++
 }
+
 
 \begin{document}
   \maketitle  
@@ -58,8 +66,7 @@ Calculating the similarity estimation using this approach could be solved using 
 The complexity of our implementation is $O(n)$. To calculate the intersection of both sets we two iterators that iterate through both sets. When an element of a set is smaller than the other we increment its iterator and when they are equal we iterate both and a counter. Finally we use the value of the counter to apply the formula. 
 \lstset{language= C++}
 \begin{lstlisting}
-double intersection(const set<string>& A,
- const set<string>& B){
+double intersection(const set<string>& A, const set<string>& B){
 	int common = 0; 
 	auto it = A.begin(), it2 = B.begin();
 	while(it!= A.end() and it2 != B.end()){
@@ -80,8 +87,7 @@ double intersection(const set<string>& A,
 
 double Jaccard(const set<string>& A, const set<string>& B){
 	double size_intersection = intersection(A,B);
-	return size_intersection / 
-	(A.size() + B.size() - size_intersection);
+	return size_intersection / (A.size() + B.size() - size_intersection);
 }
 
 \end{lstlisting}
@@ -133,19 +139,20 @@ Where:
  
 \subsubsection{Hash function used to hash a vector}
  \begin{lstlisting}
-int hash_vec(V) 
+int hash_vec(V) {
 	seed = V.size();
 	for each i in V do:
 		seed = seed XOR (i + 0x9e3779b9 + (seed << 6) + (seed >> 2));	
 		//operands << and >> are shifting left and right respectively x bits
 	return seed;
-
+}
 \end{lstlisting}
  \medskip 
   
 \subsubsection{Filling the signature matrix}
 \begin{lstlisting}
-fill(Matrix<unisgned int> repMatrix, set<string> shingles, vector<set<string>> docShing)
+fill(Matrix<unisgned int> repMatrix, set<string> shingles, 
+vector<set<string>> docShing){
 	set iterator it = shingles.begin();	
 	for i = 0 to repMatrix.size() do:
 		repMatrix[i][0] = i;
@@ -155,6 +162,7 @@ fill(Matrix<unisgned int> repMatrix, set<string> shingles, vector<set<string>> d
 			if(docShing[j-1].contains(shingle))then repMatrix[i][j] = 1;
 				//el programa en columna j conte el shingle "shingle"
 			else repMatrix[i][j] = 0;
+}
 \end{lstlisting}
 \medskip
 
@@ -170,27 +178,33 @@ float sim(Matrix<unsigned int> signatureMatrix, int a, int b)
 
 
 \end{lstlisting}
-\large{Funció que ens ordena un parell posant el més gran com a segon.}
+
+\begin{large}Funció que ens ordena un parell posant el més gran com a segon.
+\end{large}
+
 \begin{lstlisting}
-parella_inc(int a, int b)
+parella_inc(int a, int b){
 	if(a < b ) then return pair(a,b);
 	else return pair(b,a);
 
 main()
     set<string> shingles,aux;	
-    //set of the total of shingles we have and an auxiliar for each document's
+    //set of the total of shingles we have
+     and an auxiliar for each document
     vector<set<string>> docShing; 
    //for each document we save its set of shingles
     for i = 1 to number of documents do:
         aux = kshingles(file[i], 9, false, true, true);
         shingles.add(aux);
         docShing[i] = aux;
-    Matrix<unsigned int> repMatrix (shingles.size() , vector<unsigned int> (numer of files +1 ));
+    Matrix<unsigned int> repMatrix (shingles.size(),
+     vector<unsigned int> (numer of files +1 ));
     fill(repMatrix, shingles, docShing);
     int b, r, h;
     cin >> b >> r; //number of bands and rows
     h = r*b;
-    Matrix<unsigned int> signatureMatrix (h, vector<unsigned int> (number of files, INFINITY));
+    Matrix<unsigned int> signatureMatrix
+     (h, vector<unsigned int> (number of files, INFINITY));
     hashing of choice
     set<pair<unsigned int,unsigned int>> candidats;                     
     map<unsigned int,vector<unsigned int>> bucket;
@@ -204,13 +218,15 @@ main()
             unsigned int doc1 = hash_vec(row);
 			if(bucket.containsKey(doc1)) then
 			//we find a row that has the same hash signature
-				for l = 0 to bucket[doc1].size() do: //we may have several rows with the same hash signature that means they are all candidates with each other
+				for l = 0 to bucket[doc1].size() do: 
+				//we may have several rows with the same hash signature that 
+				//means they are all candidates with each other
 					candidats.insert(parella_inc(bucket[doc1][l],j));
 				           
             	bucket[doc1].push_back(j);
             else 
             	bucket[doc1] = vector<unsigned int>( 1 , j);
-
+}
  
  \end{lstlisting}
  
@@ -330,7 +346,7 @@ ofstream outFile;
 void writeVector(const vector<string>& A, int i,string nameFile){
     outFile.open(nameFile);
     for(int j = 0; j < A.size(); ++j){
-        outFile << A[j] <<" ";
+        outFile << A[j]<< space symbol;
     }
     outFile.close();
 }
@@ -369,11 +385,10 @@ Vamos a poner unos cuantos experimentos
   \label{fig:KShinglesSimilarity}
 \end{figure}
 
-
 \begin{figure}[h]
 \includegraphics[scale=1]{JaccardSimilarity_KShinglesTime.png}
   \caption{Relation between the k-shingles and the time of execution}
-  \label{fig:KShinglesSimilarity}
+  \label{fig:KShinglesTime}
 \end{figure}
 
 
