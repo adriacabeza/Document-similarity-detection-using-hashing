@@ -36,7 +36,7 @@ void fill(vector<vector<unsigned int>> & repMatrix,const set<string> & shingles,
     }
 }
 
-float sim(vector<vector<unsigned int>> & signatureMatrix, int a, int b){
+float sim(const vector<vector<unsigned int>> & signatureMatrix, int a, int b){
     float simil = 0;
     for(int i = 0; i < signatureMatrix.size(); ++i){
         if(signatureMatrix[i][a] == signatureMatrix[i][b]) ++simil;
@@ -53,25 +53,8 @@ void printmat(const vector<vector<unsigned int>> & mat){
     }
 }
 
-int main(int argc, char** argv){
-
-    set<string> shingles, aux;
-    vector<set<string>> docShing (argc-1);
-    for(int i = 1; i < argc; ++i ){
-        inFile.open(argv[i]);
-        aux = kshingles(&inFile, 9, false, true, true);
-        shingles.insert(aux.begin(), aux.end());
-        docShing[i-1] = aux;
-        inFile.close();
-    }
-    vector<vector<unsigned int>> repMatrix (shingles.size() , vector<unsigned int> (argc));
-    fill(repMatrix, shingles, docShing);
-    int b, r, h;
-    cout << "Introdueix el numero de bandes i files que tindra el LSH" << endl;
-    cin >> b >> r;
-    h = r*b;
-    vector<vector<unsigned int>> signatureMatrix (h, vector<unsigned int> (argc-1, INFINITY));
-    vector<pair<int,int>> minHashMod(h);
+ vector<vector<unsigned int>> modularHashing(const vector<vector<unsigned int>> & repMatrix, int h){
+    vector<vector<unsigned int>> signatureMatrix (h, vector<unsigned int> (repMatrix[0].size(), INFINITY));
     int value;
     srand (time(NULL));
     int prime =  NextPrime(repMatrix.size());                             //trobem el nombre primer mes proper al nombre de files
@@ -86,6 +69,10 @@ int main(int argc, char** argv){
             }
         }
     }
+    return signatureMatrix;
+}
+
+set<pair<unsigned int,unsigned int>> LSH(const vector<vector<unsigned int>> & signatureMatrix, int r, int h){
     set<pair<unsigned int,unsigned int>> candidats;                     //creem el LSH
     map<unsigned int,vector<unsigned int>> bucket;
     for(int i = 0; i < h; i+=r){
@@ -109,4 +96,11 @@ int main(int argc, char** argv){
 
         }
     }
+    return candidats;
+}
+
+vector<vector<unsigned int>> characteristicMatrix(vector<set<string>> docShing, set<string> shingles){
+    vector<vector<unsigned int>> repMatrix (shingles.size() , vector<unsigned int> (docShinng.size()));
+    fill(repMatrix, shingles, docShing);
+    return repMatrix;
 }
