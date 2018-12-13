@@ -2,13 +2,16 @@
 \usepackage[utf8]{inputenc}
 \usepackage{cite}
 \usepackage{listings}
-
+\usepackage[scale=0.75]{geometry}
 \usepackage[hidelinks]{hyperref}
 \usepackage{graphicx}
 \author{Carlos Bergillos, Antoni Rambla, Adrià Cabeza\\ Departament de Computació}
 \title{Document similarity detection using hasing }
 \date{\today}
-
+\lstset{
+	breaklines=true,
+	tabsize = 2,
+}
 
 \begin{document}
   \maketitle  
@@ -127,108 +130,86 @@ Where:
 \subsection{Locality-Sensitive Hashing for Documents}
  This technique allows us to avoid computing the similarity of every pair of sets or their minhash signatures. If we are given signatures for the sets, we may divide them into bands, and only measure the similarity of a pair of sets if they are identical in at least one band. By choosing the size of bands appropriately, we can eliminate from consideration most of the pairs that do not meet our threshold of similarity.
  \medskip 
- \\
+ 
 \subsubsection{Hash function used to hash a vector}
  \begin{lstlisting}
-unsigned int hash_vec(vector<unsigned int> const& vec) {
-  unsigned int seed = vec.size();
-  for(auto& i : vec) {
-    seed ^= i + 0x9e3779b9 + (seed << 6) + (seed >> 2);
-  }
-  return seed;
-}
+int hash_vec(V) 
+	seed = V.size();
+	for each i in V do:
+		seed = seed XOR (i + 0x9e3779b9 + (seed << 6) + (seed >> 2));	
+		//operands << and >> are shifting left and right respectively x bits
+	return seed;
 
 \end{lstlisting}
  \medskip 
   
 \subsubsection{Filling the signature matrix}
 \begin{lstlisting}
-void fill(vector<vector<unsigned int>> & repMatrix,const set<string> & shingles, const vector<set<string>> & docShing){
-
-    for(int i = 0; i < repMatrix.size(); ++i ){
-        repMatrix[i][0] = i;
-        string shingle = *next(shingles.begin(), i);
-        for(int j = 1; j < repMatrix[0].size(); ++j){
-            if(docShing[j-1].find(shingle) != docShing[j-1].end()) repMatrix[i][j] = 1;
-            else repMatrix[i][j] = 0;
-        }
-    }
-}
+fill(Matrix<unisgned int> repMatrix, set<string> shingles, vector<set<string>> docShing)
+	set iterator it = shingles.begin();	
+	for i = 0 to repMatrix.size() do:
+		repMatrix[i][0] = i;
+		string shingle = shingles.get(it);
+		it++; 
+		for j = 1 to repMatrix[0].size() do:
+			if(docShing[j-1].contains(shingle))then repMatrix[i][j] = 1;
+				//el programa en columna j conte el shingle "shingle"
+			else repMatrix[i][j] = 0;
 \end{lstlisting}
 \medskip
 
 \subsubsection{Get the similarity}
 \begin{lstlisting}
-float sim(vector<vector<unsigned int>> & signatureMatrix, int a, int b){
+float sim(Matrix<unsigned int> signatureMatrix, int a, int b)
     float simil = 0;
-    for(int i = 0; i < signatureMatrix.size(); ++i){
-        if(signatureMatrix[i][a] == signatureMatrix[i][b]) ++simil;
-    }
-    return (simil / signatureMatrix.size());
-}
+    for int i = 0 to signatureMatrix.size() do:
+        if(signatureMatrix[i][a] == signatureMatrix[i][b])
+						then ++simil;
+    
+    return simil / signatureMatrix.size();
 
 
 \end{lstlisting}
+\large{Funció que ens ordena un parell posant el més gran com a segon.}
 \begin{lstlisting}
-pair<unsigned int,unsigned int> parella_inc(unsigned int a, unsigned int b){
-    return (a < b) ? make_pair(a,b) : make_pair(b,a);
-}
+parella_inc(int a, int b)
+	if(a < b ) then return pair(a,b);
+	else return pair(b,a);
 
-int main(int argc, char** argv){
-
-    set<string> shingles, aux;
-    vector<set<string>> docShing (argc-1);
-    for(int i = 1; i < argc; ++i ){
-        inFile.open(argv[i]);
-        aux = kshingles(&inFile, 9, false, true, true);
-        shingles.insert(aux.begin(), aux.end());
-        docShing[i-1] = aux;
-        inFile.close();
-    }
-    vector<vector<unsigned int>> repMatrix (shingles.size() , vector<unsigned int> (argc));
+main()
+    set<string> shingles,aux;	
+    //set of the total of shingles we have and an auxiliar for each document's
+    vector<set<string>> docShing; 
+   //for each document we save its set of shingles
+    for i = 1 to number of documents do:
+        aux = kshingles(file[i], 9, false, true, true);
+        shingles.add(aux);
+        docShing[i] = aux;
+    Matrix<unsigned int> repMatrix (shingles.size() , vector<unsigned int> (numer of files +1 ));
     fill(repMatrix, shingles, docShing);
     int b, r, h;
     cin >> b >> r; //number of bands and rows
     h = r*b;
-    vector<vector<unsigned int>> signatureMatrix (h, vector<unsigned int> (argc-1, INFINITY));
-    vector<pair<int,int>> minHashMod(h);
-    int value;
-    srand (time(NULL));
-    int prime =  NextPrime(repMatrix.size());                             
-    for(int k = 0; k < h; ++k) minHashMod[k] = modHash(repMatrix.size());
-    for(int i = 0; i < repMatrix.size(); ++i ){                          
-        for(int j = 1; j < repMatrix[0].size(); ++j){
-            if(repMatrix[i][j] == 1){
-                for(int k = 0; k < h; ++k){
-                    value = calcValue(minHashMod[k], prime, i);
-                    if(value < signatureMatrix[k][j-1]) signatureMatrix[k][j-1] = value;
-                }
-            }
-        }
-    }
+    Matrix<unsigned int> signatureMatrix (h, vector<unsigned int> (number of files, INFINITY));
+    hashing of choice
     set<pair<unsigned int,unsigned int>> candidats;                     
     map<unsigned int,vector<unsigned int>> bucket;
-    for(int i = 0; i < h; i+=r){
+    for i = 0 to h do:
         bucket.clear();
-        for(int j = 0; j < argc-1; ++j){
+        for j = 0 to number of documents do:
             vector<unsigned int> row;
-            for(int k = 0; k < r; ++k){
+            for k = 0 to r do:
                 row.push_back(signatureMatrix[i+k][j]);
-            }
+                //computing rows
             unsigned int doc1 = hash_vec(row);
-            auto it = bucket.find(doc1);            
-            if(it != bucket.end()){
-                for(int l = 0; l < (it->second).size(); ++l ){                     candidats.insert(parella_inc((it->second)[l], j));
-                    
-                }
-                (it->second).push_back(j);
-            }else{
-                bucket.insert(it, pair<unsigned int, vector<unsigned int> >(doc1, vector<unsigned int>( 1 , j)));                
-            }
-
-        }
-    }
-}
+			if(bucket.containsKey(doc1)) then
+			//we find a row that has the same hash signature
+				for l = 0 to bucket[doc1].size() do: //we may have several rows with the same hash signature that means they are all candidates with each other
+					candidats.insert(parella_inc(bucket[doc1][l],j));
+				           
+            	bucket[doc1].push_back(j);
+            else 
+            	bucket[doc1] = vector<unsigned int>( 1 , j);
 
  
  \end{lstlisting}
@@ -274,27 +255,43 @@ The hash values are uniformly distributed.
 
 In our project we have not choosen hash cryptographic functions (i.e. sha-1 or md5) because they are too slow for our purpose.
 
-
 \subsubsection{Modular Hashing}
 
-The hash function it takes the following form. 
+In the modular hashing (also called the division method), we map a key $k$ into one of $m$ slots by taking the reminder of k divided by m. It takes the following form. 
 
 \begin{center} $h(k) = k (mod (m))$ \end{center}
 
-for some $m$ (usually the number of buckets). For example if m is a power of two(i.e. $m = 2^p$), then $h(k)$ is the $p$ lowest-order its of k. 
+When using the division method, we usually avoid certaing values of $m$. For example, $m = 2^p$ for some integer $p$, then $h(k)$ would be just the $p$-lowest-order bits of $k$. A prime value is often a good choice of $m$.
 
-%\subsubsection{Multiplicative Hashing}
 
-%It consists in:
-%\begin{center}
- %$ \left \lfloor (ax\; mod\;W) /(W/M) \right \rfloor$
-%\end{center}
-%Where:
-%\begin{itemize}
-%\item a is an appropiately chosen value that should be relatively prime to W
-%\item BUSQUEULA pq A CADA PUTO LLOC DIUEN ALGU DIFERENT JODER I MHE RALLAT
-%\end{itemize}
-%And it produces a hash value in ${0,...,M-1}$.
+
+\subsubsection{Multiplicative Hashing}
+The multiplicative method for creating hash functions operates in two steps.
+Firstly, we multiply the key $k$ by a constant $A$ in the range $0<A<1$ and extract the fractional part of $kA$. Then, we multiply this value by $m$ and take the floor the result. To sum up:  
+
+\begin{center}
+ $ \lfloor m\ kA*mod(1)  \rfloor$
+\end{center}
+Where:
+\begin{itemize}
+\item $kA*mod(1)$  is the fractional part of $kA$, that is, $kA- \lfloor kA \rfloor$
+\end{itemize}
+An advantage of the multiplication method is that the value of m is not critical. We typically choose it to be a power of 2 ($m = 2^p$ for some integer $p$), since we can then easily implement the function on most computers. 
+%canviar després envers al nostre codi
+Supposing that the word size of the machine is $w$ bits and that $k$ fits in a single word. We restrict $A$ to be a fraction of the form $S/2^w$, where s is an integer in the range $0<s<2^w$. We first mulitply k by the w-bit integer $s = A*2^w$. The result is a 2w-bit value $r_1 2^w + r_0$, where $r_1$ is the high-order word of the product and $r_0$ is the lower-order word of the product. The desired p-bit hash value consists of the p most significant bits of $r_0$. 
+
+ FICAR FIGURA CARLOS AMB ILLUSTRATOR 
+\begin{lstlisting}
+FICAR EL PSEUDOCODI
+\end{lstlisting}
+
+Although this method works with any value of the constant A, it works better with some values than with others. The optimal choice depends on the characteristics of the data being hashed. Knuth suggest that...
+
+$ A = (\sqrt{5} -1)/2 \simeq 0.6180339887  $
+
+...is likely to work well. 
+
+
 
 %\subsubsection{Multilinear Hash}
 %It takes the form of a scalar product between random values and string components.
@@ -414,6 +411,13 @@ D.\ Lemire and O.\ Kaser, \textit{Strongly universal string hashing is fast} (Un
 \bibitem{C++ STL}
 C++ Standard Template Library,
 \ Source:\textit{cplusplus.com/reference/stl/}
+
+\bibitem{Introduction to Algorithms}
+T.\ H.\ Cormen, C.\ E.\ Leierson, R.\ L.\ Rivest and C.\ Stein, \textit{Introduction to Algorithms. Third Edition}
+
+\bibitem{Sorting and searching}
+D.\ Knuth,
+\textit {Sorting and Searching}, volume 3 of \textit{The Art of Computer Programming} (Addison-Wesley, 1997. Third Edition)
 
 \end{thebibliography}
 
