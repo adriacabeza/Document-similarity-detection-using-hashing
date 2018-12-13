@@ -11,13 +11,27 @@ ofstream outFileSim, outFileTime;
 int main(){
     set<string> A, B;
     //vector<string> paths {"./input_texts/Elretornodelrey.txt","./input_texts/harrypotter1.txt","./input_texts/Starwars.txt", "./input_texts/lorem.txt"};
-    vector<string> paths {"./input_texts/Elretornodelrey.txt","./input_texts/harrypotter1.txt","./input_texts/Starwars.txt"};
+    //vector<string> paths {"./input_texts/Elretornodelrey.txt","./input_texts/harrypotter1.txt","./input_texts/Starwars.txt"};
+    cout << "Enter filename: (without .txt)" << endl;
+    string filename;
+    cin >> filename;
+    vector<string> paths;
+    int i = 0;
+    string input = "./input_texts/"+filename+"_";
+    inFile.open(input+to_string(i)+".txt");
+    while(inFile.good()){
+        paths.push_back(input+to_string(i)+".txt");
+        inFile.close();
+        i++;
+        inFile.open(input+to_string(i)+".txt");
+    }
+    inFile.close();
+
     vector<int> ks {3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
     //vector<int> ks {15, 16};
-    string filename = "out";
-    outFileSim.open(filename+"_sim.txt");
+    outFileSim.open("./output_data/"+filename+"_out_sim.txt");
     outFileSim << setprecision(10) << fixed;
-    outFileTime.open(filename+"_time.txt");
+    outFileTime.open("./output_data/"+filename+"_out_time.txt");
     outFileTime << setprecision(6) << fixed;
     for(int k : ks){
         outFileSim << k;
@@ -33,8 +47,8 @@ int main(){
                 B = kshingles(&inFile,k,true,false,false);
                 inFile.close();
 
-                outFileSim << ",\t" << Jaccard(A,B);
-                outFileTime << ",\t" << double(clock()-start)/CLOCKS_PER_SEC;
+                outFileSim << "\t" << Jaccard(A,B);
+                outFileTime << "\t" << double(clock()-start)/CLOCKS_PER_SEC;
                 cout << "Done: K = " << k << "\t" << paths[i] << "\t- " << paths[j] << endl;
             }
         }

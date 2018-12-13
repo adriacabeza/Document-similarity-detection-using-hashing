@@ -3,14 +3,14 @@
 #include <string>
 #include <vector>
 #include <sstream>
-#include <algorithm>   
+#include <algorithm>
 using namespace std;
 ifstream inFile;
 ofstream outFile;
 
 
 void writeVector(const vector<string>& A, int i,string nom){
-    string s = "./input_texts/"+ nom + "_"; 
+    string s = "./input_texts/"+ nom + "_";
     ostringstream oss;
     oss << i<<".txt";
     s += oss.str();
@@ -22,20 +22,20 @@ void writeVector(const vector<string>& A, int i,string nom){
 }
 
 int main(){
-    int n; 
+    int n;
     cout << "How may permutations do you want?"<<endl;
-    cin>>n; 
-    string testline; 
+    cin>>n;
+    string testline;
     string nom;
-    cout << "Introduce the name of the file"<<endl; 
-    cin>> nom; 
+    cout << "Introduce the name of the file"<<endl;
+    cin>> nom;
     inFile.open("./input_texts/"+nom);
     nom = nom.substr(0, nom.size() - 4);
     if(!inFile.is_open()){
         cout<<"The file does not exist"<<endl;
     }
     else{
-        vector<string> words; 
+        vector<string> words;
         while( inFile >> testline){
             words.push_back(testline);
         }
