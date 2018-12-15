@@ -10,8 +10,7 @@ ofstream outFileSim, outFileTime;
 
 int main(){
     set<string> A, B;
-    //vector<string> paths {"./input_texts/Elretornodelrey.txt","./input_texts/harrypotter1.txt","./input_texts/Starwars.txt", "./input_texts/lorem.txt"};
-    //vector<string> paths {"./input_texts/Elretornodelrey.txt","./input_texts/harrypotter1.txt","./input_texts/Starwars.txt"};
+
     cout << "Enter filename: (without .txt)" << endl;
     string filename;
     cin >> filename;
@@ -28,7 +27,7 @@ int main(){
     inFile.close();
 
     vector<int> ks {3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
-    //vector<int> ks {15, 16};
+    
     outFileSim.open("./output_data/"+filename+"_out_sim.txt");
     outFileSim << setprecision(10) << fixed;
     outFileTime.open("./output_data/"+filename+"_out_time.txt");
