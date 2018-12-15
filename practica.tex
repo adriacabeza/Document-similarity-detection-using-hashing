@@ -29,7 +29,7 @@
 	\begin{abstract}
 
 Our goal is to identify similarities between documents. We have used the Jaccard Similarity theorem,  \textit{Local-Sensitive Hashing} algorithm
- and a \textit{k-shingles} and \textit{minhash signatures} representation of documents to evaluate the effectivity of the similarity computed and the time of computation. We have introduced three different hash functions to see its differences in performance.  Also  once determined the best parameters, we will give a conclusion about the best way to indentify the more similar documents. 
+ and a \textit{k-shingles} and \textit{minhash signatures} representation of documents to evaluate the effectivity of the similarity computed and the time of computation. We have introduced three different hash functions to see its differences in performance.  Also  once determined the best parameters, we will give a conclusion about the best way to identify the more similar documents. 
 \end{abstract}
 
 \newpage
@@ -42,7 +42,7 @@ Our goal is to identify similarities between documents. We say that two document
 
 The problem of computing the similarity between two files has been studied extensively and many programs have been developed to solve it. Algorithms for the problem have numerous applications, including spelling correction systems, file comparison tools or even the study of genetic evolution.
 
- Existing approaces can also include a brute force approach of comparing all sub-strings of pair of documents. However, such and approach is computationally prohibitive. 
+ Existing approaches can also include a brute force approach of comparing all sub-strings of pair of documents. However, such and approach is computationally prohibitive. 
 
  In our case we have represented each document using a k-shingles set of strings, and implemented algorithms to calculate the Jaccard Similarity and an approximation of it using a \textit{Local-Sensitive Hashing} algorithm
  based on \textit{minhash signatures}.
@@ -65,7 +65,7 @@ $B = \{0,2,3,4,5,7,9\}$ \\
 $J(A,B) = |A \cap  B| / |A \cup B| = |{0,2,5}| / |{0,1,2,3,4,5,6,7,9}| = 3/9 = 0.33$\\\medskip
 
 
-The complexity of our implementation is $O(n)$. To calculate the intersection of both sets we two iterators that iterate through both sets. When an element of a set is smaller than the other we increment its iterator and when they are equal we iterate both and a counter. Finally we use the value of the counter to apply the formula. 
+The complexity of our implementation is $O(n)$. To calculate the intersection of both sets we use two iterators that iterate through both sets. When an element of a set is smaller than the other we increment its iterator and when they are equal we iterate both and a counter. Finally we use the value of the counter to apply the formula. 
 
 \begin{center}
 \begin{large}
@@ -115,13 +115,13 @@ To identify lexically similar documents we need a proper way to represent docume
 
 A k-shingle (or word-k-gram) is a sequence of consecutive words of size k. Intuitively, two documents A and B are similar if they share enough k-shingles. By performing union and intersection operations between the k-shingles, we can find the Jaccard similarity coefficient between A and B. 
 \\
-There are some variations regarding on how white space (blank, tab, newline, etc) is treated. Also there is a variation that works with a bag of shingles instead of a set to keep the number of appearences of a shingle. \medskip \\
+There are some variations regarding on how white space (blank, tab, newline, etc) is treated. Also there is a variation that works with a bag of shingles instead of a set to keep the number of appearances of a shingle. \medskip \\
 \\
-How large k should be depends on how long typical documents are and how large the set of typical characters is. For example if we pick k=4 there are $27^4=531441 $ possible k-shingles. However, the calculation can be a little bit more subtile because all the characters do not appear with equal probability. A good rule of thumb is to imagine that there are only 20 characters and estimate the number of k-shingles as $20^k$. For large documents, choice k = 9 is considered safe. 
+How large k should be depends on how long typical documents are and how large the set of typical characters is. For example if we pick k=4 there are $27^4=531441 $ possible k-shingles. However, the calculation can be a little bit more subtle because all the characters do not appear with equal probability. A good rule of thumb is to imagine that there are only 20 characters and estimate the number of k-shingles as $20^k$. For large documents, choice k = 9 is considered safe. 
 
 \subsubsection{Hashing Shingles}
 
-Instead of using substrings direcly as shingles, we can pick a hash function that maps strings of length k to some number of buckets and treat the resulting bucket number as the shingle. That process compacts our data and lets us manipulate shingles by single-word machine operations.
+Instead of using substrings directly as shingles, we can pick a hash function that maps strings of length k to some number of buckets and treat the resulting bucket number as the shingle. That process compacts our data and lets us manipulate shingles by single-word machine operations.
 
 \section{MinHash}
 
@@ -136,7 +136,7 @@ $$  sim(a,b) = \frac{1}{t} \sum_{i=1}^{t}\left\{
 \}\right.  $$\medskip
 
 
-To implement the idea of generating randomly permutated rows, we don’t actually generate the random numbers, since it is not feasible to do so for large datasets, e.g. For a million itemset you will have to generate a million integers …, not to mention you have to do this for each signatures that you wish to generate. One way to avoid having to generate n permutated rows is to pick n hash functions in the form of :
+To implement the idea of generating randomly permuted rows, we don't actually generate the random numbers, since it is not feasible to do so for large datasets, e.g. For a million items you will have to generate a million integers …, not to mention you have to do this for each signatures that you wish to generate. One way to avoid having to generate n permuted rows is to pick n hash functions in the form of :
 \medbreak
 \begin{center}
 $ h(x)=(ax+b)\  mod(c)$
@@ -181,9 +181,9 @@ int hash_vec(V) {
 \subsection{Filling the characteristic matrix}
 In this code we fill the characteristic matrix, that is, the matrix that holds for all documents the information about which shingles it has.
 \begin{itemize}
-\item characMatrix is the characterisic matrix
+\item characMatrix is the characteristic matrix
 \item shingles is a set containing all the shingles we have in total
-\item docShing is a vector of sets in which in poition i we have the set of shingles of document i. 
+\item docShing is a vector of sets in which in position i we have the set of shingles of document i. 
 \end{itemize}
 
  
@@ -269,7 +269,7 @@ The hash values are uniformly distributed.
 
 \end{itemize}
 
-In our project we have not choosen hash cryptographic functions (i.e. sha-1 or md5) because they are too slow for our purpose.
+In our project we have not chosen hash cryptographic functions (i.e. sha-1 or md5) because they are too slow for our purpose.
 
 \subsection{Modular Hashing}
 
@@ -282,7 +282,7 @@ Where:
 \item a and b are any random numbers smaller or equivalent to the maximum number of k 
 \end{itemize}
 
-When using the division method, we usually avoid certaing values of $m$. For example, $m = 2^p$ for some integer $p$, then $h(k)$ would be just the $p$-lowest-order bits of $k$. A prime value is often a good choice of $m$.
+When using the division method, we usually avoid certain values of $m$. For example, $m = 2^p$ for some integer $p$, then $h(k)$ would be just the $p$-lowest-order bits of $k$. A prime value is often a good choice of $m$.
 
 \begin{center}
 \begin{large}
@@ -472,7 +472,7 @@ For $k = 9$, the similarity found between all our random documents is less than 
 
 We have tested different k sizes for our k-shingles and three different hash functions in the process of filling the signature matrix to check their different performance. The process of filling the signature matrix is explained in the section 7 and our hash functions are MurmurHash3, Multiplicative Hash and Modular Hash and can be seen more deeply in the section 8.
 
-As we expected initially, the time increases as the size of the k-shingle increases. This behaviour can be explained using the fact that the number of different shingles we would have to work with would be bigger. It is trivial to observe that the number of different k-shingles is going to have a growing tendency based on their size. 
+As we expected initially, the time increases as the size of the k-shingle increases. This behavior can be explained using the fact that the number of different shingles we would have to work with would be bigger. It is trivial to observe that the number of different k-shingles is going to have a growing tendency based on their size. 
 
 Also we have been able to observe that the performance of MurmurHash and MultiplicativeHash are almost the same and ModularHash is the one that has performed the best, performing almost always with values smaller than the half of the others two.
 
@@ -491,8 +491,48 @@ Also we have been able to observe that the performance of MurmurHash and Multipl
 %  \label{fig:KShinglesTime}
 %\end{figure}
 
-\subsection{Precision of Jaccard Similarity Approximations}
+\subsection{Performance of Different Jaccard Similarity Techniques}
 \textbf{The source code for this experiment can be found in `\textit{jocProvesJaccSim.cc}'.}
+\bigskip
+
+We tested three different approaches to find similarities in a set of documents.
+\begin{itemize}
+\item Calculating the Jaccard similarity for all the possible pair combinations in the document set.
+\item Calculating a Jaccard similarity approximation via a computed signature matrix.
+\item Calculating a Jaccard similarity approximation via a computed signature matrix with a locality-sensitive algorithm.
+\end{itemize}
+
+Each approach is supposed to perform respectively faster.
+
+\bigskip
+We created a set of 410 documents (result of random permutations of a 50-words document, as explained in \autoref{generatingData}). 
+
+We then independently applied these 3 approaches to subsets of gradually increasing size, ending with the whole set of 410 documents, while recording the times of each process.
+The plotted results can be found in \autoref{fig:JaccSignLSH}.
+
+All the tests in this experiment were done with k-shingles of size 5, and for the second and third approach, we used 200 hashing functions (resulting in a signature matrix of 200 rows). Additionally, the third approach divided the 200 rows in 20 bands of 10 rows. These parameters were chosen to simulate a plausible real application.
+
+\bigskip
+
+We can observe that the first approach, while being the only one that computes the real Jaccard similarity (and not an approximation), is exponential in nature, and thus, is not feasible for large document sets. In fact, while doing this test, we had to limit the execution of this approach to only sets with less than 100 documents, as it becomes unmanageable otherwise.
+
+The other two approaches are way better alternatives, as they are asymptotically faster.
+And, while they seem to both be asymptotically linear, we don't think that's the case.
+We don't have the time or computing power to do tests with larger datasets, but the way the second approach is constructed, it iterates through all the $\binom{n}{2}$ possible pairs of documents, and this has cost $O(n^2)$, with $n$ being the number of documents. 
+We believe that most of the computation time is spent constructing the k-shingles set, and constructing the signature matrix, with a cost of $O(n)$, and that the similarity calculation for all the possible document pairs represents only a small fraction of the total time for relatively small datasets, thus making it seem of linear behavior.
+At the same time, the third approach is also faster than the second one, we can see in \autoref{fig:JaccSignLSH} how they diverge as the size of the datasets increases.
+In this case, we believe the cost is still quadratic, but with a way smaller scaling factor, as only a small fraction of the possible $\binom{n}{2}$ document pairs are selected as candidates for similarity checking.
+\bigskip
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.55]{graphs/JaccardSignatureLSHTimes.pdf}
+	\caption{}
+	\label{fig:JaccSignLSH}
+\end{figure}
+
+\subsection{Precision of Jaccard Similarity Approximations}
+\textbf{The source code for this experiment can be found in `\textit{jocProvesJaccSimLsh.cc}'.}
 \bigskip
 
 
