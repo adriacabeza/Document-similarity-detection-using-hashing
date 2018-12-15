@@ -100,6 +100,7 @@ elif a == 4 :  # Jaccard similarity vs Jaccard similarity approximation
 
     plt.plot(JaccardSimilarity[0],JaccardSimilarity[1],color='red',alpha=1,label="Real Jaccard Similarity")
     plt.plot(JaccardSimilarity[0],JaccardSimilarity[2],color='blue',alpha=1,label="Jaccard Similarity Approximation")
+    plt.legend(loc='upper left',prop={'size': 12})
 
     plt.savefig('JaccardSimilarityVsApproximation.pdf')
     plt.show()
