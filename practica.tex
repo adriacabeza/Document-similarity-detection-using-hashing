@@ -149,7 +149,13 @@ Where:
 \item c is a prime number slightly larger than the total number of shingle sets. 
 \end{itemize}
 
-\subsection{Get the similarity}
+\subsection{Getting the similarity}
+To compute the similarity between two documents we only have to traverse the signature matrix once and do an operation similar to the jaccard similarity. The complexity of this algorithm is $O(h)$ where h is the number of hash functions desired.
+\begin{center}
+\begin{large}
+Pseudocode Similarity Between Two Documents
+\end{large}
+\end{center}
 \begin{lstlisting}
 sim(signatureMatrix,a,b)
     float simil = 0;
@@ -161,13 +167,25 @@ sim(signatureMatrix,a,b)
 
 \end{lstlisting}
 
+\textbf{The source code for this section can be found in `\textit{jaccardaprox.cc}'.}
+\bigskip
+
 \section{Locality-Sensitive Hashing for Documents}
  This technique allows us to avoid computing the similarity of every pair of sets or their minhash signatures. If we are given signatures for the sets, we may divide them into bands, and only measure the similarity of a pair of sets if they are identical in at least one band. By choosing the size of bands appropriately, we can eliminate from consideration most of the pairs that do not meet our threshold of similarity.
- \medskip 
+\medskip 
+ 
+ \textbf{The source code for all subsections can be found in `\textit{jaccardaprox.cc}'.}
+\bigskip
  
 \subsection{Hash function used to hash a vector}
+This is the code used to hash a row. It consists on a series of XOR operations on each element of the vector together with a random hexadecimal number and the shifting the value of "seed" from the previous iteration some bits to the left and to the right. The time complexity of this algorithm is $O(n)$ being n the size of the vector. 
+\begin{center}
+\begin{large}
+Pseudocode Vector Hashing
+\end{large}
+\end{center}
  \begin{lstlisting}
-int hash_vec(V) {
+hash_vec(V) {
 	seed = V.size();
 	for each i in V do:
 		seed = seed XOR (i + 0x9e3779b9 + (seed << 6) + (seed >> 2));
@@ -179,15 +197,18 @@ int hash_vec(V) {
  \medskip 
 
 \subsection{Filling the characteristic matrix}
-In this code we fill the characteristic matrix, that is, the matrix that holds for all documents the information about which shingles it has.
+The characteristic matrix is the one we use to represent the shingles that each document has \textit{see \autoref{Representation}}. The complexity of this algorithm is $O(n^2)$ where n is the total number of shingles that we get as input.
 \begin{itemize}
 \item characMatrix is the characteristic matrix
 \item shingles is a set containing all the shingles we have in total
 \item docShing is a vector of sets in which in position i we have the set of shingles of document i. 
 \end{itemize}
-
- 
-\begin{lstlisting}
+ \begin{center}
+\begin{large}
+Pseudocode To Fill The Characteristic Matrix
+\end{large}
+\end{center}
+ \begin{lstlisting}
 fill(characMatrix, shingles,docShing){
     iterator it = shingles.begin();
     for i = 0 to characMatrix.size() do:
@@ -199,13 +220,21 @@ fill(characMatrix, shingles,docShing){
 \medskip
 
 \subsection{Computing the signature matrix}
+The signature matrix is the one resulting from finding for each hash function that we have applied and for every document, the first row where there appears a 1 in its permutation.
 To compute the signature matrix we use one of the three algorithms.
 \begin{itemize}
 \item modular hashing
 \item multiplicative hashing
 \item murmur hashing 
 \end{itemize}
-Albeit those are only to compute the hash to do row permutations, we follow a general schema to fill it that goes as it follows:
+The time complexity on this algorithm is tricky as we have to take into account the cost of the hashing algorithm used. Usually the time will be $O(n^2 * h * \zeta)$ where n is the number of shingles of the characteristic matrix, h is the number of hashing algorithms that we use and $\zeta$ is the cost of computing the hash value.
+Albeit we use the algorithms only to compute the hash to do row permutations, we follow a general schema to fill it that goes as it follows:
+
+ \begin{center}
+\begin{large}
+Pseudocode To Compute The Signature Matrix
+\end{large}
+\end{center}
 \begin{lstlisting}
 initialize signature matrix with infinity values
 for i = 0 to characterisicMatrix.size() do:
@@ -219,8 +248,19 @@ for i = 0 to characterisicMatrix.size() do:
 \medskip
 
 
-\subsection{Computing the LSH and getting the candidate pairs}
-The return value of this function is a set of pairs where each pair represents a candidate to evaluate. We choose to return them as a set to avoid having to check a and b and then maybe later b and a again.
+\subsection{LSH and candidate pairs}
+As we have mentioned in the beginning of this section, by choosing the size of bands and rows appropriately we augment the number of false positives, documents that have very little in common, or the number of false negatives, documents that have a lot of common but are not checked. The time complexity of this algorithm is $O(h * m * h/r * m )$ = $O(h^2 /r * m^2)$ (h$/$r is the cost of of making the rows and the last m is the worst case cost of the last for for all documents being the same(no hauria de ser $m^2$ ja que es sum de l=1 fins a m de l)) where: 
+\begin{itemize}
+\item h is the number of hash functions
+\item m is the number of documents
+\item r is the number of rows
+\end{itemize}
+ \begin{center}
+\begin{large}
+Pseudocode To Do LSH
+\end{large}
+\end{center}
+
 \begin{lstlisting}
 LSH(signatureMatrix,r,h)
     candidats;                     
@@ -240,8 +280,11 @@ LSH(signatureMatrix,r,h)
     return candidats;
 
  \end{lstlisting}
+ We choose to return them as a set to avoid having to check a and b and then maybe later b and a again.
+\newline
+
 \begin{large}
-Function that orders a pair placing the smallest number as the first.
+Function that orders a pair placing the smallest number as the first. The complexity is trivial here $O(1)$
 \end{large}
 
 \begin{lstlisting}
