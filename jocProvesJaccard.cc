@@ -26,8 +26,8 @@ int main(){
     }
     inFile.close();
 
-    vector<int> ks {3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
-    
+    vector<int> ks {2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+
     outFileSim.open("./output_data/"+filename+"_out_sim.txt");
     outFileSim << setprecision(10) << fixed;
     outFileTime.open("./output_data/"+filename+"_out_time.txt");
