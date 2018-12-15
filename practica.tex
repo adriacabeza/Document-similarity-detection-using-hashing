@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+\documentclass[13pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{cite}
 \usepackage{listings}
@@ -25,8 +25,8 @@
   \vspace{2cm}
 	\begin{abstract}
 
-Our goal is to identify similarities between documents. We have used \textit{Local-Sensitive Hashing} algorithms
- and a \textit{k-shingles} and \textit{minhash signatures} representation of documents to evaluate the effectivity of the similarity computed. Once determined the best parameters for the collection, we will give an algorithm to indentify the more similar documents. 
+Our goal is to identify similarities between documents. We have used the Jaccard Similarity theorem,  \textit{Local-Sensitive Hashing} algorithm
+ and a \textit{k-shingles} and \textit{minhash signatures} representation of documents to evaluate the effectivity of the similarity computed and the time of computation. We have introduced three different hash functions to see its differences in performance.  Also  once determined the best parameters for the collection, we will give a conclusion about the best way to indentify the more similar documents. 
 \end{abstract}
 
 \newpage
@@ -37,21 +37,16 @@ Our goal is to identify similarities between documents. We have used \textit{Loc
 
 Our goal is to identify similarities between documents. We say that two documents are similar if they contain a significant number of common substrings that are not too small. 
 
-The problem of computing the similarity between two files has been studied extensively and many programs have been developed to sole it. Algorithms for the problem have numerous applications, including spelling correction systems, file comparison tools or even the study of genetic evolution.
+The problem of computing the similarity between two files has been studied extensively and many programs have been developed to solve it. Algorithms for the problem have numerous applications, including spelling correction systems, file comparison tools or even the study of genetic evolution.
 
  Existing approaces can also include a brute force approach of comparing all sub-strings of pair of documents. However, such and approach is computationally prohibitive. 
 
+ In our case we have represented each document using a k-shingles set of strings, and implemented algorithms to calculate the Jaccard Similarity and an approximation of it using a \textit{Local-Sensitive Hashing} algorithm
+ based on \textit{minhash signatures}.
 
-% Minhashing: compresses large sets in such a wat that we can deduce the similatity of the underlying sets from their compressed versions. 
-%When we search for similar items of any kind there may be far too many pairs of items to test each pair for their degree of similarity
 
-\section{Theory}
-
-He cometido el peor de los pecadosque un hombre puede cometer. No he sidofeliz. Que los glaciares del olvidome arrastren y me pierdan, despiadados.
- Mis padres me engendraron para el juegoarriesgado y hermoso de la vida,
- para la tierra, el agua, el aire, el fuego.
  
-\subsection{Concept of similarity}
+\section{Concept of similarity}
 First we have to focus into the definition of similarity, when we talk about the ``Jaccard similarity'',which is calculated by looking at the relative size of their intersection. 
 
 The Jaccard similarity, also known as Jaccard index is a statistical measure of similarity of sets. For two sets, it is defined as the size of the intersection divided by the size of the union of the sample sets. Mathematically,
@@ -94,11 +89,11 @@ If we take in account the cost of building a set we should observe that for unso
 
 
 %In the case of finding similarities in text a slightly different approach is required. First, it is important to observe that testing whether two documents are exact duplicates is easy; just comparing the two documents characther-by-character would work. However, even if the documents are not identical, they can share large portions of their text.
-\subsection{Representation of documents}
+\section{Representation of documents}
 
 To identify lexically similar documents we need a proper way to represent documents as sets and the most effective way is to construct from the document the set of short strings that appear within it. If we do so, even if the documents have different sizes or those sentences appear in different order we will find several common elements. In the next section we will introduce some of the approaches of shingling and its variations.
 
-\subsubsection{\textit{k}-Shingles}
+\section{\textit{k}-Shingles}
 
 A k-shingle (or word-k-gram) is a sequence of consecutive words of size k. Intuitively, two documents A and B are similar if they share enough k-shingles. By performing union and intersection operations between the k-shingles, we can find the Jaccard similarity coefficient between A and B. 
 \\
@@ -110,7 +105,7 @@ How large k should be depends on how long typical documents are and how large th
 
 Instead of using substrings direcly as shingles, we can pick a hash function that maps strings of length k to some number of buckets and treat the resulting bucket number as the shingle. That process compacts our data and lets us manipulate shingles by single-word machine operations.
 
-\subsection{MinHash}
+\section{MinHash}
 
 A minhash function on sets is based on a permutation of the universal set. Given any such permutation, the minhash value for a set is that element of the set that appears first in the permuted order. 
 
@@ -131,11 +126,11 @@ Where:
 \item c is a prime number slightly larger than the total number of shingle sets. 
 \end{itemize}
 
-\subsection{Locality-Sensitive Hashing for Documents}
+\section{Locality-Sensitive Hashing for Documents}
  This technique allows us to avoid computing the similarity of every pair of sets or their minhash signatures. If we are given signatures for the sets, we may divide them into bands, and only measure the similarity of a pair of sets if they are identical in at least one band. By choosing the size of bands appropriately, we can eliminate from consideration most of the pairs that do not meet our threshold of similarity.
  \medskip 
  
-\subsubsection{Hash function used to hash a vector}
+\subsection{Hash function used to hash a vector}
  \begin{lstlisting}
 int hash_vec(V) {
 	seed = V.size();
@@ -147,7 +142,7 @@ int hash_vec(V) {
 \end{lstlisting}
  \medskip 
   
-\subsubsection{Filling the signature matrix}
+\subsection{Filling the signature matrix}
 \begin{lstlisting}
 fill(Matrix<unisgned int> repMatrix, set<string> shingles, 
 vector<set<string>> docShing){
@@ -164,7 +159,7 @@ vector<set<string>> docShing){
 \end{lstlisting}
 \medskip
 
-\subsubsection{Get the similarity}
+\subsection{Get the similarity}
 \begin{lstlisting}
 float sim(Matrix<unsigned int> signatureMatrix, int a, int b)
     float simil = 0;
@@ -228,7 +223,7 @@ main()
  
  \end{lstlisting}
  
-\subsection{Distance Measures}
+\section{Distance Measures}
 
 In this section we shall take a break to study the notions of distance measure.
 Suppose we have two points (i.e. x and y), a distance measure on them is a function d(x,y) that produces a real number and satisfies the following properties:
@@ -241,14 +236,14 @@ Suppose we have two points (i.e. x and y), a distance measure on them is a funct
 \end{itemize}
 
 
-\subsubsection{Jaccard Distance}
+\subsection{Jaccard Distance}
 
 We define the Jaccard distance of two sets x and y as d(x,y) = 1 - SIM(x,y). Note that the Jaccard similarity is the probability that a random hash function maps x and y to the \textit{same} value, that means d(x,y) is the probablility that a random hash function sends them to \textit{different} values.
 
-\subsubsection{Edit Distance}
+\subsection{Edit Distance}
 
 
-\subsection{Hashing}
+\section{Hashing}
 
 Hashing is a technique for dimensionality reduction. It uses a hash function that is any function that can be used to map data ( called a key) of arbitrary size to data of a fixed size (called a hash value or hash). That hash is a sum up of everything that is in the data. You can never make it backwards from the hash to the data.
 
@@ -269,7 +264,7 @@ The hash values are uniformly distributed.
 
 In our project we have not choosen hash cryptographic functions (i.e. sha-1 or md5) because they are too slow for our purpose.
 
-\subsubsection{Modular Hashing}
+\subsection{Modular Hashing}
 
 In the modular hashing (also called the division method), we map a key $k$ into one of $m$ slots by taking the reminder of k divided by m. It takes the following form. 
 
@@ -279,7 +274,7 @@ When using the division method, we usually avoid certaing values of $m$. For exa
 
 
 
-\subsubsection{Multiplicative Hashing}
+\subsection{Multiplicative Hashing}
 The multiplicative method for creating hash functions operates in two steps.
 Firstly, we multiply the key $k$ by a constant $A$ in the range $0<A<1$ and extract the fractional part of $kA$. Then, we multiply this value by $m$ and take the floor the result. To sum up:  
 
@@ -291,33 +286,17 @@ Where:
 \item $kA*mod(1)$  is the fractional part of $kA$, that is, $kA- \lfloor kA \rfloor$
 \end{itemize}
 An advantage of the multiplication method is that the value of m is not critical. We typically choose it to be a power of 2 ($m = 2^p$ for some integer $p$), since we can then easily implement the function on most computers. 
-%canviar després envers al nostre codi
+
 Supposing that the word size of the machine is $w$ bits and that $k$ fits in a single word. We restrict $A$ to be a fraction of the form $S/2^w$, where s is an integer in the range $0<s<2^w$. We first mulitply k by the w-bit integer $s = A*2^w$. The result is a 2w-bit value $r_1 2^w + r_0$, where $r_1$ is the high-order word of the product and $r_0$ is the lower-order word of the product. The desired p-bit hash value consists of the p most significant bits of $r_0$. 
 
- FICAR FIGURA CARLOS AMB ILLUSTRATOR 
-\begin{lstlisting}
-FICAR EL PSEUDOCODI
-\end{lstlisting}
+%\includegraphics[scale=1]{multiplicative.pdf} 
 
-Although this method works with any value of the constant A, it works better with some values than with others. The optimal choice depends on the characteristics of the data being hashed. Knuth suggest that...
+Although this method works with any value of the constant A, it works better with some values than with others. The optimal choice depends on the characteristics of the data being hashed. Donald Knuth suggest that...
 
 $ A = (\sqrt{5} -1)/2 \simeq 0.6180339887  $
 
-...is likely to work well. 
+...is likely to work well. So that's why we used this value as an starting point to generate different multiplicative hash functions.
 
-
-
-%\subsubsection{Multilinear Hash}
-%It takes the form of a scalar product between random values and string components.
-%\begin{center}
-%$h(s) = m_1 + \sum_{i=1}^{n} m_{i+1} + s_i$
-%\end{center}
-%The hash function $h$ is defined by the randomly generated values $m_1$,$m_2$,...
-
-%Also in order to reduce the number of multiplications in order to make it faster we can attempt to improve speed by reducing the number of multiplications by half: 
-%\begin{center}
- %$h(s) = m_1 + \sum_{i=1}^{n/2} (m_{2i} + s_{2i-1})(m_{2i+1} + s_{2i})$
-%\end{center}
 
 %\subsubsection{Murmur Hash}
 
@@ -375,19 +354,20 @@ int main(){
 As it can be seen, we traverse all the document once to generate a vector of strings containing all the words and then we shuffle the vector and write the result in a document n times. \\
 
 \section{Experiments}
+
 Vamos a poner unos cuantos experimentos
 
-\begin{figure}[h]
-	\includegraphics[scale=1]{JaccardSimilarityValueKshingles} 
-  \caption{Relation between the k-shingles and the similarity outputed}
-  \label{fig:KShinglesSimilarity}
-\end{figure}
-
-\begin{figure}[h]
-\includegraphics[scale=1]{JaccardSimilarityTimeKshingles.pdf}
-  \caption{Relation between the k-shingles and the time of execution}
-  \label{fig:KShinglesTime}
-\end{figure}
+%\begin{figure}[h]
+%	\includegraphics[scale=1]{JaccardSimilarityValueKshingles} 
+%  \caption{Relation between the k-shingles and the similarity outputed}
+%  \label{fig:KShinglesSimilarity}
+%\end{figure}
+%
+%\begin{figure}[h]
+%\includegraphics[scale=1]{JaccardSimilarityTimeKshingles.pdf}
+%  \caption{Relation between the k-shingles and the time of execution}
+%  \label{fig:KShinglesTime}
+%\end{figure}
 
 
 

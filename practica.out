@@ -1,22 +1,21 @@
 \BOOKMARK [1][-]{section.1}{Introduction}{}% 1
-\BOOKMARK [1][-]{section.2}{Theory}{}% 2
-\BOOKMARK [2][-]{subsection.2.1}{Concept of similarity}{section.2}% 3
-\BOOKMARK [2][-]{subsection.2.2}{Representation of documents}{section.2}% 4
-\BOOKMARK [3][-]{subsubsection.2.2.1}{k-Shingles}{subsection.2.2}% 5
-\BOOKMARK [3][-]{subsubsection.2.2.2}{Hashing Shingles}{subsection.2.2}% 6
-\BOOKMARK [2][-]{subsection.2.3}{MinHash}{section.2}% 7
-\BOOKMARK [2][-]{subsection.2.4}{Locality-Sensitive Hashing for Documents}{section.2}% 8
-\BOOKMARK [3][-]{subsubsection.2.4.1}{Hash function used to hash a vector}{subsection.2.4}% 9
-\BOOKMARK [3][-]{subsubsection.2.4.2}{Filling the signature matrix}{subsection.2.4}% 10
-\BOOKMARK [3][-]{subsubsection.2.4.3}{Get the similarity}{subsection.2.4}% 11
-\BOOKMARK [2][-]{subsection.2.5}{Distance Measures}{section.2}% 12
-\BOOKMARK [3][-]{subsubsection.2.5.1}{Jaccard Distance}{subsection.2.5}% 13
-\BOOKMARK [3][-]{subsubsection.2.5.2}{Edit Distance}{subsection.2.5}% 14
-\BOOKMARK [2][-]{subsection.2.6}{Hashing}{section.2}% 15
-\BOOKMARK [3][-]{subsubsection.2.6.1}{Modular Hashing}{subsection.2.6}% 16
-\BOOKMARK [3][-]{subsubsection.2.6.2}{Multiplicative Hashing}{subsection.2.6}% 17
-\BOOKMARK [1][-]{section.3}{Data}{}% 18
-\BOOKMARK [2][-]{subsection.3.1}{Real-world data}{section.3}% 19
-\BOOKMARK [2][-]{subsection.3.2}{Generating the data}{section.3}% 20
-\BOOKMARK [1][-]{section.4}{Experiments}{}% 21
-\BOOKMARK [1][-]{section.5}{Conclusion}{}% 22
+\BOOKMARK [1][-]{section.2}{Concept of similarity}{}% 2
+\BOOKMARK [1][-]{section.3}{Representation of documents}{}% 3
+\BOOKMARK [1][-]{section.4}{k-Shingles}{}% 4
+\BOOKMARK [2][-]{subsubsection.4.0.1}{Hashing Shingles}{section.4}% 5
+\BOOKMARK [1][-]{section.5}{MinHash}{}% 6
+\BOOKMARK [1][-]{section.6}{Locality-Sensitive Hashing for Documents}{}% 7
+\BOOKMARK [2][-]{subsection.6.1}{Hash function used to hash a vector}{section.6}% 8
+\BOOKMARK [2][-]{subsection.6.2}{Filling the signature matrix}{section.6}% 9
+\BOOKMARK [2][-]{subsection.6.3}{Get the similarity}{section.6}% 10
+\BOOKMARK [1][-]{section.7}{Distance Measures}{}% 11
+\BOOKMARK [2][-]{subsection.7.1}{Jaccard Distance}{section.7}% 12
+\BOOKMARK [2][-]{subsection.7.2}{Edit Distance}{section.7}% 13
+\BOOKMARK [1][-]{section.8}{Hashing}{}% 14
+\BOOKMARK [2][-]{subsection.8.1}{Modular Hashing}{section.8}% 15
+\BOOKMARK [2][-]{subsection.8.2}{Multiplicative Hashing}{section.8}% 16
+\BOOKMARK [1][-]{section.9}{Data}{}% 17
+\BOOKMARK [2][-]{subsection.9.1}{Real-world data}{section.9}% 18
+\BOOKMARK [2][-]{subsection.9.2}{Generating the data}{section.9}% 19
+\BOOKMARK [1][-]{section.10}{Experiments}{}% 20
+\BOOKMARK [1][-]{section.11}{Conclusion}{}% 21

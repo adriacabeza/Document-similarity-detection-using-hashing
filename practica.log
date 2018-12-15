@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.12.11)  13 DEC 2018 09:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.12.11)  15 DEC 2018 12:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -8,8 +8,8 @@ LaTeX2e <2017-04-15>
 Babel <3.18> and hyphenation patterns for 5 language(s) loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
-(/usr/share/texlive/texmf-dist/tex/latex/base/size12.clo
-File: size12.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+(/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
 \c@section=\count80
@@ -557,7 +557,12 @@ File: lstlang1.sty 2015/06/04 1.6 listings language file
 )
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
-) (./practica.aux)
+)
+
+LaTeX Warning: Unused global option(s):
+    [13pt].
+
+(./practica.aux)
 \openout1 = `practica.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 22.
@@ -575,6 +580,7 @@ LaTeX Font Info:    ... okay on input line 22.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 22.
 LaTeX Font Info:    ... okay on input line 22.
 \c@lstlisting=\count108
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -594,12 +600,12 @@ LaTeX Font Info:    ... okay on input line 22.
 * \topmargin=-29.77301pt
 * \headheight=12.0pt
 * \headsep=25.0pt
-* \topskip=12.0pt
+* \topskip=10.0pt
 * \footskip=30.0pt
-* \marginparwidth=44.0pt
-* \marginparsep=10.0pt
+* \marginparwidth=65.0pt
+* \marginparsep=11.0pt
 * \columnsep=10.0pt
-* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
 * \mag=1000
@@ -659,111 +665,92 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <14.4> on input line 24.
+(Font)              <12> on input line 24.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 24.
+(Font)              <8> on input line 24.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 24.
 
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./practica.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 3.
+(Font)              <7> on input line 5.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 3.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 3.
+(Font)              <5> on input line 5.
 )
 \tf@toc=\write4
 \openout4 = `practica.toc'.
 
 
 [2]
-LaTeX Font Info:    Try loading font information for OML+cmr on input line 67.
+LaTeX Font Info:    Try loading font information for OML+cmr on input line 62.
  (/usr/share/texlive/texmf-dist/tex/latex/base/omlcmr.fd
 File: omlcmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <12> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 67.
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 67.
+LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10> not available
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 62.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 62.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 67.
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 62.
  [3]
-Underfull \hbox (badness 10000) in paragraph at lines 103--108
+Underfull \hbox (badness 10000) in paragraph at lines 98--103
 
  []
 
-[4] [5] [6] [7] [8] [9] [10]
-Underfull \hbox (badness 10000) in paragraph at lines 375--376
+
+Package hyperref Warning: Difference (2) between bookmark levels is greater 
+(hyperref)                than one, level fixed on input line 104.
+
+[4] [5] [6] [7] [8]
+Underfull \hbox (badness 10000) in paragraph at lines 354--355
 
  []
 
-<JaccardSimilarityValueKshingles.pdf, id=291, 462.52798pt x 346.89601pt>
-File: JaccardSimilarityValueKshingles.pdf Graphic file (type pdf)
-<use JaccardSimilarityValueKshingles.pdf>
-Package pdftex.def Info: JaccardSimilarityValueKshingles.pdf  used on input lin
-e 381.
-(pdftex.def)             Requested size: 462.52684pt x 346.89516pt.
-
-Overfull \hbox (1.8056pt too wide) in paragraph at lines 381--382
-[][] 
- []
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<JaccardSimilarityTimeKshingles.pdf, id=292, 462.52798pt x 346.89601pt>
-File: JaccardSimilarityTimeKshingles.pdf Graphic file (type pdf)
-<use JaccardSimilarityTimeKshingles.pdf>
-Package pdftex.def Info: JaccardSimilarityTimeKshingles.pdf  used on input line
- 387.
-(pdftex.def)             Requested size: 462.52684pt x 346.89516pt.
-
-Overfull \hbox (1.8056pt too wide) in paragraph at lines 387--388
-[][] 
- []
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[11] [12 <./JaccardSimilarityValueKshingles.pdf>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 437.
- [13 <./JaccardSimilarityTimeKshingles.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 437.
+[9]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 417.
+ [10]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 417.
  (./practica.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 437.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 437.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 417.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 417.
 Package rerunfilecheck Info: File `practica.out' has not changed.
-(rerunfilecheck)             Checksum: 6A18DD9F03D3B3D5DFDFBAED2894235A;1480.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 437.
+(rerunfilecheck)             Checksum: C4B21BAA43533AD5737032D488E030CD;1257.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 417.
  ) 
 Here is how much of TeX's memory you used:
- 8510 strings out of 494880
- 119316 string characters out of 6179600
- 372178 words of memory out of 5000000
- 11574 multiletter control sequences out of 15000+600000
- 10468 words of font info for 36 fonts, out of 8000000 for 9000
+ 8484 strings out of 494880
+ 118538 string characters out of 6179600
+ 407157 words of memory out of 5000000
+ 11556 multiletter control sequences out of 15000+600000
+ 9911 words of font info for 34 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  32i,7n,58p,495b,1867s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10
-.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on practica.pdf (13 pages, 677271 bytes).
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/t
+exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmti9.pfb>
+Output written on practica.pdf (10 pages, 241959 bytes).
 PDF statistics:
- 474 PDF objects out of 1000 (max. 8388607)
- 394 compressed objects within 4 object streams
- 183 named destinations out of 1000 (max. 500000)
- 187 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 410 PDF objects out of 1000 (max. 8388607)
+ 376 compressed objects within 4 object streams
+ 175 named destinations out of 1000 (max. 500000)
+ 169 words of extra memory for PDF output out of 10000 (max. 10000000)
 
