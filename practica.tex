@@ -86,7 +86,7 @@ double Jaccard(const set<string>& A, const set<string>& B){
 
 \end{lstlisting}
 
-If we take in account the cost of building a set we should observe that for unsorted sequences our cost would be incremented to $O(n*log(N))$.
+If we take in account the cost of building a set we should observe that for unsorted sequences our cost would be incremented to $O(n \times log(N))$.
 
 
 %In the case of finding similarities in text a slightly different approach is required. First, it is important to observe that testing whether two documents are exact duplicates is easy; just comparing the two documents characther-by-character would work. However, even if the documents are not identical, they can share large portions of their text.
@@ -285,15 +285,36 @@ The multiplicative method for creating hash functions operates in two steps.
 Firstly, we multiply the key $k$ by a constant $A$ in the range $0<A<1$ and extract the fractional part of $kA$. Then, we multiply this value by $m$ and take the floor the result. To sum up:  
 
 \begin{center}
- $ \lfloor m\ kA*mod(1)  \rfloor$
+ $ \lfloor m\ kA \times mod(1)  \rfloor$
 \end{center}
 Where:
 \begin{itemize}
-\item $kA*mod(1)$  is the fractional part of $kA$, that is, $kA- \lfloor kA \rfloor$
+\item $kA  \times mod(1)$  is the fractional part of $kA$, that is, $kA- \lfloor kA \rfloor$
 \end{itemize}
-An advantage of the multiplication method is that the value of m is not critical. We typically choose it to be a power of 2 ($m = 2^p$ for some integer $p$), since we can then easily implement the function on most computers. 
+An advantage of the multiplication method is that the value of m is not critical. We typically choose it to be a power of 2 ($m = 2^p$ for some integer $p$), since we can then easily implement the function on most computers.
+\\
 
-Supposing that the word size of the machine is $w$ bits and that $k$ fits in a single word. We restrict $A$ to be a fraction of the form $S/2^w$, where s is an integer in the range $0<s<2^w$. We first mulitply k by the w-bit integer $s = A*2^w$. The result is a 2w-bit value $r_1 2^w + r_0$, where $r_1$ is the high-order word of the product and $r_0$ is the lower-order word of the product. The desired p-bit hash value consists of the p most significant bits of $r_0$. 
+\begin{center}
+\begin{large}
+Pseudocode 
+\end{large}
+\end{center}
+
+\begin{lstlisting}[mathescape=true]
+MultiplicativeHashing(k,len)
+
+	$A \leftarrow (\sqrt{5} -1)/2 \simeq 0.6180339887 $
+	$s \leftarrow A\times 2^w$
+	$r \leftarrow k \times s$ 
+	$r_0 \leftarrow r\ mod\  (2^w) $ 
+	$value \leftarrow r_0 >> (w-len)$
+
+\end{lstlisting}
+
+\vspace{0.7cm}
+Supposing that the word size of the machine is $w$ bits, that $k$ fits in a single word and $len$ is the number of bits that you want for the size of your hash value.
+
+ We restrict $A$ to be a fraction of the form, where s is an integer in the range $0<s<2^w$. We first mulitply k by the w-bit integer $s = A\times 2^w$. The result is a $|2 \times w| $-bit value. The desired len-bit hash value consists of the len most significant bits of $r_0$. 
 
 %\includegraphics[scale=1]{multiplicative.pdf} 
 
@@ -306,13 +327,14 @@ $ A = (\sqrt{5} -1)/2 \simeq 0.6180339887  $
 
 \subsubsection{Murmur Hash}
 
-Consists in applying some multiplications (MU) and rotations (R) to the entry bytes to obtaint the hash. It uses multiple constants which are decided to make it a good hash function by passing 2 basic tests, the Avalanche Test that evaluates how the output changes if the input is slightly modified and the statistical Chi-Squared Test. We have based the implementation of this hash function on Austin Appleby's implementation. Souce : \textit{https://sites.google.com/site/murmurhash/}\\
+Consists in applying some multiplications (MU) and rotations (R) to the entry bytes to obtaint the hash. It uses multiple constants which are decided to make it a good hash function by passing 2 basic tests, the Avalanche Test that evaluates how the output changes if the input is slightly modified and the statistical Chi-Squared Test. We have based the implementation of this hash function on Austin Appleby's implementation. Souce : \url{https://sites.google.com/site/murmurhash/}\\
 \medskip
 \begin{center}
 \begin{large}
 Pseudocode extracted from Wikipedia
 \end{large}
 \end{center}
+
 \begin{lstlisting}[mathescape=true]
 Murmur3(key, len, seed)
     c1 $\leftarrow$ 0xcc9e2d51
@@ -434,7 +456,7 @@ J.\ Bank and B.\ Cole,
 \textit {Calculating the Jaccard similarity coefficient with map reduce for entity pairs in
 Wikipedia} (Wikipedia Similarity Team, 2008).
 
-\bibitem{Cambridge}
+\bibitem{Mining of Massive Datasets}
 J.\ Leskovec, A.\ Rajaraman and J.\ Ullman
 \textit{ Finding Similar Items. In Mining of Massive Datasets} (Cambridge University Press, 2014).
 
