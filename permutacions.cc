@@ -7,9 +7,7 @@
 using namespace std;
 ifstream inFile;
 ofstream outFile;
-
-set<string> paraules = {"a","an","the", "I", "you", "of", "he", "to", "she", "it", "we", "you", "they", "!", ",", ".", "-", "?"};
-    
+   
 
 void writeVector(const vector<string>& A, int i,string nom){
     string s = "./input_texts/"+ nom + "_";
