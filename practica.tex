@@ -534,7 +534,7 @@ Also we have been able to observe that the performance of MurmurHash and Multipl
 %  \label{fig:KShinglesTime}
 %\end{figure}
 
-\subsection{Performance of Different Jaccard Similarity Techniques}
+\subsection{Performance of Different Document Similarity Approaches}
 \textbf{The source code for this experiment can be found in `\textit{jocProvesJaccSim.cc}'.}
 \bigskip
 
@@ -570,7 +570,7 @@ In this case, we believe the cost is still quadratic, but with a way smaller sca
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.55]{graphs/JaccardSignatureLSHTimes.pdf}
-	\caption{}
+	\caption{Time spent by the three approaches for different sets of documents of increasing size}
 	\label{fig:JaccSignLSH}
 \end{figure}
 
@@ -587,7 +587,15 @@ In this case, we believe the cost is still quadratic, but with a way smaller sca
 \end{figure}
 
 \clearpage
-\section{Conclusion}
+\section{Conclusions}
+
+\begin{enumerate}
+\item Small sizes for k-shingles result in many false positives. And very large sizes for the k-shingles result in very few (if any) similarities being found. 9 can be a good value for general text documents.
+\item Larger sizes for the k-shingles result in longer computation times.
+\item Of the hashing functions we evaluated, Modular Hashing is the one that performed the best. Resulting in significantly faster computation times than Multiplicative Hashing and Murmur Hashing.
+\item Trying to find pairs of similar documents by computing the Jaccard similarity for all the possible pairs is not feasible for large document sets. Jaccard approximation algorithms using minhash signatures produce a very similar result to the real Jaccard similarity, but with a fraction of the cost. And for very large documents sets, locality-sensitive hashing should be considered.
+\item ...
+\end{enumerate}
 
 %http://ethen8181.github.io/machine-learning/clustering_old/text_similarity/text_similarity.html
 
