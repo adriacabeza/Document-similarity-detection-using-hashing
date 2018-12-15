@@ -1,4 +1,4 @@
-\documentclass[13pt]{article}
+\documentclass[12pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{cite}
 \usepackage{listings}
@@ -17,6 +17,7 @@
 	tabsize = 2,
 	language=C++
 }
+
 
 
 \begin{document}
@@ -305,7 +306,50 @@ $ A = (\sqrt{5} -1)/2 \simeq 0.6180339887  $
 
 \subsubsection{Murmur Hash}
 
-Consists in applying some multiplications (MU) and rotations (R) to the entry bytes to obtaint the hash. It uses multiple constants which are decided to make it a good hash function by passing 2 basic tests, the Avalanche Test that evaluates how the output changes if the input is slightly modified and the statistical Chi-Squared Test.
+Consists in applying some multiplications (MU) and rotations (R) to the entry bytes to obtaint the hash. It uses multiple constants which are decided to make it a good hash function by passing 2 basic tests, the Avalanche Test that evaluates how the output changes if the input is slightly modified and the statistical Chi-Squared Test. We have based the implementation of this hash function on Austin Appleby's implementation. Souce : \textit{https://sites.google.com/site/murmurhash/}\\
+\medskip
+\begin{center}
+\begin{large}
+Pseudocode extracted from Wikipedia
+\end{large}
+\end{center}
+\begin{lstlisting}[mathescape=true]
+Murmur3(key, len, seed)
+    c1 $\leftarrow$ 0xcc9e2d51
+    c2 $\leftarrow$ 0x1b873593
+    r1 $\leftarrow$ 15
+    r2 $\leftarrow$ 13
+    m $\leftarrow$ 5
+    n $\leftarrow$ 0xe6546b64
+ 
+    hash $\leftarrow$ seed
+
+    for each fourByteChunk of key
+        k $\leftarrow$ fourByteChunk
+
+        k $\leftarrow$ k $\times$ c1
+        k $\leftarrow$ (k ROL r1)
+        k $\leftarrow$ k $\times$ c2
+
+        hash $\leftarrow$ hash XOR k
+        hash $\leftarrow$ (hash ROL r2)
+        hash $\leftarrow$ hash $\times$ m + n
+
+    with any remainingBytesInKey
+        remainingBytes $\leftarrow$ remainingBytes $\times$ c1
+        remainingBytes $\leftarrow$ (remainingBytes ROL r1)
+        remainingBytes $\leftarrow$ remainingBytes $\times$ c2
+
+        hash $\leftarrow$ hash XOR remainingBytes
+ 
+    hash $\leftarrow$ hash XOR len
+    hash $\leftarrow$ hash XOR (hash >> 16)
+    hash $\leftarrow$ hash $\times$ 0x85ebca6b
+    hash $\leftarrow$ hash XOR (hash >> 13)
+    hash $\leftarrow$ hash $\times$ 0xc2b2ae35
+    hash $\leftarrow$ hash XOR (hash >> 16)
+
+\end{lstlisting}
 
 \section{Data} %canviar el nom de la secció
 
@@ -410,6 +454,10 @@ D.\ Lemire and O.\ Kaser, \textit{Strongly universal string hashing is fast} (Un
 C++ Standard Template Library,
 \ Source: \url{cplusplus.com/reference/stl/}
 
+
+\bibitem{MurmurHash, Wikipedia}
+\textit{MurmurHash} \ Source: \url{https://en.wikipedia.org/wiki/MurmurHash}
+
 \bibitem{Introduction to Algorithms}
 T.\ H.\ Cormen, C.\ E.\ Leierson, R.\ L.\ Rivest and C.\ Stein, \textit{Introduction to Algorithms. Third Edition}
 
@@ -425,6 +473,7 @@ S.\ Yar [Developer's Catalog By Sahib Yar]
 \bibitem{Hashing Algorithms}
 T.\ Scoot [Computerphile]
 \textit {Hashing Algorithms and Security - Computerphile}, (Youtube, Nov 8, 2013), Retrieved from: \url{https://www.youtube.com/watch?v=b4b8ktEV4Bg&t=181s}
+
 
 
 \end{thebibliography}
