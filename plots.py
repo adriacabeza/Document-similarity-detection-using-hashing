@@ -16,7 +16,7 @@ if a == 0 :  #Plot severals Jaccard Similarity value with time
 
     plt.figure().gca().xaxis.set_major_locator(MaxNLocator(integer=True))
     plt.ylabel("Similarity")
-    plt.xlabel("K-shingles")
+    plt.xlabel("K-shingles Size")
 
     for i in range(1,len(JaccardSimilarity)):
         plt.plot(JaccardSimilarity[0],JaccardSimilarity[i],color='red',alpha=0.005)
@@ -36,7 +36,7 @@ elif a == 1 :
     TimeKshingle = plt.figure().gca()
     TimeKshingle.xaxis.set_major_locator(MaxNLocator(integer=True))
     plt.ylabel("Time (s)")
-    plt.xlabel("K-shingles")
+    plt.xlabel("K-shingles Size")
 
     for i in range(1,len(JaccardTime)):
         plt.plot(JaccardTime[0],JaccardTime[i],color='blue',alpha=0.05)
@@ -54,13 +54,13 @@ elif a == 2: #Plot for each Hash Function the time for the approximation
 
     plt.figure().gca().xaxis.set_major_locator(MaxNLocator(integer=True))
     plt.ylabel("Time (s)")
-    plt.xlabel("K-shingles")
+    plt.xlabel("K-shingles Size")
 
     colors = ['red','blue','green']
     labels = ['Modular','Multiplicative','Murmur']
     for (i,color,label) in zip(range(1,len(HashFunctionsJaccardAproxTime)), colors, labels):
         plt.plot(HashFunctionsJaccardAproxTime[0],HashFunctionsJaccardAproxTime[i],color=color,label=label, alpha=1)
-        plt.legend()
+        plt.legend(loc='upper left')
 
     plt.savefig('HashFunctionsJaccardAproxTime.pdf')
     plt.show()
@@ -75,7 +75,7 @@ elif a == 3:  #Plot for the Time of execution between Jaccard Similarity and the
 
     plt.figure().gca().xaxis.set_major_locator(MaxNLocator(integer=True))
     plt.ylabel("Time (s)")
-    plt.xlabel("K-shingles")
+    plt.xlabel("K-shingles Size")
 
     colors = ['red','blue']
     labels = ['Jaccard Similarity','Jaccard Approximation']
