@@ -1,24 +1,22 @@
 \contentsline {section}{\numberline {1}Introduction}{3}{section.1}
 \contentsline {section}{\numberline {2}Concept of similarity}{3}{section.2}
 \contentsline {section}{\numberline {3}Representation of documents}{4}{section.3}
-\contentsline {section}{\numberline {4}\textit {k}-Shingles}{5}{section.4}
-\contentsline {subsubsection}{\numberline {4.0.1}Hashing Shingles}{5}{subsubsection.4.0.1}
-\contentsline {section}{\numberline {5}MinHash}{5}{section.5}
-\contentsline {subsection}{\numberline {5.1}Get the similarity}{6}{subsection.5.1}
-\contentsline {section}{\numberline {6}Locality-Sensitive Hashing for Documents}{6}{section.6}
-\contentsline {subsection}{\numberline {6.1}Hash function used to hash a vector}{6}{subsection.6.1}
-\contentsline {subsection}{\numberline {6.2}Filling the characteristic matrix}{7}{subsection.6.2}
-\contentsline {subsection}{\numberline {6.3}Computing the signature matrix}{7}{subsection.6.3}
-\contentsline {subsection}{\numberline {6.4}Computing the LSH and getting the candidate pairs}{8}{subsection.6.4}
-\contentsline {section}{\numberline {7}Hashing}{9}{section.7}
-\contentsline {subsection}{\numberline {7.1}Modular Hashing}{9}{subsection.7.1}
-\contentsline {subsection}{\numberline {7.2}Multiplicative Hashing}{10}{subsection.7.2}
-\contentsline {subsubsection}{\numberline {7.2.1}Murmur Hash}{11}{subsubsection.7.2.1}
-\contentsline {section}{\numberline {8}Data}{13}{section.8}
-\contentsline {subsection}{\numberline {8.1}Real-world data}{13}{subsection.8.1}
-\contentsline {subsection}{\numberline {8.2}Generating the data}{13}{subsection.8.2}
-\contentsline {section}{\numberline {9}Experiments}{13}{section.9}
-\contentsline {subsection}{\numberline {9.1}\textit {k}-shingles Size}{13}{subsection.9.1}
-\contentsline {subsection}{\numberline {9.2}Performance of Different Hashing Algorithms}{15}{subsection.9.2}
-\contentsline {subsection}{\numberline {9.3}Precision of Jaccard Similarity Approximations}{15}{subsection.9.3}
-\contentsline {section}{\numberline {10}Conclusion}{17}{section.10}
+\contentsline {section}{\numberline {4}\textit {k}-Shingles}{4}{section.4}
+\contentsline {subsubsection}{\numberline {4.0.1}Hashing Shingles}{4}{subsubsection.4.0.1}
+\contentsline {section}{\numberline {5}MinHash}{4}{section.5}
+\contentsline {section}{\numberline {6}Locality-Sensitive Hashing for Documents}{5}{section.6}
+\contentsline {subsection}{\numberline {6.1}Hash function used to hash a vector}{5}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}Filling the signature matrix}{5}{subsection.6.2}
+\contentsline {subsection}{\numberline {6.3}Get the similarity}{6}{subsection.6.3}
+\contentsline {section}{\numberline {7}Distance Measures}{7}{section.7}
+\contentsline {subsection}{\numberline {7.1}Jaccard Distance}{7}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.2}Edit Distance}{7}{subsection.7.2}
+\contentsline {section}{\numberline {8}Hashing}{7}{section.8}
+\contentsline {subsection}{\numberline {8.1}Modular Hashing}{8}{subsection.8.1}
+\contentsline {subsection}{\numberline {8.2}Multiplicative Hashing}{8}{subsection.8.2}
+\contentsline {subsubsection}{\numberline {8.2.1}Murmur Hash}{8}{subsubsection.8.2.1}
+\contentsline {section}{\numberline {9}Data}{8}{section.9}
+\contentsline {subsection}{\numberline {9.1}Real-world data}{8}{subsection.9.1}
+\contentsline {subsection}{\numberline {9.2}Generating the data}{9}{subsection.9.2}
+\contentsline {section}{\numberline {10}Experiments}{9}{section.10}
+\contentsline {section}{\numberline {11}Conclusion}{10}{section.11}
