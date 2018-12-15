@@ -7,15 +7,16 @@
 \contentsline {section}{\numberline {6}Locality-Sensitive Hashing for Documents}{5}{section.6}
 \contentsline {subsection}{\numberline {6.1}Hash function used to hash a vector}{5}{subsection.6.1}
 \contentsline {subsection}{\numberline {6.2}Filling the signature matrix}{5}{subsection.6.2}
-\contentsline {subsection}{\numberline {6.3}Get the similarity}{5}{subsection.6.3}
+\contentsline {subsection}{\numberline {6.3}Get the similarity}{6}{subsection.6.3}
 \contentsline {section}{\numberline {7}Distance Measures}{7}{section.7}
 \contentsline {subsection}{\numberline {7.1}Jaccard Distance}{7}{subsection.7.1}
 \contentsline {subsection}{\numberline {7.2}Edit Distance}{7}{subsection.7.2}
 \contentsline {section}{\numberline {8}Hashing}{7}{section.8}
-\contentsline {subsection}{\numberline {8.1}Modular Hashing}{7}{subsection.8.1}
+\contentsline {subsection}{\numberline {8.1}Modular Hashing}{8}{subsection.8.1}
 \contentsline {subsection}{\numberline {8.2}Multiplicative Hashing}{8}{subsection.8.2}
+\contentsline {subsubsection}{\numberline {8.2.1}Murmur Hash}{8}{subsubsection.8.2.1}
 \contentsline {section}{\numberline {9}Data}{8}{section.9}
 \contentsline {subsection}{\numberline {9.1}Real-world data}{8}{subsection.9.1}
-\contentsline {subsection}{\numberline {9.2}Generating the data}{8}{subsection.9.2}
+\contentsline {subsection}{\numberline {9.2}Generating the data}{9}{subsection.9.2}
 \contentsline {section}{\numberline {10}Experiments}{9}{section.10}
-\contentsline {section}{\numberline {11}Conclusion}{9}{section.11}
+\contentsline {section}{\numberline {11}Conclusion}{10}{section.11}

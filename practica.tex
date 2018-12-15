@@ -109,8 +109,13 @@ Instead of using substrings direcly as shingles, we can pick a hash function tha
 
 A minhash function on sets is based on a permutation of the universal set. Given any such permutation, the minhash value for a set is that element of the set that appears first in the permuted order. 
 
-This algorithm provides us with a fast approximation to the Jaccard Similarity. The concept is to condense the large sets of unique shingles into a much smaller representations called ``signatures''. We will then use these signatures to measure the similarity between document, the signature won't give us the exact similarity but we will get a close estimate (the larger the number of signatures you choose, the more accurate the estimate).
+This algorithm provides us with a fast approximation to the Jaccard Similarity. The concept is to condense the large sets of unique shingles into a much smaller representations called ``signatures''. We will then use these signatures to measure the similarity between document, the signature won't give us the exact similarity but we will get a close estimate (the larger the number of signatures you choose, the more accurate the estimate). In this case we define the similarity like: 
 \\ \medskip
+
+$$  sim(a,b) = \frac{1}{t} \sum_{i=1}^{t}\left\{
+1  \; \; \;  if \; \;  a_{i} = b_{i} \\
+\; \; \;  or \; \; \;  0 \; \; \;   if\: \;  a_{i} \neq  b_{i} 
+\}\right.  $$
 
 
 To implement the idea of generating randomly permutated rows, we don’t actually generate the random numbers, since it is not feasible to do so for large datasets, e.g. For a million itemset you will have to generate a million integers …, not to mention you have to do this for each signatures that you wish to generate. One way to avoid having to generate n permutated rows is to pick n hash functions in the form of :
@@ -298,9 +303,9 @@ $ A = (\sqrt{5} -1)/2 \simeq 0.6180339887  $
 ...is likely to work well. So that's why we used this value as an starting point to generate different multiplicative hash functions.
 
 
-%\subsubsection{Murmur Hash}
+\subsubsection{Murmur Hash}
 
-%Consists in applying some multiplications (MU) and rotations (R) to the entry bytes to obtaint the hash. It uses multiple constants which are decided to make it a good hash function by passing 2 basic tests, the Avalanche Test that evaluates how the output changes if the input is slightly modified and the statistical Chi-Squared Test.
+Consists in applying some multiplications (MU) and rotations (R) to the entry bytes to obtaint the hash. It uses multiple constants which are decided to make it a good hash function by passing 2 basic tests, the Avalanche Test that evaluates how the output changes if the input is slightly modified and the statistical Chi-Squared Test.
 
 \section{Data} %canviar el nom de la secció
 
@@ -313,7 +318,7 @@ $ A = (\sqrt{5} -1)/2 \simeq 0.6180339887  $
 
 \subsection{Generating the data}
 
-To generate the data for our experiments we have used the random\_shuffle function inside the C++ STL which rearranges the elements randomly. The function swaps the value of each element with that of some other randomly picked element. Its complexity is $O(n)$. %NOT REALLY SURE ABOUT THAT CHECK STL
+To generate the data for our experiments we have used the random\_shuffle function inside the C++ STL which rearranges the elements randomly. The function swaps the value of each element with that of some other randomly picked element. Its complexity is $O(n)$ with $n$ being  the distance between first and last minus one.
 
 \begin{lstlisting}
 
@@ -403,7 +408,7 @@ D.\ Lemire and O.\ Kaser, \textit{Strongly universal string hashing is fast} (Un
 
 \bibitem{C++ STL}
 C++ Standard Template Library,
-\ Source:\textit{cplusplus.com/reference/stl/}
+\ Source: \url{cplusplus.com/reference/stl/}
 
 \bibitem{Introduction to Algorithms}
 T.\ H.\ Cormen, C.\ E.\ Leierson, R.\ L.\ Rivest and C.\ Stein, \textit{Introduction to Algorithms. Third Edition}
@@ -411,6 +416,16 @@ T.\ H.\ Cormen, C.\ E.\ Leierson, R.\ L.\ Rivest and C.\ Stein, \textit{Introduc
 \bibitem{Sorting and searching}
 D.\ Knuth,
 \textit {Sorting and Searching}, volume 3 of \textit{The Art of Computer Programming} (Addison-Wesley, 1997. Third Edition)
+
+
+\bibitem{Murmur Hash explained}
+S.\ Yar [Developer's Catalog By Sahib Yar]
+\textit {Sorting and Searching}, \textit{Murmur Hash - Explained} (Youtube, Jun 23, 2017), Retrieved from: \url{https://www.youtube.com/watch?v=b8HzEZt0RCQ&t=1s}
+
+\bibitem{Hashing Algorithms}
+T.\ Scoot [Computerphile]
+\textit {Hashing Algorithms and Security - Computerphile}, (Youtube, Nov 8, 2013), Retrieved from: \url{https://www.youtube.com/watch?v=b4b8ktEV4Bg&t=181s}
+
 
 \end{thebibliography}
 

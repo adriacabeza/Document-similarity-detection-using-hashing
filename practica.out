@@ -14,8 +14,9 @@
 \BOOKMARK [1][-]{section.8}{Hashing}{}% 14
 \BOOKMARK [2][-]{subsection.8.1}{Modular Hashing}{section.8}% 15
 \BOOKMARK [2][-]{subsection.8.2}{Multiplicative Hashing}{section.8}% 16
-\BOOKMARK [1][-]{section.9}{Data}{}% 17
-\BOOKMARK [2][-]{subsection.9.1}{Real-world data}{section.9}% 18
-\BOOKMARK [2][-]{subsection.9.2}{Generating the data}{section.9}% 19
-\BOOKMARK [1][-]{section.10}{Experiments}{}% 20
-\BOOKMARK [1][-]{section.11}{Conclusion}{}% 21
+\BOOKMARK [3][-]{subsubsection.8.2.1}{Murmur Hash}{subsection.8.2}% 17
+\BOOKMARK [1][-]{section.9}{Data}{}% 18
+\BOOKMARK [2][-]{subsection.9.1}{Real-world data}{section.9}% 19
+\BOOKMARK [2][-]{subsection.9.2}{Generating the data}{section.9}% 20
+\BOOKMARK [1][-]{section.10}{Experiments}{}% 21
+\BOOKMARK [1][-]{section.11}{Conclusion}{}% 22
