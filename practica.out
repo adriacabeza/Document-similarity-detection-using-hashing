@@ -4,19 +4,21 @@
 \BOOKMARK [1][-]{section.4}{k-Shingles}{}% 4
 \BOOKMARK [2][-]{subsubsection.4.0.1}{Hashing Shingles}{section.4}% 5
 \BOOKMARK [1][-]{section.5}{MinHash}{}% 6
-\BOOKMARK [1][-]{section.6}{Locality-Sensitive Hashing for Documents}{}% 7
-\BOOKMARK [2][-]{subsection.6.1}{Hash function used to hash a vector}{section.6}% 8
-\BOOKMARK [2][-]{subsection.6.2}{Filling the signature matrix}{section.6}% 9
-\BOOKMARK [2][-]{subsection.6.3}{Get the similarity}{section.6}% 10
-\BOOKMARK [1][-]{section.7}{Distance Measures}{}% 11
-\BOOKMARK [2][-]{subsection.7.1}{Jaccard Distance}{section.7}% 12
-\BOOKMARK [2][-]{subsection.7.2}{Edit Distance}{section.7}% 13
-\BOOKMARK [1][-]{section.8}{Hashing}{}% 14
-\BOOKMARK [2][-]{subsection.8.1}{Modular Hashing}{section.8}% 15
-\BOOKMARK [2][-]{subsection.8.2}{Multiplicative Hashing}{section.8}% 16
-\BOOKMARK [3][-]{subsubsection.8.2.1}{Murmur Hash}{subsection.8.2}% 17
-\BOOKMARK [1][-]{section.9}{Data}{}% 18
-\BOOKMARK [2][-]{subsection.9.1}{Real-world data}{section.9}% 19
-\BOOKMARK [2][-]{subsection.9.2}{Generating the data}{section.9}% 20
-\BOOKMARK [1][-]{section.10}{Experiments}{}% 21
-\BOOKMARK [1][-]{section.11}{Conclusion}{}% 22
+\BOOKMARK [2][-]{subsection.5.1}{Get the similarity}{section.5}% 7
+\BOOKMARK [1][-]{section.6}{Locality-Sensitive Hashing for Documents}{}% 8
+\BOOKMARK [2][-]{subsection.6.1}{Hash function used to hash a vector}{section.6}% 9
+\BOOKMARK [2][-]{subsection.6.2}{Filling the characteristic matrix}{section.6}% 10
+\BOOKMARK [2][-]{subsection.6.3}{Computing the signature matrix}{section.6}% 11
+\BOOKMARK [2][-]{subsection.6.4}{Computing the LSH and getting the candidate pairs}{section.6}% 12
+\BOOKMARK [1][-]{section.7}{Hashing}{}% 13
+\BOOKMARK [2][-]{subsection.7.1}{Modular Hashing}{section.7}% 14
+\BOOKMARK [2][-]{subsection.7.2}{Multiplicative Hashing}{section.7}% 15
+\BOOKMARK [3][-]{subsubsection.7.2.1}{Murmur Hash}{subsection.7.2}% 16
+\BOOKMARK [1][-]{section.8}{Data}{}% 17
+\BOOKMARK [2][-]{subsection.8.1}{Real-world data}{section.8}% 18
+\BOOKMARK [2][-]{subsection.8.2}{Generating the data}{section.8}% 19
+\BOOKMARK [1][-]{section.9}{Experiments}{}% 20
+\BOOKMARK [2][-]{subsection.9.1}{k-shingles Size}{section.9}% 21
+\BOOKMARK [2][-]{subsection.9.2}{Performance of Different Hashing Algorithms}{section.9}% 22
+\BOOKMARK [2][-]{subsection.9.3}{Precision of Jaccard Similarity Approximations}{section.9}% 23
+\BOOKMARK [1][-]{section.10}{Conclusion}{}% 24
