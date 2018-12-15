@@ -149,6 +149,19 @@ Where:
 \item c is a prime number slightly larger than the total number of shingle sets. 
 \end{itemize}
 
+\subsection{Get the similarity}
+\begin{lstlisting}
+sim(signatureMatrix,a,b)
+    float simil = 0;
+    for i = 0 to signatureMatrix.size() do:
+        if(signatureMatrix[i][a] == signatureMatrix[i][b]) then ++simil;
+ 
+    return simil / signatureMatrix.size();
+
+
+\end{lstlisting}
+
+
 \section{Locality-Sensitive Hashing for Documents}
  This technique allows us to avoid computing the similarity of every pair of sets or their minhash signatures. If we are given signatures for the sets, we may divide them into bands, and only measure the similarity of a pair of sets if they are identical in at least one band. By choosing the size of bands appropriately, we can eliminate from consideration most of the pairs that do not meet our threshold of similarity.
  \medskip 
@@ -158,10 +171,11 @@ Where:
 int hash_vec(V) {
 	seed = V.size();
 	for each i in V do:
-		seed = seed XOR (i + 0x9e3779b9 + (seed << 6) + (seed >> 2));	
+		seed = seed XOR (i + 0x9e3779b9 + (seed << 6) + (seed >> 2));
 		//operands << and >> are shifting left and right respectively x bits
 	return seed;
 }
+
 \end{lstlisting}
  \medskip 
   
@@ -181,19 +195,6 @@ vector<set<string>> docShing){
 }
 \end{lstlisting}
 \medskip
-
-\subsection{Get the similarity}
-\begin{lstlisting}
-float sim(Matrix<unsigned int> signatureMatrix, int a, int b)
-    float simil = 0;
-    for int i = 0 to signatureMatrix.size() do:
-        if(signatureMatrix[i][a] == signatureMatrix[i][b])
-						then ++simil;
-    
-    return simil / signatureMatrix.size();
-
-
-\end{lstlisting}
 
 \begin{large}Funció que ens ordena un parell posant el més gran com a segon.
 \end{large}
@@ -246,26 +247,6 @@ main()
  
  \end{lstlisting}
  
-\section{Distance Measures}
-
-In this section we shall take a break to study the notions of distance measure.
-Suppose we have two points (i.e. x and y), a distance measure on them is a function d(x,y) that produces a real number and satisfies the following properties:
-\begin{itemize}
-\item d(x,y) $\geq$ 0 
-
-\item d(x,y) = 0 $\iff$ x = y 
-
-\item d(x,y) $\leq$ d(x,z) + d(z,y) (this is called the triangle inequality)
-\end{itemize}
-
-
-\subsection{Jaccard Distance}
-
-We define the Jaccard distance of two sets x and y as d(x,y) = 1 - SIM(x,y). Note that the Jaccard similarity is the probability that a random hash function maps x and y to the \textit{same} value, that means d(x,y) is the probablility that a random hash function sends them to \textit{different} values.
-
-\subsection{Edit Distance}
-
-
 \section{Hashing}
 
 Hashing is a technique for dimensionality reduction. It uses a hash function that is any function that can be used to map data ( called a key) of arbitrary size to data of a fixed size (called a hash value or hash). That hash is a sum up of everything that is in the data. You can never make it backwards from the hash to the data.
@@ -299,6 +280,22 @@ Where:
 \end{itemize}
 
 When using the division method, we usually avoid certaing values of $m$. For example, $m = 2^p$ for some integer $p$, then $h(k)$ would be just the $p$-lowest-order bits of $k$. A prime value is often a good choice of $m$.
+
+\begin{center}
+\begin{large}
+Pseudocode Modular Hashing
+\end{large}
+\end{center}
+
+\begin{lstlisting}[mathescape=true]
+ModularHashing(k)
+	$x \leftarrow the \ maximum \ value \ possible \ of \ k $
+	$a \leftarrow random \ number \ mod\  (x) $
+	$b \leftarrow random \ number \ mod\  (x) $
+	$m \leftarrow a \ prime \ number \geq x $
+	$value \leftarrow a*k + b \ mod\  (m) $
+
+\end{lstlisting}
 
 \textbf{The source code for this section can be found in `\textit{ModularHash.cc}'.}
 \bigskip
