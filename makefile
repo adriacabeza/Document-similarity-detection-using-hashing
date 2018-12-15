@@ -11,6 +11,8 @@ jocProvesJaccApprox: jocProvesJaccApprox.cc jaccardaprox.o kshingles.o ModularHa
 	$(CC) $(CFLAGS) -o  jocProvesJaccApprox jocProvesJaccApprox.cc jaccard.o jaccardaprox.o kshingles.o ModularHash.o MultiplicativeHash.o MurmurHash3.o
 jocProvesJaccSim: jocProvesJaccSim.cc jaccardaprox.o kshingles.o ModularHash.o MultiplicativeHash.o MurmurHash3.o
 	$(CC) $(CFLAGS) -o  jocProvesJaccSim jocProvesJaccSim.cc jaccard.o jaccardaprox.o kshingles.o ModularHash.o MultiplicativeHash.o MurmurHash3.o
+jocProvesJaccSimLsh: jocProvesJaccSimLsh.cc jaccardaprox.o kshingles.o ModularHash.o MultiplicativeHash.o MurmurHash3.o
+	$(CC) $(CFLAGS) -o  jocProvesJaccSimLsh jocProvesJaccSimLsh.cc jaccard.o jaccardaprox.o kshingles.o ModularHash.o MultiplicativeHash.o MurmurHash3.o
 ModularHash.o: ModularHash.cc
 	$(CC) $(CFLAGS) -c ModularHash.cc
 MultiplicativeHash.o: MultiplicativeHash.cc
