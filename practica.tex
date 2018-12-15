@@ -161,7 +161,6 @@ sim(signatureMatrix,a,b)
 
 \end{lstlisting}
 
-
 \section{Locality-Sensitive Hashing for Documents}
  This technique allows us to avoid computing the similarity of every pair of sets or their minhash signatures. If we are given signatures for the sets, we may divide them into bands, and only measure the similarity of a pair of sets if they are identical in at least one band. By choosing the size of bands appropriately, we can eliminate from consideration most of the pairs that do not meet our threshold of similarity.
  \medskip 
@@ -199,72 +198,56 @@ fill(characMatrix, shingles,docShing){
 \end{lstlisting}
 \medskip
 
-\subsection{Filling the signature matrix}
+\subsection{Computing the signature matrix}
+To compute the signature matrix we use one of the three algorithms.
+\begin{itemize}
+\item modular hashing
+\item multiplicative hashing
+\item murmur hashing 
+\end{itemize}
+Albeit those are only to compute the hash to do row permutations, we follow a general schema to fill it that goes as it follows:
 \begin{lstlisting}
-fill(Matrix<unisgned int> repMatrix, set<string> shingles, 
-vector<set<string>> docShing){
-	set iterator it = shingles.begin();	
-	for i = 0 to repMatrix.size() do:
-		repMatrix[i][0] = i;
-		string shingle = shingles.get(it);
-		it++; 
-		for j = 1 to repMatrix[0].size() do:
-			if(docShing[j-1].contains(shingle))then repMatrix[i][j] = 1;
-				//el programa en columna j conte el shingle "shingle"
-			else repMatrix[i][j] = 0;
-}
+initialize signature matrix with infinity values
+for i = 0 to characterisicMatrix.size() do:
+	for j = 0 to characteristicMatrix[0].size() do:
+		if(characteristicMatrix[i][j] == 1) then
+			for k = 0 to h do:	//h is the number of hash functions that we need
+				rowPermutated <- value of hash algorithm designed for row i
+				//note that we always use the same algorithm
+				if(rowPermutated < signatureMatrix[k][j]) signatureMatrix[k][j] = rowPermutated;
 \end{lstlisting}
 \medskip
 
-\begin{large}Funció que ens ordena un parell posant el més gran com a segon.
+
+\subsection{Computing the LSH and getting the candidate pairs}
+The return value of this function is a set of pairs where each pair represents a candidate to evaluate. We choose to return them as a set to avoid having to check a and b and then maybe later b and a again.
+\begin{lstlisting}
+LSH(signatureMatrix,r,h)
+    candidats;                     
+    bucket;
+    for i = 0 to h adding each time r to i (i+=r) do:
+        bucket.clear();
+        for j = 0 to signatureMatrix[0].size() do:
+            compute the row for document j;
+            doc1 = hash_vec(row);
+            if(bucket contains doc1)
+                for l = 0 to size of the bucket that stores all documents with value doc1 
+                    insert in candidats every possible pair that can be done with j and all documents that were here beforehand.
+                we add j to the bucket that represents the value doc1
+            else
+                we create another place for rows with value doc1 and we store j there
+
+    return candidats;
+
+ \end{lstlisting}
+\begin{large}
+Function that orders a pair placing the smallest number as the first.
 \end{large}
 
 \begin{lstlisting}
 parella_inc(int a, int b){
 	if(a < b ) then return pair(a,b);
 	else return pair(b,a);
-
-main()
-    set<string> shingles,aux;	
-    //set of the total of shingles we have
-     and an auxiliar for each document
-    vector<set<string>> docShing; 
-   //for each document we save its set of shingles
-    for i = 1 to number of documents do:
-        aux = kshingles(file[i], 9, false, true, true);
-        shingles.add(aux);
-        docShing[i] = aux;
-    Matrix<unsigned int> repMatrix (shingles.size(),
-     vector<unsigned int> (numer of files +1 ));
-    fill(repMatrix, shingles, docShing);
-    int b, r, h;
-    cin >> b >> r; //number of bands and rows
-    h = r*b;
-    Matrix<unsigned int> signatureMatrix
-     (h, vector<unsigned int> (number of files, INFINITY));
-    hashing of choice
-    set<pair<unsigned int,unsigned int>> candidats;                     
-    map<unsigned int,vector<unsigned int>> bucket;
-    for i = 0 to h do:
-        bucket.clear();
-        for j = 0 to number of documents do:
-            vector<unsigned int> row;
-            for k = 0 to r do:
-                row.push_back(signatureMatrix[i+k][j]);
-                //computing rows
-            unsigned int doc1 = hash_vec(row);
-			if(bucket.containsKey(doc1)) then
-			//we find a row that has the same hash signature
-				for l = 0 to bucket[doc1].size() do: 
-				//we may have several rows with the same hash signature that 
-				//means they are all candidates with each other
-					candidats.insert(parella_inc(bucket[doc1][l],j));
-				           
-            	bucket[doc1].push_back(j);
-            else 
-            	bucket[doc1] = vector<unsigned int>( 1 , j);
-}
- 
  \end{lstlisting}
  
 \section{Hashing}
@@ -313,7 +296,7 @@ ModularHashing(k)
 	$a \leftarrow random \ number \ mod\  (x) $
 	$b \leftarrow random \ number \ mod\  (x) $
 	$m \leftarrow a \ prime \ number \geq x $
-	$value \leftarrow a*k + b \ mod\  (m) $
+	$value \leftarrow a \times k + b \ mod\  (m) $
 
 \end{lstlisting}
 
@@ -555,6 +538,8 @@ C++ Standard Template Library,
 \ Source: \url{cplusplus.com/reference/stl/}
 
 
+
+
 \bibitem{MurmurHash, Wikipedia}
 \textit{MurmurHash}. \ Source: \url{https://en.wikipedia.org/wiki/MurmurHash}
 
@@ -577,7 +562,8 @@ S.\ Yar [Developer's Catalog By Sahib Yar]
 T.\ Scoot [Computerphile]
 \textit {Hashing Algorithms and Security - Computerphile}, (Youtube, Nov 8, 2013), Retrieved from: \url{https://www.youtube.com/watch?v=b4b8ktEV4Bg&t=181s}
 
-
+\bibitem{Latex}
+L.\ Lamport, \textit{LATEX: a document preparation system: user's guide and reference manual} (Addison-Wesley Pub. Co., cop. 1994)
 
 \end{thebibliography}
 
