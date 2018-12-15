@@ -4,9 +4,9 @@ from matplotlib.ticker import MaxNLocator
 from collections import defaultdict
 import math
 
-print("Quin grafic vols fer? OPCIONS: \n 0: Jaccard Similarity value with time \n 1: Jaccard Similarity with time and k-shingle \n 2: For each Hash Function the time for the approximation \n 3: Time of execution between Jaccard Similarity and the approximation\n 4: Jaccard similarity vs Jaccard similarity approximation\n")
+print("Quin grafic vols fer? OPCIONS: \n 0: Jaccard Similarity value with k-shingle size \n 1: Jaccard Similarity with time and k-shingle \n 2: For each Hash Function the time for the approximation \n 3: Time of execution between Jaccard Similarity and the approximation\n 4: Jaccard similarity vs Jaccard similarity approximation\n")
 a = int(input())
-if a == 0 :  #Plot severals Jaccard Similarity value with time
+if a == 0 :  #Plot severals Jaccard Similarity value with k-shingles size
     JaccardSimilarity = defaultdict(list)
     with open("./output_data/lorem_out_sim.txt","r") as csv_fileTime:
         csv_reader = csv.reader(csv_fileTime, delimiter='\t')
@@ -19,7 +19,7 @@ if a == 0 :  #Plot severals Jaccard Similarity value with time
     plt.xlabel("K-shingles Size")
 
     for i in range(1,len(JaccardSimilarity)):
-        plt.plot(JaccardSimilarity[0],JaccardSimilarity[i],color='red',alpha=0.005)
+        plt.plot(JaccardSimilarity[0],JaccardSimilarity[i],color='red',alpha=0.05)
 
     plt.savefig('JaccardSimilarityValueKshingles.pdf')
     plt.show()
