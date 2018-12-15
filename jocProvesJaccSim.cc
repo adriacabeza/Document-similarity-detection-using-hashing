@@ -11,42 +11,35 @@ ofstream outFileSim, outFileTime;
 
 int main(){
     vector<string> paths {"./input_texts/lorem_0.txt","./input_texts/lorem_1.txt"};
+    int k = 9;
 
-    vector<int> ks {3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
-    //vector<int> ks {15, 16};
-    outFileTime.open("./output_data/lorem_jacc_vs_approx_time.txt");
+    outFileTime.open("./output_data/lorem_jacc_vs_sim.txt");
     outFileTime << setprecision(6) << fixed;
 
-    //int k = 9;
-
-
-    for(int k : ks){
-
-        outFileTime << k;
-        set<string> shingles_union;
-        vector<set<string>> shingles_doc(paths.size());
-        for(int p = 0; p < paths.size(); ++p){
-            inFile.open(paths[p]);
-            shingles_doc[p] = kshingles(&inFile, k, false, true, true);
-            shingles_union.insert(shingles_doc[p].begin(), shingles_doc[p].end());
-            inFile.close();
-        }
-
-        //Normal Jaccard
-        set<string> A, B;
-        clock_t start = clock();
-        inFile.open(paths[0]);
-        A = shingles_doc[0];
+    outFileTime << k;
+    set<string> shingles_union;
+    vector<set<string>> shingles_doc(paths.size());
+    for(int p = 0; p < paths.size(); ++p){
+        inFile.open(paths[p]);
+        shingles_doc[p] = kshingles(&inFile, k, false, true, true);
+        shingles_union.insert(shingles_doc[p].begin(), shingles_doc[p].end());
         inFile.close();
+    }
 
-        inFile.open(paths[1]);
-        A = shingles_doc[1];
-        inFile.close();
+    //Normal Jaccard
+    set<string> A, B;
+    clock_t start = clock();
+    inFile.open(paths[0]);
+    A = shingles_doc[0];
+    inFile.close();
 
-        float sim_jacc =Jaccard(A,B);
+    inFile.open(paths[1]);
+    A = shingles_doc[1];
+    inFile.close();
 
-        outFileTime << "\t" << double(clock()-start)/CLOCKS_PER_SEC;
+    float sim_jacc =Jaccard(A,B);
 
+    for(int i = 1; i < 30; i++){
         //Approx
         int b = 5;
         int r = 5;
@@ -65,6 +58,10 @@ int main(){
         cout << "Done: K = " << k << endl;
         outFileTime << endl;
     }
+    outFileTime << endl;
+    //cout << "Done: K = " << k << endl;
+
+
     outFileTime.close();
     return 0;
 }
