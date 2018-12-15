@@ -37,7 +37,6 @@ int main(){
 
     float sim_jacc = Jaccard(A,B);
 
-    //for(int t = 1; t < 300; t++){
     for(int t = 1; t < 300; t++){
         //Approx
         vector<vector<unsigned int> > charactMatrix =  characteristicMatrix(shingles_doc, shingles_union);

@@ -23,7 +23,7 @@ void writeVector(const vector<string>& A, int i,string nom){
 
 int main(){
     int n;
-    cout << "How may permutations do you want?"<<endl;
+    cout << "How many permutations do you want?"<<endl;
     cin>>n; 
     string testline;
     string nom;
