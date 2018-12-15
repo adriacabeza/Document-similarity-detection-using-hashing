@@ -7,16 +7,15 @@
 
 using namespace std;
 ifstream inFile;
-ofstream outFileSim, outFileTime;
+ofstream outFileSim;
 
 int main(){
-    vector<string> paths {"./input_texts/lorem_0.txt","./input_texts/lorem_1.txt"};
+    vector<string> paths {"./input_texts/lorem_99.txt","./input_texts/lorem_100.txt"};
     int k = 9;
 
-    outFileTime.open("./output_data/lorem_jacc_vs_sim.txt");
-    outFileTime << setprecision(6) << fixed;
+    outFileSim.open("./output_data/lorem_jacc_vs_sim.txt");
+    outFileSim << setprecision(6) << fixed;
 
-    outFileTime << k;
     set<string> shingles_union;
     vector<set<string>> shingles_doc(paths.size());
     for(int p = 0; p < paths.size(); ++p){
@@ -28,40 +27,32 @@ int main(){
 
     //Normal Jaccard
     set<string> A, B;
-    clock_t start = clock();
     inFile.open(paths[0]);
     A = shingles_doc[0];
     inFile.close();
 
     inFile.open(paths[1]);
-    A = shingles_doc[1];
+    B = shingles_doc[1];
     inFile.close();
 
-    float sim_jacc =Jaccard(A,B);
+    float sim_jacc = Jaccard(A,B);
 
-    for(int i = 1; i < 30; i++){
+    //for(int t = 1; t < 300; t++){
+    for(int t = 1; t < 300; t++){
         //Approx
-        int b = 5;
-        int r = 5;
-        int h = b*r;
         vector<vector<unsigned int> > charactMatrix =  characteristicMatrix(shingles_doc, shingles_union);
         vector<vector<unsigned int> > signatureMatrix;
 
         //Modular Hashing
-        start = clock();
-        signatureMatrix =  modularHashing(charactMatrix, h);
+        signatureMatrix =  modularHashing(charactMatrix, t);
 
         float sim_approx = sim(signatureMatrix, 0, 1);
 
-        outFileTime << "\t" << double(clock()-start)/CLOCKS_PER_SEC;
+        outFileSim << t << "\t" << sim_jacc << "\t" << sim_approx << endl;
 
-        cout << "Done: K = " << k << endl;
-        outFileTime << endl;
+        cout << "Done: t = " << t << endl;
     }
-    outFileTime << endl;
-    //cout << "Done: K = " << k << endl;
 
-
-    outFileTime.close();
+    outFileSim.close();
     return 0;
 }

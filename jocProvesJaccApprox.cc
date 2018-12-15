@@ -40,7 +40,7 @@ int main(){
         inFile.close();
 
         inFile.open(paths[1]);
-        A = shingles_doc[1];
+        B = shingles_doc[1];
         inFile.close();
 
         float sim_jacc =Jaccard(A,B);
