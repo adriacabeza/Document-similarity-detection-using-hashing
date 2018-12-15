@@ -314,8 +314,13 @@ Where:
 \begin{itemize}
 \item $kA  \times mod(1)$  is the fractional part of $kA$, that is, $kA- \lfloor kA \rfloor$
 \end{itemize}
-An advantage of the multiplication method is that the value of m is not critical. We typically choose it to be a power of 2 ($m = 2^p$ for some integer $p$), since we can then easily implement the function on most computers.
-\\
+An advantage of the multiplication method is that the value of m is not critical. We typically choose it to be a power of 2 ($m = 2^r$ for some integer $r$), since we can then easily implement the function on most computers.
+
+\vspace{0.4cm}
+Supposing that the word size of the machine is $w$ bits, that $k$ fits in a single word and $p$ is the number of bits that you want for the size of your hash value.
+
+ We restrict $A$ to be a fraction of the form, where s is an integer in the range $0<s<2^w$. We first mulitply k by the w-bit integer $s = A\times 2^w$. The result is a $|2 \times w| $-bit value. The desired p-bit hash value consists of the p most significant bits of $r_0$. 
+
 
 \begin{figure}[H]
 	\centering
@@ -325,6 +330,14 @@ An advantage of the multiplication method is that the value of m is not critical
 \end{figure}
 
 \bigskip
+
+Although this method works with any value of the constant A, it works better with some values than with others. The optimal choice depends on the characteristics of the data being hashed. Donald Knuth suggest that...
+
+$ A = (\sqrt{5} -1)/2 \simeq 0.6180339887  $
+
+...is likely to work well. So that's why we used this value as an starting point to generate different multiplicative hash functions.
+\bigskip
+
 \begin{center}
 \begin{large}
 Pseudocode Multiplicative Hashing
@@ -332,31 +345,19 @@ Pseudocode Multiplicative Hashing
 \end{center}
 
 \begin{lstlisting}[mathescape=true]
-MultiplicativeHashing(k,len)
+MultiplicativeHashing(k,p)
 
 	$A \leftarrow (\sqrt{5} -1)/2 \simeq 0.6180339887 $
 	$s \leftarrow A\times 2^w$
 	$r \leftarrow k \times s$ 
 	$r_0 \leftarrow r\ mod\  (2^w) $ 
-	$value \leftarrow r_0 >> (w-len)$
+	$value \leftarrow r_0 >> (w-p)$
 
 \end{lstlisting}
 
 \textbf{The source code for this section can be found in `\textit{MultiplicativeHash.cc}'.}
 \bigskip
 
-\vspace{0.7cm}
-Supposing that the word size of the machine is $w$ bits, that $k$ fits in a single word and $len$ is the number of bits that you want for the size of your hash value.
-
- We restrict $A$ to be a fraction of the form, where s is an integer in the range $0<s<2^w$. We first mulitply k by the w-bit integer $s = A\times 2^w$. The result is a $|2 \times w| $-bit value. The desired len-bit hash value consists of the len most significant bits of $r_0$. 
-
-%\includegraphics[scale=1]{multiplicative.pdf} 
-
-Although this method works with any value of the constant A, it works better with some values than with others. The optimal choice depends on the characteristics of the data being hashed. Donald Knuth suggest that...
-
-$ A = (\sqrt{5} -1)/2 \simeq 0.6180339887  $
-
-...is likely to work well. So that's why we used this value as an starting point to generate different multiplicative hash functions.
 
 
 \subsubsection{Murmur Hash}
@@ -421,9 +422,9 @@ Murmur3(key, len, seed)
 
 \subsection{Generating the data} \label{generatingData}
 
-To generate the data for our experiments we have used the random\_shuffle function inside the C++ STL which rearranges the elements randomly. The function swaps the value of each element with that of some other randomly picked element. Its complexity is $O(n)$ with $n$ being  the distance between first and last minus one.
+To generate the data for our experiments we have used the \textit{random\_ shuffle} function inside the C++ STL which rearranges the elements randomly of a vector. The function swaps the value of each element with that of some other randomly picked element. Its complexity is $O(n)$ with $n$ being  the distance between first and last minus one.\\
 
-As it can be seen, we traverse all the document once to generate a vector of strings containing all the words and then we shuffle the vector and write the result in a document as many times as permutations of a document we want. \\
+The algorithm we implemented to generate our data consists in traversing all the document once to generate a vector of strings containing all the words, then, as many times as permutations we want, we shuffle the vector and write the result in a document. \\
 
 \section{Experiments}
 We designed some experiments in order to test our algorithms, and discover how some of their variables affect the outcome.
