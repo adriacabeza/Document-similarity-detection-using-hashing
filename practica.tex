@@ -1,6 +1,7 @@
 \documentclass[12pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{cite}
+\usepackage{float}
 \usepackage{listings}
 \usepackage[scale=0.75]{geometry}
 \usepackage[hidelinks]{hyperref}
@@ -98,6 +99,9 @@ Jaccard(A, B){
 }
 
 \end{lstlisting}
+
+\textbf{The source code for this section can be found in `\textit{jaccard.cc}'.}
+\bigskip
 
 If we take in account the cost of building a set we should observe that for unsorted sequences our cost would be incremented to $O(n \times log(N))$.
 
@@ -296,6 +300,8 @@ Where:
 
 When using the division method, we usually avoid certaing values of $m$. For example, $m = 2^p$ for some integer $p$, then $h(k)$ would be just the $p$-lowest-order bits of $k$. A prime value is often a good choice of $m$.
 
+\textbf{The source code for this section can be found in `\textit{ModularHash.cc}'.}
+\bigskip
 
 
 \subsection{Multiplicative Hashing}
@@ -312,13 +318,13 @@ Where:
 An advantage of the multiplication method is that the value of m is not critical. We typically choose it to be a power of 2 ($m = 2^p$ for some integer $p$), since we can then easily implement the function on most computers.
 \\
 
-\begin{figure}[!h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.7]{graphs/MultiplicativeHashingDiagram.pdf}
 	\caption{Multiplicative Hashing}
 	\label{fig:MultiplicativeHashing}
 \end{figure}
-
+\bigskip
 \begin{center}
 \begin{large}
 Pseudocode Multiplicative Hashing
@@ -335,6 +341,9 @@ MultiplicativeHashing(k,len)
 	$value \leftarrow r_0 >> (w-len)$
 
 \end{lstlisting}
+
+\textbf{The source code for this section can be found in `\textit{MultiplicativeHash.cc}'.}
+\bigskip
 
 \vspace{0.7cm}
 Supposing that the word size of the machine is $w$ bits, that $k$ fits in a single word and $len$ is the number of bits that you want for the size of your hash value.
@@ -398,6 +407,10 @@ Murmur3(key, len, seed)
 
 \end{lstlisting}
 
+\textbf{The source code for this section can be found in `\textit{MurmurHash3.cc}'.}
+\bigskip
+
+
 \section{Data} %canviar el nom de la secció
 
 \subsection{Real-world data}
@@ -445,7 +458,7 @@ And, on the other hand, for values of $k$ that span more than a word, the simila
 As mentioned in \autoref{kShingles}, a good and reasonable value for $k$ is 9.
 For $k = 9$, the similarity found between all our random documents is less than 0.1, which corresponds with the fact that the documents don't really share sentences or many contiguous words.
 
-\begin{figure}[!h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.5]{graphs/JaccardSimilarityValueKshingles.pdf} 
 	\caption{Relation between the K-shingles size and the similarity (for all of the possible pairwise combinations of 100 random permutations of a 50 words document)}
@@ -456,7 +469,7 @@ For $k = 9$, the similarity found between all our random documents is less than 
 \textbf{The source code for this experiment can be found in `\textit{jocProvesHashTimes.cc}'.}
 \bigskip
 
-\begin{figure}[!h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.55]{graphs/HashFunctionsJaccardAproxTime.pdf} 
 	\caption{Difference between the time used by different Hashing Functions}
@@ -473,7 +486,7 @@ For $k = 9$, the similarity found between all our random documents is less than 
 \textbf{The source code for this experiment can be found in `\textit{jocProvesJaccSim.cc}'.}
 \bigskip
 
-\begin{figure}[!h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.55]{graphs/JaccardSimilarityVsApproximation.pdf}
 	\caption{Approximated Jaccard Similarity for a pair of 2 documents with 60\% real similarity (K-shingles size = 9)}
