@@ -107,7 +107,7 @@ If we take in account the cost of building a set we should observe that for unso
 
 
 %In the case of finding similarities in text a slightly different approach is required. First, it is important to observe that testing whether two documents are exact duplicates is easy; just comparing the two documents characther-by-character would work. However, even if the documents are not identical, they can share large portions of their text.
-\section{Representation of documents}
+\section{Representation of documents} \label{Representation}
 
 To identify lexically similar documents we need a proper way to represent documents as sets and the most effective way is to construct from the document the set of short strings that appear within it. If we do so, even if the documents have different sizes or those sentences appear in different order we will find several common elements. In the next section we will introduce some of the approaches of shingling and its variations.
 
@@ -197,7 +197,7 @@ hash_vec(V) {
  \medskip 
 
 \subsection{Filling the characteristic matrix}
-The characteristic matrix is the one we use to represent the shingles that each document has \textit{see \autoref{Representation}}. The complexity of this algorithm is $O(n^2)$ where n is the total number of shingles that we get as input.
+The characteristic matrix is the one we use to represent the shingles that each document has ({see \autoref{Representation}). The complexity of this algorithm is $O(n^2)$ where n is the total number of shingles that we get as input.
 \begin{itemize}
 \item characMatrix is the characteristic matrix
 \item shingles is a set containing all the shingles we have in total

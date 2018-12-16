@@ -71,7 +71,7 @@ vector<vector<unsigned int>> multiplicativeHashing(const vector<vector<unsigned 
             if(repMatrix[i][j] == 1){
                 for(int k = 0; k < h; ++k){
                     value = computeValue(i,repMatrix.size(),seeds[k]);
-                    else if(value < signatureMatrix[k][j] && value != 0) {
+                    if(value < signatureMatrix[k][j] && value != 0) {
                         signatureMatrix[k][j] = value;
                     }
                 }
