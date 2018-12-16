@@ -301,7 +301,7 @@ LSH(signatureMatrix,r,h)
 \textbf{Our C++ implementation can be found in function \textit{LSH} in `\textit{jaccardaprox.cc}'}
 \newline
  
-\section{Hashing}
+\section{Hashing} \label{hashing}
 
 Hashing is a technique for dimensionality reduction. It uses a hash function that is any function that can be used to map data (called a key) of arbitrary size to data of a fixed size (called a hash value or hash). That hash is a sum up of everything that is in the data. You can never make it backwards from the hash to the data.
 
@@ -411,7 +411,7 @@ MultiplicativeHashing(k,p)
 
 
 
-\subsubsection{Murmur Hash}
+\subsection{Murmur Hash}
 
 Consists in applying some multiplications (MU) and rotations (R) to the entry bytes to obtaint the hash. It uses multiple constants which are decided to make it a good hash function by passing 2 basic tests, the Avalanche Test that evaluates how the output changes if the input is slightly modified and the statistical Chi-Squared Test. We have based the implementation of this hash function on Austin Appleby's implementation. Source : \url{https://sites.google.com/site/murmurhash/}\\
 \medskip
@@ -522,7 +522,7 @@ For $k = 9$, the similarity found between all our random documents is less than 
 \textbf{The source code for this experiment can be found in `\textit{jocProvesHashTimes.cc}'.}
 \bigskip
 
-We have tested different k sizes for our k-shingles and three different hash functions in the process of filling the signature matrix to check their different performance. The process of filling the signature matrix is explained in the section 7 and our hash functions are MurmurHash3, Multiplicative Hash and Modular Hash and can be seen more deeply in the section 8.
+We have tested different k sizes for our k-shingles and three different hash functions in the process of filling the signature matrix to check their different performance. The process of filling the signature matrix is explained in the \autoref{computingSignMatrix} and our hash functions are MurmurHash3, Multiplicative Hash and Modular Hash and can be seen more deeply in \autoref{hashing}.
 
 As we expected initially, the time increases as the size of the k-shingle increases. This behavior can be explained using the fact that the number of different shingles we would have to work with would be bigger. It is trivial to observe that the number of different k-shingles is going to have a growing tendency based on their size. 
 
