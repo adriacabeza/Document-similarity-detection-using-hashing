@@ -117,7 +117,7 @@ A k-shingle (or word-k-gram) is a sequence of consecutive words of size k. Intui
 \\
 There are some variations regarding on how white space (blank, tab, newline, etc) is treated. Also there is a variation that works with a bag of shingles instead of a set to keep the number of appearances of a shingle. \medskip \\
 \\
-How large k should be depends on how long typical documents are and how large the set of typical characters is. For example if we pick k=4 there are $27^4=531441 $ possible k-shingles. However, the calculation can be a little bit more subtle because all the characters do not appear with equal probability. A good rule of thumb is to imagine that there are only 20 characters and estimate the number of k-shingles as $20^k$. For large documents, choice k = 9 is considered safe. 
+How large k should be depends on how long typical documents are and how large the set of typical characters is. For example if we pick k = 4 there are $27^4=531441 $ possible k-shingles. However, the calculation can be a little bit more subtle because all the characters do not appear with equal probability. A good rule of thumb is to imagine that there are only 20 characters and estimate the number of k-shingles as $20^k$. For large documents, choice k = 9 is considered safe. 
 
 \subsubsection{Hashing Shingles}
 
@@ -136,7 +136,7 @@ $$  sim(a,b) = \frac{1}{t} \sum_{i=1}^{t}\left\{
 \}\right.  $$\medskip
 
 
-To implement the idea of generating randomly permuted rows, we don't actually generate the random numbers, since it is not feasible to do so for large datasets, e.g. For a million items you will have to generate a million integers …, not to mention you have to do this for each signatures that you wish to generate. One way to avoid having to generate n permuted rows is to pick n hash functions in the form of :
+To implement the idea of generating randomly permuted rows, we don't actually generate the random numbers, since it is not feasible to do so for large datasets, e.g. For a million items you will have to generate a million integers..., not to mention you have to do this for each signatures that you wish to generate. One way to avoid having to generate n permuted rows is to pick n hash functions in the form of :
 \medbreak
 \begin{center}
 $ h(x)=(ax+b)\  mod(c)$
@@ -585,7 +585,7 @@ In the experiment we have observed how the similarity changes depending on the n
 All the tests in this experiment were done with a pair of documents with 60\% similarity and with k-shingles of size 9, which is a good value for $k$ as we argued in \autoref{kShingles}. 
 
 \bigskip
-As we expected when the number of hash functions is small the difference between the real similarity and the approximation differs a lot. Moreover, as the number of hash functions increases the difference of similarity decreases significantly.  The reason we believe this happens is because albeit the hash functions are not perfect and create collisions, the number of "good" permutations outnumbers the ones that collide. Having more functions means that in overall we have more "good" permutations and thus the impact that the "bad" ones have is less significant.
+As we expected when the number of hash functions is small the difference between the real similarity and the approximation differs a lot. Moreover, as the number of hash functions increases the difference of similarity decreases significantly.  The reason we believe this happens is because albeit the hash functions are not perfect and create collisions, the number of ``good'' permutations outnumbers the ones that collide. Having more functions means that overall we have more ``good'' permutations and thus the impact that the ``bad'' ones have is less significant.
 
 
 \begin{figure}[H]
