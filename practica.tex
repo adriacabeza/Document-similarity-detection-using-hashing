@@ -585,7 +585,7 @@ In the experiment we have observed how the similarity changes depending on the n
 All the tests in this experiment were done with a pair of documents with 60\% similarity and with k-shingles of size 9, which is a good value for $k$ as we argued in \autoref{kShingles}. 
 
 \bigskip
-As we expected when the number of hash functions is small the difference between the real similarity and the approximation differs a lot. Moreover, as the number of hash functions increases the difference of similarity decreases significantly.  The reason we believe this happens is because albeit the hash functions are not perfect and create collisions, the number of "good" permutations outnumbers the ones that collide. Having more functions means that in overall we have more permutations and thus the impact that the "bad" ones have is less significant.
+As we expected when the number of hash functions is small the difference between the real similarity and the approximation differs a lot. Moreover, as the number of hash functions increases the difference of similarity decreases significantly.  The reason we believe this happens is because albeit the hash functions are not perfect and create collisions, the number of "good" permutations outnumbers the ones that collide. Having more functions means that in overall we have more "good" permutations and thus the impact that the "bad" ones have is less significant.
 
 
 \begin{figure}[H]
