@@ -9,7 +9,7 @@
 \usepackage{mathtools}
 \usepackage{xcolor} % for setting colors
 \author{Carlos Bergillos, Antoni Rambla, Adrià Cabeza\\ Departament de Computació}
-\title{Document similarity detection using hasing }
+\title{Document similarity detection using hashing }
 \date{\today}
 \lstset{
     numbers=none,
@@ -469,6 +469,7 @@ Murmur3(key, len, seed)
 \item \textbf{Star Wars: Heir to the Empire}:  An Star Wars novel by Timothy Zahn. 
 \item \textbf{50-word lorem ipsum}: The lorem ipsum text is widely used as a place-holder for text so we decided to take 50 words and make our tests based on permutations of it.
 \end{itemize}
+In our experiments, to compute similarities and approximations we have done several tests with every kind of document, our most successful ones have been with the smallest (lorem ipsum) as we needed some patterns to appear. We can see that in some cases we have iterated with hundreds of documents to achieve that. 
 
 \subsection{Generating the data} \label{generatingData}
 
@@ -601,6 +602,7 @@ As we expected when the number of hash functions is small the difference between
 	\caption{Approximated Jaccard Similarity for a pair of 2 documents with 60\% real similarity (K-shingles size = 9)}
 	\label{fig:JaccardVsApprox}
 \end{figure}
+\section{Visualizing the data}
 
 \clearpage
 \section{Conclusions}
@@ -611,6 +613,9 @@ As we expected when the number of hash functions is small the difference between
 \item Of the hashing functions we evaluated, Modular Hashing is the one that performed the best. Resulting in significantly faster computation times than Multiplicative Hashing and Murmur Hashing.
 \item Trying to find pairs of similar documents by computing the Jaccard similarity for all the possible pairs is not feasible for large document sets. Jaccard approximation algorithms using minhash signatures produce a very similar result to the real Jaccard similarity, but with a fraction of the cost. And for very large documents sets, locality-sensitive hashing should be considered.
 \item Larger number of hash functions result in a better precision for the MinHash method.
+\item The bigger the number of documents to compare is, the more important is to use a LSH with the signature matrix as it will have a big impact on the required time.
+\item Choosing b and r carefully is important as it means that we can either get several documents which are very dissimilar together or we never band two documents that look the same. It is needed to think beforehand and choose an appropriate value. 
+\item It is important to explore different approaches and algorithms to improve either time or the quality of the solution, as we have seen if we only took the Jaccard similarity to compute how similar several documents are we would have gotten an exponential time. After taking the signature matrix (which already highly improves the speed) we use the LSH technique to further improve it.
 
 \end{enumerate}
 
@@ -651,6 +656,9 @@ C++ Standard Template Library,
 \bibitem{MurmurHash, Wikipedia}
 \textit{MurmurHash}. \ Source: \url{https://en.wikipedia.org/wiki/MurmurHash}
 
+\bibitem{MurmurHash, Github}
+\textit{MurmurHash alternative source}. \ Source: \url{https://github.com/aappleby/smhasher/wiki/MurmurHash3}
+
 \bibitem{Hash function}
 \textit{Hash function}. \ Source: \url{https://en.wikipedia.org/wiki/Hash_function}
 
@@ -672,6 +680,7 @@ T.\ Scoot [Computerphile]
 
 \bibitem{Latex}
 L.\ Lamport, \textit{LATEX: a document preparation system: user's guide and reference manual} (Addison-Wesley Pub. Co., cop. 1994)
+
 
 \end{thebibliography}
 
