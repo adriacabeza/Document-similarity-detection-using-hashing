@@ -1,18 +1,22 @@
 CC = g++
 CFLAGS = -std=c++11
 
+default: compjac permutacions jocProvesJaccard jocProvesJaccApprox jocProvesJaccSim jocProvesJaccSimLsh jocProvesLsh
+
 compjac: CompararDocumentsJaccard.cc jaccard.o kshingles.o
 	$(CC) $(CFLAGS) -o compjac CompararDocumentsJaccard.cc jaccard.o kshingles.o
 permutacions: permutacions.cc
 	$(CC) $(CFLAGS) -o permutacions permutacions.cc
 jocProvesJaccard: jocProvesJaccard.cc jaccard.o kshingles.o
-	$(CC) $(CFLAGS) -o  jocProvesJaccard jocProvesJaccard.cc jaccard.o kshingles.o
+	$(CC) $(CFLAGS) -o jocProvesJaccard jocProvesJaccard.cc jaccard.o kshingles.o
 jocProvesJaccApprox: jocProvesJaccApprox.cc jaccardaprox.o kshingles.o ModularHash.o MultiplicativeHash.o MurmurHash3.o
-	$(CC) $(CFLAGS) -o  jocProvesJaccApprox jocProvesJaccApprox.cc jaccard.o jaccardaprox.o kshingles.o ModularHash.o MultiplicativeHash.o MurmurHash3.o
+	$(CC) $(CFLAGS) -o jocProvesJaccApprox jocProvesJaccApprox.cc jaccard.o jaccardaprox.o kshingles.o ModularHash.o MultiplicativeHash.o MurmurHash3.o
 jocProvesJaccSim: jocProvesJaccSim.cc jaccardaprox.o kshingles.o ModularHash.o MultiplicativeHash.o MurmurHash3.o
-	$(CC) $(CFLAGS) -o  jocProvesJaccSim jocProvesJaccSim.cc jaccard.o jaccardaprox.o kshingles.o ModularHash.o MultiplicativeHash.o MurmurHash3.o
+	$(CC) $(CFLAGS) -o jocProvesJaccSim jocProvesJaccSim.cc jaccard.o jaccardaprox.o kshingles.o ModularHash.o MultiplicativeHash.o MurmurHash3.o
 jocProvesJaccSimLsh: jocProvesJaccSimLsh.cc jaccardaprox.o kshingles.o ModularHash.o MultiplicativeHash.o MurmurHash3.o
-	$(CC) $(CFLAGS) -o  jocProvesJaccSimLsh jocProvesJaccSimLsh.cc jaccard.o jaccardaprox.o kshingles.o ModularHash.o MultiplicativeHash.o MurmurHash3.o
+	$(CC) $(CFLAGS) -o jocProvesJaccSimLsh jocProvesJaccSimLsh.cc jaccard.o jaccardaprox.o kshingles.o ModularHash.o MultiplicativeHash.o MurmurHash3.o
+jocProvesLsh: jocProvesLsh.cc jaccardaprox.o kshingles.o ModularHash.o MultiplicativeHash.o MurmurHash3.o
+	$(CC) $(CFLAGS) -o jocProvesLsh jocProvesLsh.cc jaccard.o jaccardaprox.o kshingles.o ModularHash.o MultiplicativeHash.o MurmurHash3.o
 ModularHash.o: ModularHash.cc
 	$(CC) $(CFLAGS) -c ModularHash.cc
 MultiplicativeHash.o: MultiplicativeHash.cc
@@ -26,4 +30,4 @@ jaccard.o: jaccard.cc
 kshingles.o: kshingles.cc
 	$(CC) $(CFLAGS) -c kshingles.cc
 clean:
-	rm -f *.o jacap compjac compjac
+	rm -f *.o compjac permutacions jocProvesJaccard jocProvesJaccApprox jocProvesJaccSim jocProvesJaccSimLsh jocProvesLsh

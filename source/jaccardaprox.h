@@ -8,6 +8,7 @@
 #include <set>
 #include <cmath>
 #include <map>
+#include <climits>
 #include "kshingles.h"
 #include "ModularHash.h"
 #include "MultiplicativeHash.h"
