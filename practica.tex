@@ -405,7 +405,7 @@ MultiplicativeHashing(k,p)
 
 \subsubsection{Murmur Hash}
 
-Consists in applying some multiplications (MU) and rotations (R) to the entry bytes to obtaint the hash. It uses multiple constants which are decided to make it a good hash function by passing 2 basic tests, the Avalanche Test that evaluates how the output changes if the input is slightly modified and the statistical Chi-Squared Test. We have based the implementation of this hash function on Austin Appleby's implementation. Souce : \url{https://sites.google.com/site/murmurhash/}\\
+Consists in applying some multiplications (MU) and rotations (R) to the entry bytes to obtaint the hash. It uses multiple constants which are decided to make it a good hash function by passing 2 basic tests, the Avalanche Test that evaluates how the output changes if the input is slightly modified and the statistical Chi-Squared Test. We have based the implementation of this hash function on Austin Appleby's implementation. Source : \url{https://sites.google.com/site/murmurhash/}\\
 \medskip
 \begin{center}
 \begin{large}
@@ -576,7 +576,16 @@ In this case, we believe the cost is still quadratic, but with a way smaller sca
 
 \subsection{Precision of Jaccard Similarity Approximations}
 \textbf{The source code for this experiment can be found in `\textit{jocProvesJaccSimLsh.cc}'.}
+\medskip
+
+In the following experiment we wanted to test how precise the outputed similarity for the Jaccard Similarity Approximation is.
+
 \bigskip
+In the experiment we have observed how the similarity changes depending on the number of hash functions used. Also we have plotted the Jaccard Similarity value in order to see which is the real similarity for the pair of documents analysed and check how the precision changes. 
+All the tests in this experiment were done with a pair of documents with 60\% similarity and with k-shingles of size 9, which is a good value for $k$ as we argued in \autoref{kShingles}. 
+
+\bigskip
+As we expected when the number of hash functions is small the difference between the real similarity and the approximation differs a lot. Moreover, as the number of hash functions increases the difference of similarity decreases significantly.  The reason we believe this happens is %FICAR AQUÍ TONI
 
 
 \begin{figure}[H]
@@ -594,7 +603,8 @@ In this case, we believe the cost is still quadratic, but with a way smaller sca
 \item Larger sizes for the k-shingles result in longer computation times.
 \item Of the hashing functions we evaluated, Modular Hashing is the one that performed the best. Resulting in significantly faster computation times than Multiplicative Hashing and Murmur Hashing.
 \item Trying to find pairs of similar documents by computing the Jaccard similarity for all the possible pairs is not feasible for large document sets. Jaccard approximation algorithms using minhash signatures produce a very similar result to the real Jaccard similarity, but with a fraction of the cost. And for very large documents sets, locality-sensitive hashing should be considered.
-\item ...
+\item Larger number of hash functions result in a better precision for the Jaccard Similarity Approximation.
+
 \end{enumerate}
 
 %http://ethen8181.github.io/machine-learning/clustering_old/text_similarity/text_similarity.html
