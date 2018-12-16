@@ -119,7 +119,7 @@ There are some variations regarding on how white space (blank, tab, newline, etc
 \\
 How large k should be depends on how long typical documents are and how large the set of typical characters is. For example if we pick k=4 there are $27^4=531441 $ possible k-shingles. However, the calculation can be a little bit more subtle because all the characters do not appear with equal probability. A good rule of thumb is to imagine that there are only 20 characters and estimate the number of k-shingles as $20^k$. For large documents, choice k = 9 is considered safe. 
 
-\subsubsection{Hashing Shingles}
+\subsection{Hashing Shingles}
 
 Instead of using substrings directly as shingles, we can pick a hash function that maps strings of length k to some number of buckets and treat the resulting bucket number as the shingle. That process compacts our data and lets us manipulate shingles by single-word machine operations.
 
@@ -578,7 +578,7 @@ In this case, we believe the cost is still quadratic, but with a way smaller sca
 \textbf{The source code for this experiment can be found in `\textit{jocProvesJaccSimLsh.cc}'.}
 \medskip
 
-In the following experiment we wanted to test how precise the outputed similarity for the Jaccard Similarity Approximation is.
+In the following experiment we wanted to test how precise the outputed similarity for the MinHash method is. 
 
 \bigskip
 In the experiment we have observed how the similarity changes depending on the number of hash functions used. Also we have plotted the Jaccard Similarity value in order to see which is the real similarity for the pair of documents analysed and check how the precision changes. 
@@ -603,7 +603,7 @@ As we expected when the number of hash functions is small the difference between
 \item Larger sizes for the k-shingles result in longer computation times.
 \item Of the hashing functions we evaluated, Modular Hashing is the one that performed the best. Resulting in significantly faster computation times than Multiplicative Hashing and Murmur Hashing.
 \item Trying to find pairs of similar documents by computing the Jaccard similarity for all the possible pairs is not feasible for large document sets. Jaccard approximation algorithms using minhash signatures produce a very similar result to the real Jaccard similarity, but with a fraction of the cost. And for very large documents sets, locality-sensitive hashing should be considered.
-\item Larger number of hash functions result in a better precision for the Jaccard Similarity Approximation.
+\item Larger number of hash functions result in a better precision for the MinHash method.
 
 \end{enumerate}
 
