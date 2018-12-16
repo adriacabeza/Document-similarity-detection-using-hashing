@@ -17,10 +17,8 @@
 	breaklines=true,showstringspaces=false,
   	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
 	tabsize = 2,
-	language=C++
+	language=C
 }
-
-
 
 \begin{document}
   \maketitle  
@@ -172,16 +170,15 @@ sim(signatureMatrix,a,b)
 
 \section{Locality-Sensitive Hashing for Documents}
  This technique allows us to avoid computing the similarity of every pair of sets or their minhash signatures. If we are given signatures for the sets, we may divide them into bands, and only measure the similarity of a pair of sets if they are identical in at least one band. By choosing the size of bands appropriately, we can eliminate from consideration most of the pairs that do not meet our threshold of similarity.
- \newline
+ 
+ \bigskip
  We define the threshold as the value in which the probability of being taken as a candidate is 1/2, for low thresholds as soon as there is some similitude between documents, we will take them as candidates and vice-versa for high thresholds. An approximation to compute the value of the threshold is as it follows:
- $$Threshold = (1/b)^1^/^r$$
- Where b is the desired number of bands and r is the number of rows(note that $b*r = h$)
- \newline
+ $$Threshold = (1/b)^{1/r}$$
+ Where b is the desired number of bands and r is the number of rows (note that $b*r = h$)
+ 
+ \bigskip
 If we are looking for speed we want to set the threshold as high as possible so that we find only the documents that look more alike. If what we want is a thorough search, lowering it will allow us to find documents that may only have similar sections.
 \medskip 
- 
- \textbf{The source code for all subsections can be found in `\textit{jaccardaprox.cc}'.}
-\bigskip
  
 \subsection{Hash function used to hash a vector}
 This is the code used to hash a row. It consists on a series of XOR operations on each element of the vector together with a random hexadecimal number and the shifting the value of "seed" from the previous iteration some bits to the left and to the right. The time complexity of this algorithm is $O(n)$ being n the size of the vector. 
@@ -200,14 +197,20 @@ hash_vec(V) {
 }
 
 \end{lstlisting}
- \medskip 
 
-\subsection{Filling the characteristic matrix}
-The characteristic matrix is the one we use to represent the shingles that each document has ({see \autoref{Representation}). The complexity of this algorithm is $O(n^2)$ where n is the total number of shingles that we get as input.
+\bigskip
+\textbf{Our C++ implementation can be found in function \textit{hash\_vec} in `\textit{\mbox{jaccardaprox.cc}}'}
+
+\subsection{Filling the characteristic matrix} \label{fillingCharacMatrix}
+The characteristic matrix is the one we use to represent the shingles that each document has ({see \autoref{Representation}). 
+
+\bigskip
+The complexity of the algorithm we use to fill it is $O(n*m)$ where $n$ is number of rows of the matrix (the number of unique k-shingles) and $m$ is the number of columns of the matrix (the number of documents).
+
 \begin{itemize}
-\item characMatrix is the characteristic matrix
-\item shingles is a set containing all the shingles we have in total
-\item docShing is a vector of sets in which in position i we have the set of shingles of document i. 
+\item characMatrix is the characteristic matrix (empty at the beginning of the algorithm)
+\item shingles is ordered set containing all the shingles we have in total
+\item docShing is a vector of sets in which in position i we have the set of shingles for document i. 
 \end{itemize}
  \begin{center}
 \begin{large}
@@ -215,17 +218,19 @@ Pseudocode To Fill The Characteristic Matrix
 \end{large}
 \end{center}
  \begin{lstlisting}
-fill(characMatrix, shingles,docShing){
-    iterator it = shingles.begin();
-    for i = 0 to characMatrix.size() do:
-        shingle = *(it++);
-        for j = 0 to characMatrix[0].size() do:
-            if(docShing[j] contains(shingle)) then characMatrix[i][j] = 1;
-            else characMatrix[i][j] = 0;
+fill(characMatrix, shingles, docShing){
+    for each row i of characMatrix do:
+        for each column j of characMatrix do:
+            if docShing[j] contains shingles[i] do:
+            	characMatrix[i][j] = 1;
+            else
+            	characMatrix[i][j] = 0;
 \end{lstlisting}
-\medskip
 
-\subsection{Computing the signature matrix}
+\bigskip
+\textbf{Our C++ implementation can be found in function \textit{fill} in `\textit{\mbox{jaccardaprox.cc}}'}
+
+\subsection{Computing the signature matrix} \label{computingSignMatrix}
 The signature matrix is the one resulting from finding for each hash function that we have applied and for every document, the first row where there appears a 1 in its permutation.
 To compute the signature matrix we use one of the three algorithms.
 \begin{itemize}
@@ -233,7 +238,7 @@ To compute the signature matrix we use one of the three algorithms.
 \item multiplicative hashing
 \item murmur hashing 
 \end{itemize}
-The time complexity on this algorithm is tricky as we have to take into account the cost of the hashing algorithm used. Usually the time will be $O(n^2 * h * \zeta)$ where n is the number of shingles of the characteristic matrix, h is the number of hashing algorithms that we use and $\zeta$ is the cost of computing the hash value.
+The time complexity of this algorithm is tricky as we have to take into account the cost of the hashing algorithm used. Usually the time will be $O(n*m*h*\zeta)$ where $n$ and $m$ are the number of rows and columns of the characteristic matrix respectively, $h$ is the number of hashing algorithms that we use and $\zeta$ is the cost of computing the hash value.
 Albeit we use the algorithms only to compute the hash to do row permutations, we follow a general schema to fill it that goes as it follows:
 
  \begin{center}
@@ -243,65 +248,62 @@ Pseudocode To Compute The Signature Matrix
 \end{center}
 \begin{lstlisting}
 initialize signature matrix with infinity values
-for i = 0 to characterisicMatrix.size() do:
-	for j = 0 to characteristicMatrix[0].size() do:
+for each row i of signatureMatrix do:
+	for each column j of signatureMatrix do:
 		if(characteristicMatrix[i][j] == 1) then
 			for k = 0 to h do:	//h is the number of hash functions that we need
-				rowPermutated <- value of hash algorithm designed for row i
+				rowPermutated = value of hash algorithm for row i
 				//note that we always use the same algorithm
-				if(rowPermutated < signatureMatrix[k][j]) signatureMatrix[k][j] = rowPermutated;
+				if(rowPermutated < signatureMatrix[k][j])
+					signatureMatrix[k][j] = rowPermutated;
 \end{lstlisting}
-\medskip
 
+\bigskip
+\textbf{Our C++ implementations can be found in functions \textit{\mbox{modularHashing}}, \textit{\mbox{multiplicativeHashing}} and \textit{\mbox{murmurHashing}} in `\textit{\mbox{jaccardaprox.cc}}'}
 
 \subsection{LSH and candidate pairs}
-As we have mentioned in the beginning of this section, by choosing the size of bands and rows appropriately we augment the number of false positives, documents that have very little in common, or the number of false negatives, documents that have a lot of common but are not checked. The time complexity of this algorithm is $O(h * m * h/r * m )$ = $O(h^2 /r * m^2)$ (h$/$r is the cost of of making the rows and the last m is the worst case cost of the last for for all documents being the same(no hauria de ser $m^2$ ja que es sum de l=1 fins a m de l)) where: 
+As we have mentioned in the beginning of this section, by choosing the size of bands and rows appropriately we augment the number of false positives, documents that have very little in common, or the number of false negatives, documents that have a lot of common but are not checked. 
+
+\bigskip
+The time complexity for this algorithm in the worst case (when all the columns of the signature matrix are identical) is $O(b*m*(r+m)) = O(h*m^2)$ where: 
 \begin{itemize}
-\item h is the number of hash functions
 \item m is the number of documents
-\item r is the number of rows
+\item h is the total number of hash functions
+\item b is the number of bands
+\item r is the number of hash functions per band
 \end{itemize}
  \begin{center}
 \begin{large}
-Pseudocode To Do LSH
+LSH Pseudocode
 \end{large}
 \end{center}
 
 \begin{lstlisting}
 LSH(signatureMatrix,r,h)
-    candidats;                     
-    bucket;
-    for i = 0 to h adding each time r to i (i+=r) do:
+    set<unordered pair<integer,integer>> candidats;                     
+    map<integer, set<integer>> bucket;
+    for each band i of signatureMatrix do:
         bucket.clear();
-        for j = 0 to signatureMatrix[0].size() do:
-            compute the row for document j;
-            doc1 = hash_vec(row);
-            if(bucket contains doc1)
-                for l = 0 to size of the bucket that stores all documents with value doc1 
-                    insert in candidats every possible pair that can be done with j and all documents that were here beforehand.
-                we add j to the bucket that represents the value doc1
+        for each column j of signatureMatrix do:
+            doc1 = hash_vec of the elements in this band and column
+            if (bucket contains doc1 as key) do:
+            	for all integers k in bucket[doc1] do:
+            		add unordered pair<j, k> to candidats
+            	add j to bucket[doc1]
             else
-                we create another place for rows with value doc1 and we store j there
-
+            	bucket[doc1] = new set {j}
+            	
     return candidats;
 
  \end{lstlisting}
- We choose to return them as a set to avoid having to check a and b and then maybe later b and a again.
+
+\bigskip
+\textbf{Our C++ implementation can be found in function \textit{LSH} in `\textit{jaccardaprox.cc}'}
 \newline
-
-
-Function that orders a pair placing the smallest number as the first. The complexity is trivial here $O(1)$
-
-
-\begin{lstlisting}
-parella_inc(int a, int b){
-	if(a < b ) then return pair(a,b);
-	else return pair(b,a);
- \end{lstlisting}
  
-\section{Hashing}
+\section{Hashing} \label{hashing}
 
-Hashing is a technique for dimensionality reduction. It uses a hash function that is any function that can be used to map data ( called a key) of arbitrary size to data of a fixed size (called a hash value or hash). That hash is a sum up of everything that is in the data. You can never make it backwards from the hash to the data.
+Hashing is a technique for dimensionality reduction. It uses a hash function that is any function that can be used to map data (called a key) of arbitrary size to data of a fixed size (called a hash value or hash). That hash is a sum up of everything that is in the data. You can never make it backwards from the hash to the data.
 
 Hashing is done for indexing and locating items in databases because it is easier to find the shorter hash value than the longer string.
 
@@ -409,7 +411,7 @@ MultiplicativeHashing(k,p)
 
 
 
-\subsubsection{Murmur Hash}
+\subsection{Murmur Hash}
 
 Consists in applying some multiplications (MU) and rotations (R) to the entry bytes to obtaint the hash. It uses multiple constants which are decided to make it a good hash function by passing 2 basic tests, the Avalanche Test that evaluates how the output changes if the input is slightly modified and the statistical Chi-Squared Test. We have based the implementation of this hash function on Austin Appleby's implementation. Source : \url{https://sites.google.com/site/murmurhash/}\\
 \medskip
@@ -521,7 +523,7 @@ For $k = 9$, the similarity found between all our random documents is less than 
 \textbf{The source code for this experiment can be found in `\textit{jocProvesHashTimes.cc}'.}
 \bigskip
 
-We have tested different k sizes for our k-shingles and three different hash functions in the process of filling the signature matrix to check their different performance. The process of filling the signature matrix is explained in the section 7 and our hash functions are MurmurHash3, Multiplicative Hash and Modular Hash and can be seen more deeply in the section 8.
+We have tested different k sizes for our k-shingles and three different hash functions in the process of filling the signature matrix to check their different performance. The process of filling the signature matrix is explained in the \autoref{computingSignMatrix} and our hash functions are MurmurHash3, Multiplicative Hash and Modular Hash and can be seen more deeply in \autoref{hashing}.
 
 As we expected initially, the time increases as the size of the k-shingle increases. This behavior can be explained using the fact that the number of different shingles we would have to work with would be bigger. It is trivial to observe that the number of different k-shingles is going to have a growing tendency based on their size. 
 
@@ -569,8 +571,10 @@ We can observe that the first approach, while being the only one that computes t
 
 The other two approaches are way better alternatives, as they are asymptotically faster.
 And, while they seem to both be asymptotically linear, we don't think that's the case.
-We don't have the time or computing power to do tests with larger datasets, but the way the second approach is constructed, it iterates through all the $\binom{n}{2}$ possible pairs of documents, and this has cost $O(n^2)$, with $n$ being the number of documents. 
-We believe that most of the computation time is spent constructing the k-shingles set, and constructing the signature matrix, with a cost of $O(n)$, and that the similarity calculation for all the possible document pairs represents only a small fraction of the total time for relatively small datasets, thus making it seem of linear behavior.
+We don't have the time or computing power to do tests with larger datasets, but the way the second approach is constructed, it iterates through all the $\binom{n}{2}$ possible pairs of documents, which has cost $O(n^2)$, with $n$ being the number of documents.
+
+We believe that most of the computation time is spent constructing the k-shingles set, and constructing the signature matrix, which has a cost of $O(n)$ (see \autoref{fillingCharacMatrix} and \autoref{computingSignMatrix}), and that the similarity calculation for all the possible document pairs represents only a small fraction of the total time for relatively small datasets, thus making it seem of linear behavior.
+
 At the same time, the third approach is also faster than the second one, we can see in \autoref{fig:JaccSignLSH} how they diverge as the size of the datasets increases.
 In this case, we believe the cost is still quadratic, but with a way smaller scaling factor, as only a small fraction of the possible $\binom{n}{2}$ document pairs are selected as candidates for similarity checking.
 \bigskip

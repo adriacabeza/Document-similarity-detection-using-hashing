@@ -41,7 +41,7 @@ void printmat(const vector<vector<unsigned int>> & mat){
 }
 
  vector<vector<unsigned int>> modularHashing(const vector<vector<unsigned int>> & repMatrix, int h){
-    vector<vector<unsigned int>> signatureMatrix (h, vector<unsigned int> (repMatrix[0].size(), INFINITY));
+    vector<vector<unsigned int>> signatureMatrix (h, vector<unsigned int> (repMatrix[0].size(), UINT_MAX));
     int value;
     srand (time(NULL));
     vector<pair<int,int>> minHashMod(h);
@@ -63,7 +63,7 @@ void printmat(const vector<vector<unsigned int>> & mat){
 
 vector<vector<unsigned int>> multiplicativeHashing(const vector<vector<unsigned int>> & repMatrix, int h){
     int value;
-    vector<vector<unsigned int>> signatureMatrix (h, vector<unsigned int> (repMatrix[0].size(), INFINITY));
+    vector<vector<unsigned int>> signatureMatrix (h, vector<unsigned int> (repMatrix[0].size(), UINT_MAX));
     vector<float> seeds(h);
     for(int k = 0; k < h; ++k) seeds[k] =  ((sqrt(5) -1) /2.0)+(((rand()%5000))/5000.0*1.2)-0.6;
     for(int i = 0; i < repMatrix.size(); ++i ){                           //starting to calculate the signature matrix
@@ -82,10 +82,10 @@ vector<vector<unsigned int>> multiplicativeHashing(const vector<vector<unsigned 
 }
 
 vector<vector<unsigned int>> murmurHashing(const vector<vector<unsigned int>> & repMatrix, int h){
-    unsigned int value;                 
+    unsigned int value;
     vector<float> seeds(h);
     for(int k = 0; k < h; ++k) seeds[k] = rand()% h;
-    vector<vector<unsigned int>> signatureMatrix (h, vector<unsigned int> (repMatrix[0].size(), INFINITY));
+    vector<vector<unsigned int>> signatureMatrix (h, vector<unsigned int> (repMatrix[0].size(), UINT_MAX));
     for(int i = 0; i < repMatrix.size(); ++i ){                           //starting to calculate the signature matrix
     const int *key = &i;
         for(int j = 0; j < repMatrix[0].size(); ++j){
@@ -107,14 +107,14 @@ set<pair<unsigned int,unsigned int>> LSH(const vector<vector<unsigned int>> & si
         bucket.clear();
         for(int j = 0; j < signatureMatrix[0].size(); ++j){
             vector<unsigned int> row;
-            for(int k = 0; k < r; ++k){
-                row.push_back(signatureMatrix[i+k][j]);
+            for(int t = 0; t < r; ++t){
+                row.push_back(signatureMatrix[i+t][j]);
             }
             unsigned int doc1 = hash_vec(row);
             auto it = bucket.find(doc1);
             if(it != bucket.end()){
-                for(int l = 0; l < (it->second).size(); ++l ){  //al ser set, ordenem la parella de documents de forma creixent per a evitar repeticions
-                    candidats.insert(parella_inc((it->second)[l], j));
+                for(int k = 0; k < (it->second).size(); ++k ){  //al ser set, ordenem la parella de documents de forma creixent per a evitar repeticions
+                    candidats.insert(parella_inc((it->second)[k], j));
                 }
                 (it->second).push_back(j);
             }else{
