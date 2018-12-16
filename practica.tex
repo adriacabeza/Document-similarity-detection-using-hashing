@@ -111,7 +111,7 @@ If we take in account the cost of building a set we should observe that for unso
 
 To identify lexically similar documents we need a proper way to represent documents as sets and the most effective way is to construct from the document the set of short strings that appear within it. If we do so, even if the documents have different sizes or those sentences appear in different order we will find several common elements. In the next section we will introduce some of the approaches of shingling and its variations.
 
-\section{\textit{k}-Shingles} \label{kShingles}
+\subsection{\textit{k}-Shingles} \label{kShingles}
 
 A k-shingle (or word-k-gram) is a sequence of consecutive words of size k. Intuitively, two documents A and B are similar if they share enough k-shingles. By performing union and intersection operations between the k-shingles, we can find the Jaccard similarity coefficient between A and B. 
 \\
@@ -119,7 +119,7 @@ There are some variations regarding on how white space (blank, tab, newline, etc
 \\
 How large k should be depends on how long typical documents are and how large the set of typical characters is. For example if we pick k=4 there are $27^4=531441 $ possible k-shingles. However, the calculation can be a little bit more subtle because all the characters do not appear with equal probability. A good rule of thumb is to imagine that there are only 20 characters and estimate the number of k-shingles as $20^k$. For large documents, choice k = 9 is considered safe. 
 
-\subsection{Hashing Shingles}
+\subsubsection{Hashing Shingles}
 
 Instead of using substrings directly as shingles, we can pick a hash function that maps strings of length k to some number of buckets and treat the resulting bucket number as the shingle. That process compacts our data and lets us manipulate shingles by single-word machine operations.
 
