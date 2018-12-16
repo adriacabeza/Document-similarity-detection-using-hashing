@@ -1,0 +1,52 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{cite}
+\usepackage{float}
+\usepackage{listings}
+\usepackage[scale=0.75]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{xcolor} % for setting colors
+\author{Carlos Bergillos, Antoni Rambla, Adrià Cabeza\\ Departament de Computació}
+\title{Compiling and executing manual}
+
+
+\begin{document}
+  \maketitle  
+   \newpage
+   \section{Makefile}
+   To make easier the work of compiling end executing the source files we have created a makefile that can be seen in our source folder. Inside the makefile we have determined several functionalities that can help us in the task of compiling and executing our source files:
+   
+   \begin{itemize}
+   \item \textbf{Default option}: it compiles all our source files and generates all our executables. It also creates several object files in order to be able to generate some of our executables. 
+   To run it you have to type: \textit{make}
+   \item Generate the program that \textbf{compares two different documents using Jaccard Similarity}:
+   To run it you have to type: \textit{make compjac}
+\item Generate the program that creates the data for our \textbf{INSERT NAME EXPERIMENT} experiment:
+   To run it you have to type: \textit{make jocProvesJaccard}
+ \item Generate the program that creates the data for our \textbf{INSERT NAME EXPERIMENT} experiment:
+   To run it you have to type: \textit{make jocProvesJaccApprox}
+\item Generate the program that creates the data for our \textbf{Performance of Different Document Similarity Approaches} experiment:
+   To run it you have to type: \textit{make jocProvesJaccSim}
+   \item Generate the program that creates the data for our \textbf{Precision of Jaccard Similarity Approximations} experiment:
+   To run it you have to type: \textit{make jocProvesJaccSimLsh}
+    \item Generate the program that creates the data for our \textbf{INSERT NAME EXPERIMENT} experiment:
+   To run it you have to type: \textit{make jocProvesLsh}
+   \item Generate the textbf{Modular Hashing Function} object file:
+   To run it you have to type: \textit{make ModularHash.o} 
+   \item Generate the \textbf{Multiplicative Hashing Function} object file:
+   To run it you have to type: \textit{make Multiplicative.o}
+   \item Generate the \textbf{Murmur Hashing Function} object file:
+   To run it you have to type: \textit{make MurmurHash3.o}
+   \item Generate the \textbf{Jaccard Approximation} object file:
+   To run it you have to type: \textit{make jaccardaprox.o}
+   \item Generate the \textbf{Jaccard Similarity} object file:
+   To run it you have to type: \textit{make jaccard.o}
+   \item Generate the \textbf{k-shingles} object file:
+   To run it you have to type: \textit{make kshingles.o}
+   \item \textbf{Delete all the object and executables files} generated in the folder:
+   To run it you have to type: \textit{make clean}
+   \end{itemize}
+\end{document}
+
