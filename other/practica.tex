@@ -17,10 +17,8 @@
 	breaklines=true,showstringspaces=false,
   	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
 	tabsize = 2,
-	language=C++
+	language=C
 }
-
-
 
 \begin{document}
   \maketitle  
@@ -172,16 +170,15 @@ sim(signatureMatrix,a,b)
 
 \section{Locality-Sensitive Hashing for Documents}
  This technique allows us to avoid computing the similarity of every pair of sets or their minhash signatures. If we are given signatures for the sets, we may divide them into bands, and only measure the similarity of a pair of sets if they are identical in at least one band. By choosing the size of bands appropriately, we can eliminate from consideration most of the pairs that do not meet our threshold of similarity.
- \newline
+ 
+ \bigskip
  We define the threshold as the value in which the probability of being taken as a candidate is 1/2, for low thresholds as soon as there is some similitude between documents, we will take them as candidates and vice-versa for high thresholds. An approximation to compute the value of the threshold is as it follows:
- $$Threshold = (1/b)^1^/^r$$
- Where b is the desired number of bands and r is the number of rows(note that $b*r = h$)
- \newline
+ $$Threshold = (1/b)^{1/r}$$
+ Where b is the desired number of bands and r is the number of rows (note that $b*r = h$)
+ 
+ \bigskip
 If we are looking for speed we want to set the threshold as high as possible so that we find only the documents that look more alike. If what we want is a thorough search, lowering it will allow us to find documents that may only have similar sections.
 \medskip 
- 
- \textbf{The source code for all subsections can be found in `\textit{jaccardaprox.cc}'.}
-\bigskip
  
 \subsection{Hash function used to hash a vector}
 This is the code used to hash a row. It consists on a series of XOR operations on each element of the vector together with a random hexadecimal number and the shifting the value of "seed" from the previous iteration some bits to the left and to the right. The time complexity of this algorithm is $O(n)$ being n the size of the vector. 
@@ -200,7 +197,9 @@ hash_vec(V) {
 }
 
 \end{lstlisting}
- \medskip 
+
+\bigskip
+\textbf{Our C++ implementation can be found in function \textit{hash\_vec} in `\textit{\mbox{jaccardaprox.cc}}'}
 
 \subsection{Filling the characteristic matrix}
 The characteristic matrix is the one we use to represent the shingles that each document has ({see \autoref{Representation}). The complexity of this algorithm is $O(n^2)$ where n is the total number of shingles that we get as input.
@@ -223,7 +222,9 @@ fill(characMatrix, shingles,docShing){
             if(docShing[j] contains(shingle)) then characMatrix[i][j] = 1;
             else characMatrix[i][j] = 0;
 \end{lstlisting}
-\medskip
+
+\bigskip
+\textbf{Our C++ implementation can be found in function \textit{fill} in `\textit{\mbox{jaccardaprox.cc}}'}
 
 \subsection{Computing the signature matrix}
 The signature matrix is the one resulting from finding for each hash function that we have applied and for every document, the first row where there appears a 1 in its permutation.
@@ -243,65 +244,62 @@ Pseudocode To Compute The Signature Matrix
 \end{center}
 \begin{lstlisting}
 initialize signature matrix with infinity values
-for i = 0 to characterisicMatrix.size() do:
-	for j = 0 to characteristicMatrix[0].size() do:
+for each row i of signatureMatrix do:
+	for each column j of signatureMatrix do:
 		if(characteristicMatrix[i][j] == 1) then
 			for k = 0 to h do:	//h is the number of hash functions that we need
-				rowPermutated <- value of hash algorithm designed for row i
+				rowPermutated = value of hash algorithm for row i
 				//note that we always use the same algorithm
-				if(rowPermutated < signatureMatrix[k][j]) signatureMatrix[k][j] = rowPermutated;
+				if(rowPermutated < signatureMatrix[k][j])
+					signatureMatrix[k][j] = rowPermutated;
 \end{lstlisting}
-\medskip
 
+\bigskip
+\textbf{Our C++ implementations can be found in functions \textit{\mbox{modularHashing}}, \textit{\mbox{multiplicativeHashing}} and \textit{\mbox{murmurHashing}} in `\textit{\mbox{jaccardaprox.cc}}'}
 
 \subsection{LSH and candidate pairs}
-As we have mentioned in the beginning of this section, by choosing the size of bands and rows appropriately we augment the number of false positives, documents that have very little in common, or the number of false negatives, documents that have a lot of common but are not checked. The time complexity of this algorithm is $O(h * m * h/r * m )$ = $O(h^2 /r * m^2)$ (h$/$r is the cost of of making the rows and the last m is the worst case cost of the last for for all documents being the same(no hauria de ser $m^2$ ja que es sum de l=1 fins a m de l)) where: 
+As we have mentioned in the beginning of this section, by choosing the size of bands and rows appropriately we augment the number of false positives, documents that have very little in common, or the number of false negatives, documents that have a lot of common but are not checked. 
+
+\bigskip
+The time complexity for this algorithm in the worst case (when all the columns of the signature matrix are identical) is $O(b*m*(r+m)) = O(h*m^2)$ where: 
 \begin{itemize}
-\item h is the number of hash functions
 \item m is the number of documents
-\item r is the number of rows
+\item h is the total number of hash functions
+\item b is the number of bands
+\item r is the number of hash functions per band
 \end{itemize}
  \begin{center}
 \begin{large}
-Pseudocode To Do LSH
+LSH Pseudocode
 \end{large}
 \end{center}
 
 \begin{lstlisting}
 LSH(signatureMatrix,r,h)
-    candidats;                     
-    bucket;
-    for i = 0 to h adding each time r to i (i+=r) do:
+    set<unordered pair<integer,integer>> candidats;                     
+    map<integer, set<integer>> bucket;
+    for each band i of signatureMatrix do:
         bucket.clear();
-        for j = 0 to signatureMatrix[0].size() do:
-            compute the row for document j;
-            doc1 = hash_vec(row);
-            if(bucket contains doc1)
-                for l = 0 to size of the bucket that stores all documents with value doc1 
-                    insert in candidats every possible pair that can be done with j and all documents that were here beforehand.
-                we add j to the bucket that represents the value doc1
+        for each column j of signatureMatrix do:
+            doc1 = hash_vec of the elements in this band and column
+            if (bucket contains doc1 as key) do:
+            	for all integers k in bucket[doc1] do:
+            		add unordered pair<j, k> to candidats
+            	add j to bucket[doc1]
             else
-                we create another place for rows with value doc1 and we store j there
-
+            	bucket[doc1] = new set {j}
+            	
     return candidats;
 
  \end{lstlisting}
- We choose to return them as a set to avoid having to check a and b and then maybe later b and a again.
+
+\bigskip
+\textbf{Our C++ implementation can be found in function \textit{LSH} in `\textit{jaccardaprox.cc}'}
 \newline
-
-
-Function that orders a pair placing the smallest number as the first. The complexity is trivial here $O(1)$
-
-
-\begin{lstlisting}
-parella_inc(int a, int b){
-	if(a < b ) then return pair(a,b);
-	else return pair(b,a);
- \end{lstlisting}
  
 \section{Hashing}
 
-Hashing is a technique for dimensionality reduction. It uses a hash function that is any function that can be used to map data ( called a key) of arbitrary size to data of a fixed size (called a hash value or hash). That hash is a sum up of everything that is in the data. You can never make it backwards from the hash to the data.
+Hashing is a technique for dimensionality reduction. It uses a hash function that is any function that can be used to map data (called a key) of arbitrary size to data of a fixed size (called a hash value or hash). That hash is a sum up of everything that is in the data. You can never make it backwards from the hash to the data.
 
 Hashing is done for indexing and locating items in databases because it is easier to find the shorter hash value than the longer string.
 

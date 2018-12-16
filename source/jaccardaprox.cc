@@ -107,14 +107,14 @@ set<pair<unsigned int,unsigned int>> LSH(const vector<vector<unsigned int>> & si
         bucket.clear();
         for(int j = 0; j < signatureMatrix[0].size(); ++j){
             vector<unsigned int> row;
-            for(int k = 0; k < r; ++k){
-                row.push_back(signatureMatrix[i+k][j]);
+            for(int t = 0; t < r; ++t){
+                row.push_back(signatureMatrix[i+t][j]);
             }
             unsigned int doc1 = hash_vec(row);
             auto it = bucket.find(doc1);
             if(it != bucket.end()){
-                for(int l = 0; l < (it->second).size(); ++l ){  //al ser set, ordenem la parella de documents de forma creixent per a evitar repeticions
-                    candidats.insert(parella_inc((it->second)[l], j));
+                for(int k = 0; k < (it->second).size(); ++k ){  //al ser set, ordenem la parella de documents de forma creixent per a evitar repeticions
+                    candidats.insert(parella_inc((it->second)[k], j));
                 }
                 (it->second).push_back(j);
             }else{
