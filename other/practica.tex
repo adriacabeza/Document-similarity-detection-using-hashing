@@ -172,6 +172,12 @@ sim(signatureMatrix,a,b)
 
 \section{Locality-Sensitive Hashing for Documents}
  This technique allows us to avoid computing the similarity of every pair of sets or their minhash signatures. If we are given signatures for the sets, we may divide them into bands, and only measure the similarity of a pair of sets if they are identical in at least one band. By choosing the size of bands appropriately, we can eliminate from consideration most of the pairs that do not meet our threshold of similarity.
+ \newline
+ We define the threshold as the value in which the probability of being taken as a candidate is 1/2, for low thresholds as soon as there is some similitude between documents, we will take them as candidates and vice-versa for high thresholds. An approximation to compute the value of the threshold is as it follows:
+ $$Threshold = (1/b)^1^/^r$$
+ Where b is the desired number of bands and r is the number of rows(note that $b*r = h$)
+ \newline
+If we are looking for speed we want to set the threshold as high as possible so that we find only the documents that look more alike. If what we want is a thorough search, lowering it will allow us to find documents that may only have similar sections.
 \medskip 
  
  \textbf{The source code for all subsections can be found in `\textit{jaccardaprox.cc}'.}
@@ -283,9 +289,9 @@ LSH(signatureMatrix,r,h)
  We choose to return them as a set to avoid having to check a and b and then maybe later b and a again.
 \newline
 
-\begin{large}
+
 Function that orders a pair placing the smallest number as the first. The complexity is trivial here $O(1)$
-\end{large}
+
 
 \begin{lstlisting}
 parella_inc(int a, int b){
