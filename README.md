@@ -1,7 +1,11 @@
+Our goal is to identify similarities between documents. We say that two documents are similar if they contain a significant number of common substrings that are not too small. 
 
+The problem of computing the similarity between two files has been studied extensively and many programs have been developed to solve it. Algorithms for the problem have numerous applications, including spelling correction systems, file comparison tools or even the study of genetic evolution.
 
-Our goal is to identify similarities between documents. We have used the Jaccard Similarity theorem,  *Local-Sensitive Hashing* algorithm
- and a *k-shingles* and *minhash signatures* representation of documents to evaluate the effectivity of the similarity computed and the time of computation. We have introduced three different hash functions to see its differences in performance.  Also once determined the best parameters, we will give a conclusion about the best way to identify the more similar documents. 
+ Existing approaches can also include a brute force approach of comparing all sub-strings of pair of documents. However, such and approach is computationally prohibitive. 
+
+We have used the Jaccard Similarity theorem,  *Local-Sensitive Hashing* algorithm and a *k-shingles* and *minhash signatures* representation of documents to evaluate the effectivity of the similarity computed and the time of computation. We have introduced three different hash functions to see its differences in performance.  Also once determined the best parameters, we will give a conclusion about the best way to identify the more similar documents. 
+
 
 ## Compiling
 
