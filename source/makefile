@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -std=c++11
 
-default: compjac permutacions jocProvesJaccSim jocProvesJaccSimLsh mainDriver
+default: compjac permutacions jocProvesJaccSim jocProvesJaccSimLsh jocProvesHashTimes mainDriver
 
 compjac: CompararDocumentsJaccard.cc jaccard.o kshingles.o
 	$(CC) $(CFLAGS) -o compjac CompararDocumentsJaccard.cc jaccard.o kshingles.o
@@ -28,4 +28,4 @@ jaccard.o: jaccard.cc
 kshingles.o: kshingles.cc
 	$(CC) $(CFLAGS) -c kshingles.cc
 clean:
-	rm -f *.o compjac permutacions jocProvesJaccSim jocProvesJaccSimLsh mainDriver
+	rm -f *.o compjac permutacions jocProvesJaccSim jocProvesJaccSimLsh jocProvesHashTimes mainDriver
