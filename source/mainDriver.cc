@@ -56,7 +56,7 @@ int main(){
             }
             inFile.close();
 
-            cout << "> Specify the number of documents to work with (" << i << " files found). A large number here may result in very long processing times." << endl;
+            cout << "> Specify the number of documents to work with (" << i << " files found). A very large number here may result in very processing times." << endl;
             int n;
             cin >> n;
 
