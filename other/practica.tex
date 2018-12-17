@@ -182,7 +182,7 @@ If we are looking for speed we want to set the threshold as high as possible so 
 \medskip 
  
 \subsection{Hash function used to hash a vector}
-This is the code used to hash a row. It consists on a series of XOR operations on each element of the vector together with a random hexadecimal number and the shifting the value of ``seed'' from the previous iteration some bits to the left and to the right. The time complexity of this algorithm is $O(n)$ being n the size of the vector. 
+This is the code used to hash a row. It consists on a series of XOR operations on each element of the vector together with a random hexadecimal number and the shifting of the value of ``seed'' from the previous iteration some bits to the left and to the right. The time complexity of this algorithm is $O(n)$ being n the size of the vector. 
 \begin{center}
 \begin{large}
 Pseudocode Vector Hashing
@@ -210,7 +210,7 @@ The complexity of the algorithm we use to fill it is $O(n*m)$ where $n$ is numbe
 
 \begin{itemize}
 \item characMatrix is the characteristic matrix (empty at the beginning of the algorithm)
-\item shingles is ordered set containing all the shingles we have in total
+\item shingles is an ordered set containing all the shingles we have in total
 \item docShing is a vector of sets in which in position i we have the set of shingles for document i. 
 \end{itemize}
  \begin{center}
