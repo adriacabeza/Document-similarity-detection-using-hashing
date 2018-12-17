@@ -263,7 +263,7 @@ for each row i of signatureMatrix do:
 \textbf{Our C++ implementations can be found in functions \textit{\mbox{modularHashing}}, \textit{\mbox{multiplicativeHashing}} and \textit{\mbox{murmurHashing}} in `\textit{\mbox{jaccardaprox.cc}}'}
 
 \subsection{LSH and candidate pairs}
-As we have mentioned in the beginning of this section, by choosing the size of bands and rows appropriately we augment the number of false positives, documents that have very little in common and are checked, or the number of false negatives, documents that have a lot in common but are not checked. 
+As we have mentioned in the beginning of this section, by not choosing the size of bands and rows appropriately, we can increase the number of false positives (documents that have very little in common  but are selected and checked), or increase the number of false negatives (documents that have a lot in common but are not selected). 
 
 \bigskip
 The time complexity for this algorithm in the worst case (when all the columns of the signature matrix are identical) is $O(b*m*(r+m)) = O(h*m^2)$ where: 
@@ -476,7 +476,7 @@ In our experiments, to compute similarities and approximations we have done seve
 
 \subsection{Generating the data} \label{generatingData}
 
-To generate the data for our experiments we have used the \textit{random\_ shuffle} function inside the C++ STL which rearranges the elements randomly of a vector. The function swaps the value of each element with that of some other randomly picked element. Its complexity is $O(n)$ with $n$ being  the distance between first and last minus one.\\
+To generate the data for our experiments we have used the \textit{random\_shuffle} function inside the C++ STL which randomly rearranges the elements of a vector. The function swaps the value of each element with that of some other randomly picked element. Its complexity is $O(n)$ with $n$ being  the distance between first and last minus one.\\
 
 The algorithm we implemented to generate our data consists in traversing all the document once to generate a vector of strings containing all the words, then, as many times as permutations we want, we shuffle the vector and write the result in a document. \\
 
@@ -508,7 +508,7 @@ As we expected, the similarity decreases as the size of the k-shingles increases
 
 For smaller values of $k$ that allow k-shingles to remain within a word, we see that a lot of similarities are found, as the documents share the same words.
 On the other hand, for values of $k$ that span more than one word, the similarity between documents is very small (because the documents don't share the word order, so the probability of identical k-shingles decreases).
-In fact, we observe that for values of $k$ larger 12, the similarity obtained is mostly 0.
+In fact, we observe that for values of $k$ larger than 12, the similarity obtained is mostly 0.
 
 As mentioned in \autoref{kShingles}, a good and reasonable value for $k$ is 9.
 For $k = 9$, the similarity found between all our random documents is less than 0.1, which corresponds with the fact that the documents don't really share sentences or many contiguous words.
@@ -619,7 +619,7 @@ To make it easier for us to compute and visualize graphically the results we hav
 \item Trying to find pairs of similar documents by computing the Jaccard similarity for all the possible pairs is not feasible for large document sets. Jaccard approximation algorithms using minhash signatures produce a very similar result to the real Jaccard similarity, but with a fraction of the cost. And for very large documents sets, locality-sensitive hashing should be considered.
 \item Larger number of hash functions result in a better precision for the MinHash method.
 \item The bigger the number of documents to compare is, the more important is to use a LSH with the signature matrix as it will have a big impact on the required time.
-\item Choosing b and r carefully is important as it means that we can either get several documents which are very dissimilar together or we never band two documents that look the same. It is needed to think beforehand and choose an appropriate value. 
+\item In LSH, choosing $b$ and $r$ carefully is important as it can result in a large number of very different documents being selected as candidates, or result in very similar documents never being selected as candidates. The values used need to be carefully chosen for each case.
 \item It is important to explore different approaches and algorithms to improve either time or the quality of the solution, as we have seen if we only took the Jaccard similarity to compute how similar several documents are we would have gotten an exponential time. After taking the signature matrix (which already highly improves the speed) we use the LSH technique to further improve it.
 
 \end{enumerate}
