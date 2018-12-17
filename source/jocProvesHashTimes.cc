@@ -26,11 +26,9 @@ int main(){
     }
     inFile.close();
     vector<int> ks {3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
-    //vector<int> ks {15, 16};
     outFileTime.open("./output_data/"+filename+"_hashfuncts_time.txt");
     outFileTime << setprecision(6) << fixed;
 
-    //int k = 9;
     int b = 5;
     int r = 5;
     int h = b*r;
@@ -66,14 +64,6 @@ int main(){
         start = clock();
         signatureMatrix =  murmurHashing(charactMatrix, h);
         outFileTime << "\t" << double(clock()-start)/CLOCKS_PER_SEC;
-
-        /**set<pair<unsigned int, unsigned int> > candidates = LSH(signatureMatrix, r, h);
-        for(pair<unsigned int, unsigned int> p : candidates){
-            int a = p.first;
-            int b = p.second;
-            float sim_v = sim(signatureMatrix, a, b);
-            cout << "Candidate " << paths[a] << " with " << paths[b] << " has similarity " << sim_v << endl;
-        }**/
 
         cout << "Done: K = " << k << endl;
         outFileTime << endl;

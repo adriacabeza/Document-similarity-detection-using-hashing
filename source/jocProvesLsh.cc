@@ -29,12 +29,9 @@ int main(){
     outFile << setprecision(6) << fixed;
 
     int k = 9;
-    //vector<int> bs {1,2,4,8,16,32,64,128,256};
     vector<int> bs {1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 16, 20, 24, 30, 40, 48, 60, 80, 120, 240};
-    //int r = ;
     int h = 240;
 
-    //for(int n = 2; n < paths.size(); n++){
     for(int b : bs){
         int r = h/b;
 
@@ -56,9 +53,6 @@ int main(){
         signatureMatrix =  modularHashing(charactMatrix, h);
 
         set<pair<unsigned int, unsigned int> > candidates = LSH(signatureMatrix, r, h);
-        /**for(pair<unsigned int, unsigned int> p : candidates){
-            float sim_v = sim(signatureMatrix, p.first, p.second);
-        }**/
         outFile << "\t" << candidates.size();
 
         outFile << endl;

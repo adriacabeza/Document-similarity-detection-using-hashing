@@ -113,7 +113,7 @@ set<pair<unsigned int,unsigned int>> LSH(const vector<vector<unsigned int>> & si
             unsigned int doc1 = hash_vec(row);
             auto it = bucket.find(doc1);
             if(it != bucket.end()){
-                for(int k = 0; k < (it->second).size(); ++k ){  //al ser set, ordenem la parella de documents de forma creixent per a evitar repeticions
+                for(int k = 0; k < (it->second).size(); ++k ){  
                     candidats.insert(parella_inc((it->second)[k], j));
                 }
                 (it->second).push_back(j);
