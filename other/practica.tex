@@ -240,7 +240,7 @@ To compute the signature matrix we use one of the three algorithms.
 \item murmur hashing 
 \end{itemize}
 The time complexity of this algorithm is tricky as we have to take into account the cost of the hashing algorithm used. Usually the time will be $O(n*m*h*\zeta)$ where $n$ and $m$ are the number of rows and columns of the characteristic matrix respectively, $h$ is the number of hashing algorithms that we use and $\zeta$ is the cost of computing the hash value.
-Albeit we use the algorithms only to compute the hash to do row permutations, we follow a general schema to fill it that goes as it follows:
+Albeit we use the algorithms only to compute the hash to do row permutations, we follow a general template to fill it that goes as it follows:
 
  \begin{center}
 \begin{large}
@@ -263,7 +263,7 @@ for each row i of signatureMatrix do:
 \textbf{Our C++ implementations can be found in functions \textit{\mbox{modularHashing}}, \textit{\mbox{multiplicativeHashing}} and \textit{\mbox{murmurHashing}} in `\textit{\mbox{jaccardaprox.cc}}'}
 
 \subsection{LSH and candidate pairs}
-As we have mentioned in the beginning of this section, by choosing the size of bands and rows appropriately we augment the number of false positives, documents that have very little in common, or the number of false negatives, documents that have a lot of common but are not checked. 
+As we have mentioned in the beginning of this section, by choosing the size of bands and rows appropriately we augment the number of false positives, documents that have very little in common and are checked, or the number of false negatives, documents that have a lot in common but are not checked. 
 
 \bigskip
 The time complexity for this algorithm in the worst case (when all the columns of the signature matrix are identical) is $O(b*m*(r+m)) = O(h*m^2)$ where: 
