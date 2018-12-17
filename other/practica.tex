@@ -156,18 +156,17 @@ Pseudocode Similarity Between Two Documents
 \end{center}
 \begin{lstlisting}
 sim(signatureMatrix,a,b)
-    float simil = 0
-    for each row i of signatureMatrix do:
-        if(signatureMatrix[i][a] == signatureMatrix[i][b]) do:
-        	++simil
+    float simil = 0;
+    for i = 0 to signatureMatrix.size() do:
+        if(signatureMatrix[i][a] == signatureMatrix[i][b]) then ++simil;
  
-    return simil / signatureMatrix.size()
+    return simil / signatureMatrix.size();
 
 
 \end{lstlisting}
 
-\bigskip
 \textbf{The source code for this section can be found in `\textit{jaccardaprox.cc}'.}
+\bigskip
 
 \section{Locality-Sensitive Hashing for Documents}
  This technique allows us to avoid computing the similarity of every pair of sets or their minhash signatures. If we are given signatures for the sets, we may divide them into bands, and only measure the similarity of a pair of sets if they are identical in at least one band. By choosing the size of bands appropriately, we can eliminate from consideration most of the pairs that do not meet our threshold of similarity.
@@ -182,7 +181,7 @@ If we are looking for speed we want to set the threshold as high as possible so 
 \medskip 
  
 \subsection{Hash function used to hash a vector}
-This is the code used to hash a row. It consists on a series of XOR operations on each element of the vector together with a random hexadecimal number and the shifting the value of ``seed'' from the previous iteration some bits to the left and to the right. The time complexity of this algorithm is $O(n)$ being n the size of the vector. 
+This is the code used to hash a row. It consists on a series of XOR operations on each element of the vector together with a random hexadecimal number and the shifting the value of "seed" from the previous iteration some bits to the left and to the right. The time complexity of this algorithm is $O(n)$ being n the size of the vector. 
 \begin{center}
 \begin{large}
 Pseudocode Vector Hashing
@@ -253,7 +252,7 @@ for each row i of signatureMatrix do:
 	for each column j of signatureMatrix do:
 		if(characteristicMatrix[i][j] == 1) then
 			for k = 0 to h do:	//h is the number of hash functions that we need
-				rowPermutated = value of hash algorithm at row i
+				rowPermutated = value of hash algorithm for row i
 				//note that we always use the same algorithm
 				if(rowPermutated < signatureMatrix[k][j])
 					signatureMatrix[k][j] = rowPermutated;
