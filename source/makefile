@@ -9,6 +9,8 @@ permutacions: permutacions.cc
 	$(CC) $(CFLAGS) -o permutacions permutacions.cc
 jocProvesJaccSim: jocProvesJaccSim.cc jaccardaprox.o kshingles.o ModularHash.o MultiplicativeHash.o MurmurHash3.o
 	$(CC) $(CFLAGS) -o jocProvesJaccSim jocProvesJaccSim.cc jaccard.o jaccardaprox.o kshingles.o ModularHash.o MultiplicativeHash.o MurmurHash3.o
+jovProvesJaccard: jocProvesJaccard.cc jaccardaprox.o kshingles.o ModularHash.o MultiplicativeHash.o MurmurHash3.o
+	$(CC) $(CFLAGS) -o jocProvesJaccard jocProvesJaccard.cc jaccard.o jaccardaprox.o kshingles.o ModularHash.o MultiplicativeHash.o MurmurHash3.o
 jocProvesJaccSimLsh: jocProvesJaccSimLsh.cc jaccardaprox.o kshingles.o ModularHash.o MultiplicativeHash.o MurmurHash3.o
 	$(CC) $(CFLAGS) -o jocProvesJaccSimLsh jocProvesJaccSimLsh.cc jaccard.o jaccardaprox.o kshingles.o ModularHash.o MultiplicativeHash.o MurmurHash3.o
 jocProvesHashTimes: jocProvesHashTimes.cc jaccardaprox.o kshingles.o ModularHash.o MultiplicativeHash.o MurmurHash3.o
