@@ -1,5 +1,7 @@
 # :page_with_curl:Document similarity detection using hashing
 
+[![HitCount](http://hits.dwyl.io/adriacabeza/https://github.com/adriacabeza/Document-similarity-detection-using-hashing.svg)](http://hits.dwyl.io/adriacabeza/https://github.com/adriacabeza/Document-similarity-detection-using-hashing)
+
 Our goal is to identify similarities between documents. We say that two documents are similar if they contain a significant number of common substrings that are not too small. 
 
 The problem of computing the similarity between two files has been studied extensively and many programs have been developed to solve it. Algorithms for the problem have numerous applications, including spelling correction systems, file comparison tools or even the study of genetic evolution.
